@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-json/wp/v2/users
+
+Sitemap: https://akdisi.ddev.site:8443/wp-sitemap.xml
