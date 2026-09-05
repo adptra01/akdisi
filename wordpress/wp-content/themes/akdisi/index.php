@@ -52,9 +52,9 @@ $is_search = is_search();
 		<?php the_posts_pagination( [ 'mid_size' => 1 ] ); ?>
 		<?php else : ?>
 			<div style="text-align:center;padding:var(--s12) 0;">
-				<p class="serif" style="font-size:var(--text-3xl);color:var(--text-mut);">0</p>
+				<p class="serif" style="font-size:var(--text-3xl);color:var(--text-muted-light);">0</p>
 				<h2><?php _e( 'Tidak Ada Hasil', 'akdisi' ); ?></h2>
-				<p style="color:var(--text-mut);margin:var(--s3) auto var(--s8);max-width:40ch;"><?php _e( 'Coba kata kunci lain atau lihat layanan kami untuk menemukan yang Anda butuhkan.', 'akdisi' ); ?></p>
+				<p style="color:var(--text-muted-light);margin:var(--s3) auto var(--s8);max-width:40ch;"><?php _e( 'Coba kata kunci lain atau lihat layanan kami untuk menemukan yang Anda butuhkan.', 'akdisi' ); ?></p>
 				<a href="<?php echo esc_url( home_url( '/services/' ) ); ?>" class="btn btn-accent magnetic"><?php _e( 'Lihat Layanan', 'akdisi' ); ?></a>
 			</div>
 		<?php endif; ?>

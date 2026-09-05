@@ -819,7 +819,7 @@ function akdisi_handle_portfolio_filter(): void
                 <?php if (has_post_thumbnail()) : ?>
                     <?php the_post_thumbnail('akdisi-portfolio', ['loading' => 'lazy', 'class' => 'card-image']); ?>
                 <?php else : ?>
-                    <div class="card-image" style="background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--text-mut);"><?php esc_html_e('No Image', 'akdisi'); ?></div>
+                    <div class="card-image" style="background:var(--bg-surface);display:flex;align-items:center;justify-content:center;color:var(--text-muted);"><?php esc_html_e('No Image', 'akdisi'); ?></div>
                 <?php endif; ?>
                 <div class="card-body">
                     <?php if (!empty($cat_names)) : ?>

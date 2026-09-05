@@ -50,7 +50,7 @@ foreach ( [ 'housing', 'developer', 'property', 'organization' ] as $slug ) {
 }
 if ( $solutions || $rel_portfolio ) :
 ?>
-<div class="section section-surface" style="background:var(--surface);">
+<div class="section section-dark">
 	<div class="container">
 		<p class="eyebrow"><?php _e( 'Related', 'akdisi' ); ?></p>
 		<h2 class="section-title" style="font-size:var(--text-2xl);"><?php _e( 'Solusi & Portfolio Terkait', 'akdisi' ); ?></h2>

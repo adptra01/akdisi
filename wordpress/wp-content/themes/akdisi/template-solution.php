@@ -36,7 +36,7 @@ $current_slug   = $current_post ? basename( (string) get_permalink( $current_pos
 </div>
 <?php endwhile; endif; ?>
 
-<div class="section section-surface" style="background:var(--surface);">
+<div class="section section-dark">
 	<div class="container">
 		<p class="eyebrow"><?php _e( 'Explore', 'akdisi' ); ?></p>
 		<h2 class="section-title" style="font-size:var(--text-2xl);"><?php _e( 'Solusi Lainnya', 'akdisi' ); ?></h2>

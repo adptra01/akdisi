@@ -30,7 +30,7 @@ $addr  = get_theme_mod( 'akdisi_address', 'Jambi, Indonesia' );
 		<div class="split-grid js-stagger">
 			<div class="split-intro">
 				<h2><?php _e( 'Ngobrol langsung', 'akdisi' ); ?></h2>
-				<p style="color:var(--text-mut);margin-bottom:var(--s8);max-width:44ch;">
+				<p style="color:var(--text-muted-light);margin-bottom:var(--s8);max-width:44ch;">
 					<?php _e( 'Respons cepat, tanpa jargon. Jelaskan masalah Anda — kami bantu tentukan langkah selanjutnya.', 'akdisi' ); ?>
 				</p>
 
