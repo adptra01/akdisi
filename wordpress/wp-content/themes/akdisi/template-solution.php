@@ -1,7 +1,7 @@
 <?php
 /**
- * Solution Detail Template (Housing / Developer / Property / Organization)
- * PRD BAGIAN H — capability list driven by page content.
+ * Solution Detail Template (BAGIAN H) — detail solusi per sektor.
+ * v1.3.0 — entry editorial + solution rows + CTA.
  *
  * @package AKDISI
  * @since 1.1.0
@@ -11,107 +11,68 @@
 
 get_header();
 
-// Previous/next solution links.
-$solution_slugs = ['housing', 'developer', 'property', 'organization'];
+$solution_slugs = [ 'housing', 'developer', 'property', 'organization' ];
 $current_post   = get_post();
-$current_slug   = $current_post ? basename((string) get_permalink($current_post)) : '';
+$current_slug   = $current_post ? basename( (string) get_permalink( $current_post ) ) : '';
 ?>
 
-<section class="page-hero">
-    <div class="container">
-        <p style="margin-bottom:0.5rem;color:var(--color-neutral-500);font-size:0.875rem;">
-            <a href="<?php echo esc_url(home_url('/solutions/')); ?>"><?php _e('Solusi', 'akdisi'); ?></a> &raquo;
-        </p>
-        <h1><?php echo esc_html(get_the_title()); ?></h1>
-        <p><?php _e('Kemampuan yang dapat disesuaikan dengan kebutuhan organisasi Anda.', 'akdisi'); ?></p>
-    </div>
+<section class="page-hero" data-reveal>
+	<div class="container">
+		<nav class="breadcrumb" aria-label="<?php esc_attr_e( 'Breadcrumb', 'akdisi' ); ?>">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php _e( 'Beranda', 'akdisi' ); ?></a><span class="sep">/</span>
+			<a href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>"><?php _e( 'Solusi', 'akdisi' ); ?></a><span class="sep">/</span>
+			<span aria-current="page"><?php echo esc_html( get_the_title() ); ?></span>
+		</nav>
+		<h1 style="margin-top:var(--s4);"><?php echo esc_html( get_the_title() ); ?></h1>
+		<p><?php _e( 'Kemampuan yang dapat disesuaikan dengan kebutuhan organisasi Anda.', 'akdisi' ); ?></p>
+	</div>
 </section>
 
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
 <div class="section">
-    <div class="container entry-content">
-        <?php the_content(); ?>
-    </div>
+	<div class="container entry-content" style="font-size:var(--text-lg);">
+		<?php the_content(); ?>
+	</div>
 </div>
 <?php endwhile; endif; ?>
 
-<!-- Related solutions -->
-<div class="section section-alt">
-    <div class="container">
-        <div class="section-header">
-            <h2><?php _e('Solusi Lainnya', 'akdisi'); ?></h2>
-        </div>
-        <div class="card-grid">
-            <?php
-            $solutions = [
-                'housing'      => [__('Perumahan', 'akdisi'), __('Pengelolaan kawasan dan layanan penghuni.', 'akdisi')],
-                'developer'    => [__('Developer', 'akdisi'), __('Mendukung proses bisnis developer.', 'akdisi')],
-                'property'     => [__('Properti', 'akdisi'), __('Pengelolaan bisnis properti.', 'akdisi')],
-                'organization' => [__('Organisasi', 'akdisi'), __('Administrasi dan pengelolaan organisasi.', 'akdisi')],
-            ];
-            foreach ($solutions as $slug => $data) :
-                if ($slug === $current_slug) {
-                    continue;
-                }
-            ?>
-            <div class="card">
-                <div class="card-body">
-                    <h3><?php echo esc_html($data[0]); ?></h3>
-                    <p><?php echo esc_html($data[1]); ?></p>
-                    <a href="<?php echo esc_url(home_url('/solutions/' . $slug . '/')); ?>" class="btn btn-secondary" style="margin-top:1rem;"><?php _e('Lihat Solusi', 'akdisi'); ?></a>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
+<div class="section section-surface" style="background:var(--surface);">
+	<div class="container">
+		<p class="eyebrow"><?php _e( 'Explore', 'akdisi' ); ?></p>
+		<h2 class="section-title" style="font-size:var(--text-2xl);"><?php _e( 'Solusi Lainnya', 'akdisi' ); ?></h2>
+
+		<div class="solution-list js-stagger" style="margin-top:var(--s6);">
+			<?php
+			$solutions = [
+				'housing'      => [ __( 'Perumahan', 'akdisi' ), __( 'Pengelolaan kawasan dan layanan penghuni.', 'akdisi' ) ],
+				'developer'    => [ __( 'Developer', 'akdisi' ), __( 'Mendukung proses bisnis developer.', 'akdisi' ) ],
+				'property'     => [ __( 'Properti', 'akdisi' ), __( 'Pengelolaan bisnis properti.', 'akdisi' ) ],
+				'organization' => [ __( 'Organisasi', 'akdisi' ), __( 'Administrasi dan pengelolaan organisasi.', 'akdisi' ) ],
+			];
+			$row = 0;
+			foreach ( $solutions as $slug => $data ) :
+				if ( $slug === $current_slug ) { continue; }
+				$row++;
+				$sol   = get_page_by_path( 'solutions/' . $slug );
+				$title = $data[0];
+				$desc  = $sol ? get_the_excerpt( $sol ) : $data[1];
+				$link  = $sol ? get_permalink( $sol ) : home_url( '/solutions/' . $slug . '/' );
+			?>
+			<a href="<?php echo esc_url( $link ); ?>" class="solution-row" data-ga-track="cta_click" data-ga-content="solution_<?php echo esc_attr( $slug ); ?>">
+				<span class="solution-index">0<?php echo esc_html( $row ); ?></span>
+				<div>
+					<h3><?php echo esc_html( $title ); ?></h3>
+					<p><?php echo esc_html( $desc ); ?></p>
+				</div>
+				<span class="text-link"><?php _e( 'Lihat Solusi', 'akdisi' ); ?>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+				</span>
+			</a>
+			<?php endforeach; ?>
+		</div>
+	</div>
 </div>
 
-<!-- Related services & portfolio (PRD §90) -->
-<?php
-$rel_portfolio = get_posts([
-    'post_type'      => 'akdisi_portfolio',
-    'posts_per_page' => 3,
-    'post_status'    => 'publish',
-    'meta_key'       => '_akdisi_related_solution',
-    'meta_value'     => $current_slug,
-]);
-$service_ids = [50, 51, 52, 53]; // application-development, business-process-digitalization, data-administration-systems, custom-business-solutions
-?>
-<div class="section">
-    <div class="container">
-        <div class="section-header">
-            <h2><?php _e('Layanan & Portfolio Terkait', 'akdisi'); ?></h2>
-        </div>
-        <div class="related-cards">
-            <?php foreach ($service_ids as $sid) : ?>
-                <?php $svc = get_post($sid); ?>
-                <?php if ($svc && 'publish' === $svc->post_status) : ?>
-                <div class="card">
-                    <span class="card-category"><?php _e('Layanan', 'akdisi'); ?></span>
-                    <h3><?php echo esc_html(get_the_title($svc)); ?></h3>
-                    <a href="<?php echo esc_url(get_permalink($svc)); ?>" class="btn btn-secondary"><?php _e('Lihat Layanan', 'akdisi'); ?></a>
-                </div>
-                <?php endif; ?>
-            <?php endforeach; ?>
-            <?php foreach ($rel_portfolio as $p) : ?>
-                <div class="card">
-                    <span class="card-category"><?php _e('Portfolio', 'akdisi'); ?></span>
-                    <h3><?php echo esc_html(get_the_title($p)); ?></h3>
-                    <p style="font-size:0.875rem;"><?php echo esc_html(get_the_excerpt($p)); ?></p>
-                    <a href="<?php echo esc_url(get_permalink($p)); ?>" class="btn btn-secondary"><?php _e('Lihat Portfolio', 'akdisi'); ?></a>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
-</div>
-
-<!-- CTA -->
-<div class="cta-section">
-    <div class="container">
-        <h2><?php _e('Butuh solusi yang disesuaikan dengan proses bisnis Anda?', 'akdisi'); ?></h2>
-        <p><?php _e('Kami siap membantu Anda dari tahap konsultasi hingga implementasi.', 'akdisi'); ?></p>
-        <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn btn-large"><?php _e('Konsultasikan Sekarang', 'akdisi'); ?></a>
-    </div>
-</div>
+<?php get_template_part( 'template-parts/cta-band', null, [ 'btn_ga' => 'cta_band_solution_' . ( $current_slug ?: 'x' ) ] ); ?>
 
 <?php get_footer();

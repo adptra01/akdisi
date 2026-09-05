@@ -1,7 +1,7 @@
 <?php
 /**
- * Solutions Landing Template
- * PRD BAGIAN H — "Apa yang dapat dilakukan AKDISI untuk industri saya?"
+ * Solutions Template (BAGIAN H) — daftar solusi berdasarkan sektor/kebutuhan.
+ * v1.3.0 — editorial rows.
  *
  * @package AKDISI
  * @since 1.1.0
@@ -12,60 +12,59 @@
 get_header();
 ?>
 
-<section class="page-hero">
-    <div class="container">
-        <h1><?php echo esc_html(get_the_title()); ?></h1>
-        <p><?php _e('Solusi aplikasi yang dirancang untuk kebutuhan bisnis Anda di berbagai sektor.', 'akdisi'); ?></p>
-    </div>
+<section class="page-hero" data-reveal>
+	<div class="container">
+		<p class="eyebrow"><?php _e( 'By Sector & Need', 'akdisi' ); ?></p>
+		<h1><?php echo esc_html( get_the_title() ); ?></h1>
+		<p><?php _e( 'Solusi aplikasi yang dirancang untuk kebutuhan bisnis Anda di berbagai sektor.', 'akdisi' ); ?></p>
+	</div>
 </section>
 
-<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-    <?php if (trim((string) get_the_content())) : ?>
-    <div class="section">
-        <div class="container">
-            <div class="entry-content">
-                <?php the_content(); ?>
-            </div>
-        </div>
-    </div>
-    <?php endif; ?>
+<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
+	<?php if ( trim( (string) get_the_content() ) ) : ?>
+	<div class="section">
+		<div class="container entry-content" style="max-width:680px;font-size:var(--text-lg);">
+			<?php the_content(); ?>
+		</div>
+	</div>
+	<?php endif; ?>
 <?php endwhile; endif; ?>
 
-<div class="section section-alt">
-    <div class="container">
-        <div class="section-header">
-            <h2><?php _e('Solusi Berdasarkan Sektor', 'akdisi'); ?></h2>
-            <p><?php _e('Konteks yang sering kami tangani — hubungi kami untuk kebutuhan lainnya.', 'akdisi'); ?></p>
-        </div>
-        <div class="card-grid">
-            <?php
-            $solutions = [
-                'housing'      => [__('Perumahan', 'akdisi'), __('Solusi untuk pengelolaan kawasan dan layanan penghuni.', 'akdisi')],
-                'developer'    => [__('Developer', 'akdisi'), __('Solusi untuk mendukung proses bisnis developer.', 'akdisi')],
-                'property'     => [__('Properti', 'akdisi'), __('Solusi untuk pengelolaan bisnis properti.', 'akdisi')],
-                'organization' => [__('Organisasi', 'akdisi'), __('Solusi untuk administrasi dan pengelolaan organisasi.', 'akdisi')],
-            ];
-            foreach ($solutions as $slug => $data) :
-            ?>
-            <div class="card">
-                <div class="card-body">
-                    <h3><?php echo esc_html($data[0]); ?></h3>
-                    <p><?php echo esc_html($data[1]); ?></p>
-                    <a href="<?php echo esc_url(home_url('/solutions/' . $slug . '/')); ?>" class="btn btn-secondary" style="margin-top:1rem;"><?php _e('Lihat Solusi', 'akdisi'); ?></a>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
+<div class="section" style="padding-top:0;">
+	<div class="container">
+		<?php
+		$solutions = [
+			'housing'      => [ __( 'Perumahan', 'akdisi' ), __( 'Solusi untuk pengelolaan kawasan dan layanan penghuni.', 'akdisi' ) ],
+			'developer'    => [ __( 'Developer', 'akdisi' ), __( 'Solusi untuk mendukung proses bisnis developer.', 'akdisi' ) ],
+			'property'     => [ __( 'Properti', 'akdisi' ), __( 'Solusi untuk pengelolaan bisnis properti.', 'akdisi' ) ],
+			'organization' => [ __( 'Organisasi', 'akdisi' ), __( 'Solusi untuk administrasi dan pengelolaan organisasi.', 'akdisi' ) ],
+		];
+		$loaded = [];
+		?>
+		<div class="solution-list js-stagger">
+			<?php foreach ( $solutions as $slug => $data ) :
+				$sol    = get_page_by_path( 'solutions/' . $slug );
+				$index  = array_search( $slug, array_keys( $solutions ), true ) + 1;
+				$title  = $data[0];
+				$desc   = $sol ? get_the_excerpt( $sol ) : $data[1];
+				$link   = $sol ? get_permalink( $sol ) : home_url( '/solutions/' . $slug . '/' );
+				if ( $sol ) { $loaded[ $slug ] = true; }
+			?>
+			<a href="<?php echo esc_url( $link ); ?>" class="solution-row" data-ga-track="cta_click" data-ga-content="solution_<?php echo esc_attr( $slug ); ?>">
+				<span class="solution-index">0<?php echo esc_html( $index ); ?></span>
+				<div>
+					<h3><?php echo esc_html( $title ); ?></h3>
+					<p><?php echo esc_html( $desc ); ?></p>
+				</div>
+				<span class="text-link"><?php _e( 'Lihat Solusi', 'akdisi' ); ?>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+				</span>
+			</a>
+			<?php endforeach; ?>
+		</div>
+	</div>
 </div>
 
-<!-- CTA -->
-<div class="cta-section">
-    <div class="container">
-        <h2><?php _e('Punya proses bisnis yang ingin dibuat lebih terstruktur?', 'akdisi'); ?></h2>
-        <p><?php _e('Diskusikan kebutuhan industri Anda bersama kami.', 'akdisi'); ?></p>
-        <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn btn-large"><?php _e('Konsultasikan Sekarang', 'akdisi'); ?></a>
-    </div>
-</div>
+<?php get_template_part( 'template-parts/cta-band', null, [ 'btn_ga' => 'cta_band_solutions' ] ); ?>
 
 <?php get_footer();

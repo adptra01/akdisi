@@ -6,6 +6,56 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v1.3.1 — Inner Pages Redesign 2026-09-05
+
+Semua halaman dalam di-upgrade ke language design v1.3.0 (Variance 8 editorial,
+bukan hanya pasang class lama). Sumber inspirasi: shadcnblocks/21st.dev pattern
+(contact split, CTA band, bento values) — diterjemahkan ke PHP + CSS theme,
+tanpa dependency baru.
+
+### Komponen shared baru
+- `template-parts/cta-band.php` — CTA dark rounded reusable (glow radial + grain +
+  magnetic button) untuk semua halaman dalam; dipakai di archive, single, services,
+  service, solutions, solution, about, faq.
+- CSS `19B. Inner Page Components`: `.portfolio-filters` (pill filter bar),
+  `.folio-grid` (asymmetric 6-col: item pertama full-width, sisanya pasangan),
+  `.cta-band`, `.stat-grid`/`.stat-num`, `.split-grid` (5fr/7fr), `.facts-bar`
+  (dl 4-col), `.article-meta`, `.tag-pills`, `.feature-list` (✓ grid 2-col),
+  `.contact-form-shell` (form card), `.kv-row`.
+
+### Template rewrite (11 file)
+- **archive.php** — portfolio: filter bar + folio-grid asymmetric (first item
+  full-bleed `span2`, sisanya pairs); insight: editorial post-list; FAQ fallback.
+- **single.php** — portfolio detail: page-hero + facts-bar (type/konteks/status/
+  tahun), thumb rounded, meta blocks, `feature-list`, gallery, related
+  service/solution + related portfolio, CTA band. Insight: editorial article +
+  tag-pills + insight terkait + CTA band.
+- **template-services.php** — dark **bento** 4 layanan (wide/narrow) + CTA band.
+- **template-service.php** — breadcrumb + content + related solutions (editorial
+  rows) + related portfolio cards + FAQ + CTA band.
+- **template-solutions.php** — editorial `solution-list` rows (index serif,
+  hover accent) + CTA band.
+- **template-solution.php** — breadcrumb + content + solusi lainnya rows + CTA band.
+- **template-about.php** — split story + **stat-grid angka nyata** (portofolio/
+  insight/layanan dari DB, bukan fabricated) + dark bento values + process-steps
+  + kv info + CTA band.
+- **template-contact.php** — **split 5fr/7fr**: info & WhatsApp (kiri) + form
+  card (kanan); field/form/nonce/campaign tetap; submit magnetic.
+- **template-faq.php** — header + accordion + CTA band.
+- **index.php** — fallback/search: editorial list + empty state, tidak lagi
+  menduplikasi hero homepage.
+
+### Fix & QA
+- **Fix AJAX filter portfolio**: render handler disamakan ke komponen `.folio-item`
+  baru (sebelumnya markup lama → grid kosong); `akdisiData.loading` missing →
+  "Memuat..." ditambahkan.
+- Playwright: 22 URL OK; filter alive (administrasi → 1 item, reset → 8); geometri
+  grid terverifikasi (folio 1320/648, split 523/733 ± 5fr/7fr, stats 4-col,
+  bento 6-col); mobile 390px single-col tanpa h-scroll; `pageerror` 0.
+- PHP lint bersih seluruh theme.
+
+---
+
 ## v1.3.0 — Modern Digital Enterprise Redesign 2026-09-05
 
 Overhaul visual penuh menurut arah desain user (Modern Digital Enterprise):

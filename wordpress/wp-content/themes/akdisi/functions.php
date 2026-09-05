@@ -127,6 +127,7 @@ function akdisi_enqueue_assets(): void
         'siteUrl' => home_url(),
         'ga4Id'   => get_theme_mod('akdisi_ga4_id', ''),
         'sending' => __('Mengirim...', 'akdisi'),
+        'loading' => __('Memuat...', 'akdisi'),
         'submitText' => __('Kirim Pesan', 'akdisi'),
     ]);
 }
@@ -812,28 +813,25 @@ function akdisi_handle_portfolio_filter(): void
             $query->the_post();
             $categories = get_the_terms(get_the_ID(), 'portfolio_category');
             $cat_names  = $categories ? wp_list_pluck($categories, 'name') : [];
+            $cat_slugs  = $categories ? wp_list_pluck($categories, 'slug') : [];
             ?>
-            <div class="card portfolio-item" data-categories="<?php echo esc_attr(implode(',', wp_list_pluck($categories, 'slug'))); ?>">
-                <div class="card-image">
-                    <?php if (has_post_thumbnail()) : ?>
-                        <?php the_post_thumbnail('akdisi-portfolio', ['loading' => 'lazy', 'class' => 'card-image']); ?>
-                    <?php else : ?>
-                        <div style="width:100%;height:200px;background:var(--color-neutral-200);display:flex;align-items:center;justify-content:center;">
-                            <span style="color:var(--color-neutral-400);">No Image</span>
-                        </div>
-                    <?php endif; ?>
-                </div>
+            <a href="<?php the_permalink(); ?>" class="card folio-item" data-categories="<?php echo esc_attr(implode(',', $cat_slugs)); ?>" data-ga-track="cta_click" data-ga-content="portfolio_archive">
+                <?php if (has_post_thumbnail()) : ?>
+                    <?php the_post_thumbnail('akdisi-portfolio', ['loading' => 'lazy', 'class' => 'card-image']); ?>
+                <?php else : ?>
+                    <div class="card-image" style="background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--text-mut);"><?php esc_html_e('No Image', 'akdisi'); ?></div>
+                <?php endif; ?>
                 <div class="card-body">
                     <?php if (!empty($cat_names)) : ?>
                         <span class="card-category"><?php echo esc_html(implode(', ', $cat_names)); ?></span>
                     <?php endif; ?>
                     <h3><?php the_title(); ?></h3>
                     <p><?php echo esc_html(wp_trim_words(get_the_excerpt() ?: get_the_content(), 20)); ?></p>
-                    <a href="<?php the_permalink(); ?>" class="btn btn-secondary" style="margin-top:1rem;">
-                        <?php _e('View Details', 'akdisi'); ?>
-                    </a>
+                    <span class="text-link"><?php _e('Lihat Detail', 'akdisi'); ?>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </span>
                 </div>
-            </div>
+            </a>
             <?php
         }
         wp_reset_postdata();
