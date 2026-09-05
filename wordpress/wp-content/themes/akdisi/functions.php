@@ -79,10 +79,10 @@ add_action('after_setup_theme', 'akdisi_setup');
  */
 function akdisi_enqueue_assets(): void
 {
-    // Fonts: Plus Jakarta Sans (PRD §77 primary) + Instrument Serif (display accent, v1.3.0)
+    // Fonts: Plus Jakarta Sans (display) + Inter (body) + JetBrains Mono (metadata/telemetry) — v1.4.0
     wp_enqueue_style(
         'akdisi-fonts',
-        'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap',
+        'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap',
         [],
         null
     );
@@ -116,7 +116,7 @@ function akdisi_enqueue_assets(): void
         'akdisi-main',
         get_template_directory_uri() . '/assets/js/main.js',
         ['gsap-core', 'gsap-st'],
-        '1.3.0',
+        '1.4.0',
         true
     );
 
@@ -226,7 +226,7 @@ function akdisi_add_schema_markup(): void
             '@type'    => 'Organization',
             'name'     => 'AKAR Digital Solusi',
             'url'      => home_url('/'),
-            'description' => 'Jasa pembuatan aplikasi, sistem informasi, dan digitalisasi proses bisnis untuk berbagai sektor di Jambi.',
+            'description' => 'Custom application development partner — membangun aplikasi dan sistem digital untuk bisnis dan organisasi di berbagai sektor.',
             'address'  => [
                 '@type'           => 'PostalAddress',
                 'addressLocality' => 'Jambi',

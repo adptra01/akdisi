@@ -6,6 +6,67 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v1.4.0 — Precision Engineering & Architecture Redesign 2026-09-06
+
+Overhaul visual penuh ke "Precision Engineering & Architecture" — Corporate
+High-Tech Minimalist + Developer Console Utility. Palet, tipografi, shape,
+elevation, dan konten homepage dirombak total.
+
+### Design system baru
+- **Palet**: Deep charcoal `#0a0d12`/`#0d1117` (dark), titanium light `#f8f9fa`/
+  `#eceef0` (light). Brand emerald `#10b981`/`#34d399` (bukan sage lama).
+- **Typography**: Plus Jakarta Sans (display/headlines) + **Inter** (body) +
+  **JetBrains Mono** (metadata/telemetry/eyebrows). Instrument Serif dihapus.
+- **Shape**: low-radius — card 8px, button 6px, pill hanya untuk status indicators.
+  Bukan pill buttons lagi.
+- **Elevation**: tonal layering + ghost borders (`rgba(240,246,252,0.1)`), bukan
+  drop shadows. Active glow `rgba(16,185,129,0.15)`.
+- **Eyebrow**: monospace uppercase (`JetBrains Mono 11px 0.08em`) dengan line prefix.
+
+### Homepage rewrite (front-page.php)
+- Hero: "Custom Application Development Partner" — positioning tajam, bukan
+  "Jasa Pembuatan Aplikasi" generik.
+- Transformation Flow: visual 3-step (Proses Manual → Analisis & Perancangan →
+  Sistem Terstruktur) dengan icons SVG, menggantikan Approach 6-step lama.
+- Market Proof section: 3 highlight portfolio (KawasanHub, PropertiCare,
+  ProjectMonitor) di dark section — bukti implementasi nyata.
+- Process: 4 step (Consultation → Deployment & Support), bukan 6.
+- CTA: "Siap Memindahkan Proses Manual ke Sistem Digital?"
+- Solutions: dipertahankan (editorial rows).
+- Value props: 4 item (bukan 5) — light cards di light section.
+
+### Component changes
+- `.bento-card .bento-num` → `font-weight: 300` (light numeral, bukan serif).
+- `.proc-step-num` → `font-weight: 300` (light numeral).
+- `.stat-num` → `font-weight: 300` + emerald color.
+- `.portfolio-filter-btn` → monospace, low-radius (bukan pill).
+- `.cta-band` → emerald radial glow (bukan sage).
+- `.hero-mockup .mockup-stat` → monospace font.
+- `.hero-mockup .mockup-label` → monospace uppercase.
+- `.card-category` → monospace, low-radius (bukan pill).
+- New: `.transform-flow`, `.transform-step`, `.transform-node`, `.transform-icon`,
+  `.transform-label`, `.transform-arrow` (transformation flow).
+- New: `.proof-grid`, `.proof-card` (market proof portfolio highlights).
+
+### Typography migration
+- `--font-sans` → `--font-display` (Plus Jakarta Sans) + `--font-body` (Inter).
+- `--font-serif` → removed (Instrument Serif dropped).
+- Added: `--font-mono` (JetBrains Mono) for metadata/telemetry.
+- All `.eyebrow` → `font-family: var(--font-mono)`.
+- All `.stat-label`, `.post-card-meta`, `.breadcrumb`, `.footer-heading` → mono.
+
+### Footer + Schema
+- Footer description: "Custom application development partner..."
+- Schema.org description updated.
+
+### QA
+- PHP lint clean (front-page.php, functions.php).
+- Playwright: homepage, services, portfolio, about, 404 — all OK (10 screenshots).
+- Design tokens verified: emerald `#10b981`, charcoal `#0d1117`, monospace eyebrows,
+  low-radius shapes, ghost borders.
+
+---
+
 ## v1.3.1 — Inner Pages Redesign 2026-09-05
 
 Semua halaman dalam di-upgrade ke language design v1.3.0 (Variance 8 editorial,

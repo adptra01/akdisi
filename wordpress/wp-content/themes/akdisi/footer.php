@@ -40,7 +40,7 @@ $wa_message = get_theme_mod('akdisi_wa_message', 'Halo AKDISI, saya ingin konsul
             <div>
                 <h3 class="footer-heading"><?php _e('AKAR Digital Solusi', 'akdisi'); ?></h3>
                 <?php
-                $desc = get_theme_mod('akdisi_description', 'Jasa pembuatan aplikasi, sistem informasi, dan digitalisasi proses bisnis untuk berbagai sektor di Jambi.');
+                $desc = get_theme_mod('akdisi_description', 'Custom application development partner — membangun aplikasi dan sistem digital untuk bisnis dan organisasi di berbagai sektor.');
                 ?>
                 <p style="font-size:0.875rem;"><?php echo esc_html($desc); ?></p>
             </div>
