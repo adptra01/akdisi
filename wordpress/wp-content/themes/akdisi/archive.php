@@ -17,7 +17,7 @@ $is_faq = ($post_type === 'akdisi_faq');
 $title = $is_portfolio ? __('Portfolio', 'akdisi') : ($is_insight ? __('Insights', 'akdisi') : ($is_faq ? __('FAQ', 'akdisi') : get_the_archive_title()));
 ?>
 
-<section class="hero" style="padding:3rem 0;">
+<section class="page-hero">
     <div class="container">
         <h1><?php echo esc_html($title); ?></h1>
         <?php if ($is_portfolio) : ?>

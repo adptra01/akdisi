@@ -6,6 +6,65 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v1.3.0 — Modern Digital Enterprise Redesign 2026-09-05
+
+Overhaul visual penuh menurut arah desain user (Modern Digital Enterprise):
+Variance 8 (editorial/asymmetric) · Motion 6 (GSAP ScrollTrigger) · Density 4.
+Keputusan: custom CSS + token (bukan Tailwind), homepage-first, palette baru
+menghapus navy v1.2.0.
+
+### Design system baru
+- **Palet**: Ink `#101312` / Graphite `#171c1a` (dark surface), Warm White `#F5F4EF`
+  / Surface `#EAE9E3` (light), Akar Green `#789B87` / Forest `#3D5C4A` (brand,
+  brand AKAR → growth), Lime Soft `#B7D36B` (aksen tipis). Semua CSS v1.2.0
+  di-map ulang ke token — komponen lama (card, btn, form, bofta, FAQ) tetap
+  kompatibel (`section-alt` alias).
+- **Typography**: Plus Jakarta Sans + **Instrument Serif** (italic display accent);
+  h1 hero fluid `clamp(2.6rem, 6vw, 5.25rem)`; `.serif` untuk kata/angka aksen.
+- **Shape**: pill buttons (radius 999px, min-height 48px), card 16–24px,
+  container 1320px, nav 84→68px saat scroll (blur backdrop).
+
+### Homepage showcase (front-page.php rewrite)
+- Rhythm dark/light **D-L-D-L-D-L-D-L-D**: hero dark → problem/approach light →
+  services dark (bento 4) → solutions light (editorial rows asymmetric) →
+  why dark (value grid 5) → portfolio light (horizontal) → process dark
+  (pinned) → FAQ light → CTA dark.
+- Hero split: kiri teks editorial (h1 2 baris clip-reveal, eyebrow, 2 CTA
+  magnetic) + kanan mockup dark glass (parallax; PRD §79 tetap, bukan stock image).
+- Bento services dengan nomor serif; solution rows index serif + hover accent;
+  portfolio **horizontal scroll** desktop (ScrollTrigger pin + progress bar,
+  fallback scroll-snap mobile); process **pinned storytelling** (step highlight,
+  desktop; fallback list statis); CTA besar dengan serif italic.
+- Semua copy PRD dipertahankan kata demi kata (hanya layout berubah); h1 DOM text
+  tidak berubah (sedikit pengganti class).
+
+### Motion (GSAP + ScrollTrigger, CDN jsdelivr 3.12.5)
+- Enqueue GSAP + ScrollTrigger via `functions.php` (deferred, dependency main.js).
+- Signatures: hero clip-reveal stagger (`power3.out`), parallax subtle (`data-parallax`),
+  stagger reveal grids (`.js-stagger`), horizontal portfolio (pin+scrub, desktop
+  only), process active-step, **magnetic buttons** (fine pointer only, `gsap.quickTo`).
+- Hanya `transform`/`opacity` — tanpa CLS. `prefers-reduced-motion` kill-switch;
+  no-JS visible (`html.no-js` swap di header, reveal hanya jika `html.js`).
+
+### Halaman dalam & template lain
+- `.page-hero` light baru (surface + border) menggantikan `.hero` kecil di
+  archive, single, services, solutions, about, faq, contact (12 patchnote).
+- Header adaptif: `body.header-light` (teks gelap) pada halaman dalam — home,
+  booth, 404 pakai header terang-on-dark. Logo default "AKDISI." dengan dot hijau.
+- 404: dark editorial 4**0**4 serif + grid backdrop + CTA magnetic + GA track.
+- FAQ accordion, form, entry-content, breadcrumb, related-cards, pagination —
+  semuanya re-token; screenshot theme diganti (1200×900 homepage baru).
+
+### QA v1.3.0
+- Playwright: 10 URL OK (200; 404 → 404), design token terverifikasi via computed
+  style, rhythm 9 section terkonfirmasi, horizontal track bergeser -546px + progress,
+  form 5 inline errors + focus, booth campaign+nonce, mobile menu, `pageerror` nol.
+- **CWV mobile (PerformanceObserver)**: FCP 0.42s · LCP 0.42s · CLS 0.000 · ~63 KB
+  resource (Lighthouse penuh menyusul pasca-prod).
+- Docs: `docs/performance.md` ditulis ulang untuk v1.3.0.
+
+---
+
 ## v1.2.0 — Design System + Portfolio Detail + Analytics + Booth/Form 2026-09-05
 
 Menutup PRD §47/§76-83/§86/§90-92/§96-107/§114. Keputusan user: align warna PRD §76,

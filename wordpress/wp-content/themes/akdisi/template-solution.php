@@ -17,7 +17,7 @@ $current_post   = get_post();
 $current_slug   = $current_post ? basename((string) get_permalink($current_post)) : '';
 ?>
 
-<section class="hero" style="padding:3rem 0;">
+<section class="page-hero">
     <div class="container">
         <p style="margin-bottom:0.5rem;color:var(--color-neutral-500);font-size:0.875rem;">
             <a href="<?php echo esc_url(home_url('/solutions/')); ?>"><?php _e('Solusi', 'akdisi'); ?></a> &raquo;

@@ -79,10 +79,10 @@ add_action('after_setup_theme', 'akdisi_setup');
  */
 function akdisi_enqueue_assets(): void
 {
-    // Plus Jakarta Sans (PRD §77 primary font)
+    // Fonts: Plus Jakarta Sans (PRD §77 primary) + Instrument Serif (display accent, v1.3.0)
     wp_enqueue_style(
         'akdisi-fonts',
-        'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap',
+        'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap',
         [],
         null
     );
@@ -95,12 +95,28 @@ function akdisi_enqueue_assets(): void
         wp_get_theme()->get('Version')
     );
 
-    // Main JavaScript (deferred)
+    // GSAP + ScrollTrigger (v1.3.0 motion) — deferred, CDN
+    wp_enqueue_script(
+        'gsap-core',
+        'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js',
+        [],
+        '3.12.5',
+        true
+    );
+    wp_enqueue_script(
+        'gsap-st',
+        'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js',
+        ['gsap-core'],
+        '3.12.5',
+        true
+    );
+
+    // Main JavaScript (deferred, after GSAP)
     wp_enqueue_script(
         'akdisi-main',
         get_template_directory_uri() . '/assets/js/main.js',
-        [],
-        '1.2.0',
+        ['gsap-core', 'gsap-st'],
+        '1.3.0',
         true
     );
 
@@ -116,6 +132,19 @@ function akdisi_enqueue_assets(): void
 }
 
 add_action('wp_enqueue_scripts', 'akdisi_enqueue_assets');
+
+/**
+ * Body class: dark header on hero pages, light header elsewhere.
+ */
+function akdisi_body_class_dark_header( array $classes ): array
+{
+    $is_dark_header = is_front_page() || is_page_template( 'template-booth.php' ) || is_404();
+    if ( ! $is_dark_header ) {
+        $classes[] = 'header-light';
+    }
+    return $classes;
+}
+add_filter( 'body_class', 'akdisi_body_class_dark_header' );
 
 /**
  * Register Widget Areas

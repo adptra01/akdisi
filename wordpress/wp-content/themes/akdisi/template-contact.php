@@ -12,7 +12,7 @@
 get_header();
 ?>
 
-<section class="hero" style="padding:3rem 0;">
+<section class="page-hero">
     <div class="container">
         <h1><?php echo esc_html(get_the_title()); ?></h1>
         <p><?php _e('Ceritakan kebutuhan Anda — kami akan membantu Anda menemukan solusi yang tepat.', 'akdisi'); ?></p>

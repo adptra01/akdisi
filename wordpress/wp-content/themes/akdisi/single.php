@@ -23,7 +23,7 @@ $post_type = get_post_type();
         $gallery_ids   = array_filter(array_map('absint', (array) get_post_meta(get_the_ID(), '_akdisi_gallery', true)));
     ?>
     <article id="post-<?php the_ID(); ?>" <?php post_class('portfolio-detail'); ?>>
-        <section class="hero" style="padding:3rem 0;">
+        <section class="page-hero">
             <div class="container">
                 <span class="card-category" style="margin-bottom:1rem;">
                     <?php echo $terms ? esc_html(implode(', ', wp_list_pluck($terms, 'name'))) : __('Portfolio', 'akdisi'); ?>
@@ -177,7 +177,7 @@ $post_type = get_post_type();
         $cats = get_the_category();
     ?>
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-        <section class="hero" style="padding:3rem 0;">
+        <section class="page-hero">
             <div class="container" style="max-width:800px;">
                 <h1><?php the_title(); ?></h1>
                 <p style="font-size:0.9rem;margin-top:1rem;"><?php _e('Published on', 'akdisi'); ?> <?php echo esc_html(get_the_date()); ?></p>
@@ -237,7 +237,7 @@ $post_type = get_post_type();
 <?php elseif ($post_type === 'akdisi_faq') : ?>
     <?php while (have_posts()) : the_post(); ?>
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-        <section class="hero" style="padding:3rem 0;">
+        <section class="page-hero">
             <div class="container">
                 <h1><?php the_title(); ?></h1>
             </div>
@@ -255,7 +255,7 @@ $post_type = get_post_type();
 <?php else : ?>
     <?php while (have_posts()) : the_post(); ?>
     <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-        <section class="hero" style="padding:3rem 0;">
+        <section class="page-hero">
             <div class="container">
                 <h1><?php the_title(); ?></h1>
             </div>

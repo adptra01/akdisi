@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-<section class="hero" style="padding:3rem 0;">
+<section class="page-hero">
     <div class="container" style="max-width:800px;">
         <h1><?php echo esc_html(get_the_title()); ?></h1>
         <p><?php _e('AKAR Digital Solusi (AKDISI) — pasangan pengembangan solusi digital untuk organisasi dan bisnis Anda.', 'akdisi'); ?></p>

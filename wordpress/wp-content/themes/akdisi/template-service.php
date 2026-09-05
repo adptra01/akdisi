@@ -13,7 +13,7 @@
 get_header();
 ?>
 
-<section class="hero" style="padding:3rem 0;">
+<section class="page-hero">
     <div class="container">
         <p style="margin-bottom:0.5rem;color:var(--color-neutral-500);font-size:0.875rem;">
             <a href="<?php echo esc_url(home_url('/services/')); ?>"><?php _e('Layanan', 'akdisi'); ?></a> &raquo;
