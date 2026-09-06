@@ -10,7 +10,9 @@ get_header();
 while ( have_posts() ) :
 	the_post();
 
-	$cats = get_the_term_list( get_the_ID(), 'akdisi_project_cat', '', ', ', '' );
+	$cats  = get_the_term_list( get_the_ID(), 'akdisi_project_cat', '', ', ', '' );
+	$visit = function_exists( 'akdisi_pm_get_visit_url' ) ? akdisi_pm_get_visit_url( get_the_ID() ) : '';
+	$gal   = function_exists( 'akdisi_pm_get_gallery' ) ? akdisi_pm_get_gallery( get_the_ID() ) : array();
 	?>
 	<section class="section-bg border-b border-paper-line pt-16 pb-12">
 		<div class="container mx-auto">
@@ -54,11 +56,31 @@ while ( have_posts() ) :
 							<div class="flex justify-between gap-4"><dt class="text-ink-faint">Peran</dt><dd class="text-ink font-medium"><?php echo esc_html( get_post_meta( get_the_ID(), 'role', true ) ?: 'Desain + Bangun' ); ?></dd></div>
 							<div class="flex justify-between gap-4"><dt class="text-ink-faint">Status</dt><dd class="text-brand font-medium"><?php echo esc_html( get_post_meta( get_the_ID(), 'status', true ) ?: 'Tayang' ); ?></dd></div>
 						</dl>
-						<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary w-full justify-center">Diskusikan proyek serupa</a>
+						<?php if ( $visit ) : ?>
+							<a href="<?php echo esc_url( $visit ); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary w-full justify-center" data-ga-track="visit_site">Kunjungi situs ↗</a>
+						<?php endif; ?>
+						<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn <?php echo $visit ? 'btn-outline' : 'btn-primary'; ?> w-full justify-center">Diskusikan proyek serupa</a>
 					</div>
 				</aside>
 			</div>
 		</div>
+
+		<?php if ( $gal ) : ?>
+			<div class="mt-16" data-reveal>
+				<h2 class="font-display text-2xl font-bold tracking-tight text-ink">Galeri</h2>
+				<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+					<?php
+					foreach ( $gal as $aid ) :
+						$img = wp_get_attachment_image( $aid, 'akdisi-card', false, array( 'class' => 'h-full w-full object-cover', 'loading' => 'lazy' ) );
+						if ( ! $img ) {
+							continue;
+						}
+						?>
+						<figure class="overflow-hidden rounded-xl bg-paper-alt"><?php echo $img; ?></figure>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		<?php endif; ?>
 	</section>
 
 	<?php endwhile; ?>

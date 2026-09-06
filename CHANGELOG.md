@@ -6,6 +6,61 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.5.0 — Plugin AKDISI Project Manager (Kelola Detail Proyek) 2026-09-07
+
+Plugin sederhana baru untuk mengelola konten terstruktur halaman detail proyek
+(`akdisi_project`) langsung dari wp-admin — menggantikan pengeditan meta manual.
+
+### Plugin `akdisi-project-manager` (v1.0.0)
+- **Meta box "Detail Proyek"** (posisi normal, high) pada layar edit proyek:
+  - *Deskripsi singkat* (textarea) → tersimpan ke `post_excerpt` — satu sumber
+    kebenaran dengan hero halaman proyek & meta description SEO (bukan duplikat
+    field baru).
+  - *Klien / Peran / Status* → meta `client`, `role`, `status` (kompatibel data
+    15 proyek yang sudah ada).
+  - *URL kunjungan situs* (input URL) → meta `visit_url`, tampil sebagai tombol
+    "Kunjungi situs ↗" di sidebar fakta proyek.
+  - *Galeri gambar* (media manager native `wp.media`, pilih banyak + preview
+    grid + tombol kosongkan) → meta `akdisi_project_gallery` (array attachment
+    ID), dirender sebagai grid foto di bawah konten.
+- **register_post_meta** untuk `client`, `role`, `status`, `visit_url`,
+  `akdisi_project_gallery` — `show_in_rest` aktif (REST/headless siap pakai).
+- **Sanitasi ketat**: nonce, `current_user_can('edit_post')`, `esc_url_raw`
+  untuk URL, `absint` untuk ID galeri. Pelajaran penting: `sanitize_callback`
+  ter-register dipanggil WP via `map_deep` (per-scalar), maka callback galeri
+  dibuat aman untuk array, string CSV (`"[135,136,137]"`), maupun scalar.
+- Helper publik untuk template: `akdisi_pm_get_gallery($id)`,
+  `akdisi_pm_get_visit_url($id)` — dipanggil lewat `function_exists` guard.
+
+### Template `single-akdisi_project.php`
+- Sidebar fakta proyek: tombol **"Kunjungi situs ↗"** (`btn-primary`,
+  `target="_blank" rel="noopener noreferrer"`, `data-ga-track="visit_site"`)
+  bila `visit_url` terisi; tombol "Diskusikan proyek serupa" turun ke
+  `btn-outline` (fallback `btn-primary` bila situs kosong).
+- Section **Galeri** (`sm:grid-cols-2 lg:grid-cols-3`, gambar `akdisi-card`
+  object-cover lazy) hanya dirender bila galeri berisi; `data-reveal` tetap.
+
+### Data: URL demo klien (10 proyek baru)
+`visit_url` di-backfill dari daftar user (hosting gratis demo klien):
+Sibanyu `sibanyu.com` · Laundry Al-Farizi `laundry-websystem.42web.io`
+· FutsalKu `futsal.42web.io` · Nusantara Kost `booking-kost.fwh.is`
+· Klinik ABC `medical-web.42web.io` · Expression Hairsalon
+`expression-hairsalon.page.gd` · Wedding Gallery `booking-wedding.ct.ws`
+· Kas Dusun Kebun `kas-system.42web.io` · Glad2Glow
+`akar-solution.page.gd/glad2glow/` · Akar Solution `akar-solution.page.gd`.
+Lima proyek lama (fiksi) sengaja kosong — tanpa tombol visit.
+
+### QA v4.5.0 (Playwright Chromium, DDEV)
+- Proyek ber-field: tombol visit href benar, galeri 3 gambar dirender, tombol
+  sekunder `btn-outline`, `pageerror` 0, h-overflow 0 (desktop 1440 & mobile
+  390).
+- Proyek kosong: tidak ada tombol/galeri bocor, tombol diskusi jatuh ke
+  `btn-primary`.
+- Semua 10 proyek demo: href "Kunjungi situs" cocok dengan URL yang di-backfill.
+- Metabox render tanpa error (context CLI); PHP lint plugin + template bersih.
+
+---
+
 ## v4.4.0 — 10 Proyek Portofolio Baru (Demo Klien Nyata) 2026-09-07
 
 Penambahan 10 proyek `akdisi_project` dari demo use case klien nyata (fetch via
