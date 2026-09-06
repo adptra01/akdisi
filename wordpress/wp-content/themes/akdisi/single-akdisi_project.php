@@ -66,18 +66,20 @@ while ( have_posts() ) :
 		</div>
 
 		<?php if ( $gal ) : ?>
-			<div class="mt-16" data-reveal>
-				<h2 class="font-display text-2xl font-bold tracking-tight text-ink">Galeri</h2>
-				<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-					<?php
-					foreach ( $gal as $aid ) :
-						$img = wp_get_attachment_image( $aid, 'akdisi-card', false, array( 'class' => 'h-full w-full object-cover', 'loading' => 'lazy' ) );
-						if ( ! $img ) {
-							continue;
-						}
-						?>
-						<figure class="overflow-hidden rounded-xl bg-paper-alt"><?php echo $img; ?></figure>
-					<?php endforeach; ?>
+			<div class="container mx-auto">
+				<div class="mt-16" data-reveal>
+					<h2 class="font-display text-2xl font-bold tracking-tight text-ink">Galeri</h2>
+					<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+						<?php
+						foreach ( $gal as $aid ) :
+							$img = wp_get_attachment_image( $aid, 'akdisi-card', false, array( 'class' => 'h-full w-full object-cover', 'loading' => 'lazy' ) );
+							if ( ! $img ) {
+								continue;
+							}
+							?>
+							<figure class="overflow-hidden rounded-xl bg-paper-alt"><?php echo $img; ?></figure>
+						<?php endforeach; ?>
+					</div>
 				</div>
 			</div>
 		<?php endif; ?>
