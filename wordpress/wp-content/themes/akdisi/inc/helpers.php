@@ -48,15 +48,15 @@ function akdisi_fallback_footer() {
 }
 
 /**
- * Footer services quick-links.
+ * Footer services quick-links — 4 layanan inti (custom app development).
  *
  * @return array<string,string>
  */
 function akdisi_footer_services() {
 	return array(
-		__( 'Pengembangan Website', 'akdisi' )  => home_url( '/layanan/' ),
-		__( 'Desain UI/UX', 'akdisi' )          => home_url( '/layanan/' ),
-		__( 'Identitas Brand', 'akdisi' )       => home_url( '/layanan/' ),
-		__( 'Pemasaran Digital', 'akdisi' )     => home_url( '/layanan/' ),
+		__( 'Pengembangan Aplikasi Kustom', 'akdisi' ) => home_url( '/layanan/application-development/' ),
+		__( 'Digitalisasi Proses Bisnis', 'akdisi' )   => home_url( '/layanan/business-process-digitalization/' ),
+		__( 'Sistem Administrasi & Data', 'akdisi' )   => home_url( '/layanan/data-administration-systems/' ),
+		__( 'Solusi Bisnis Kustom', 'akdisi' )         => home_url( '/layanan/custom-business-solutions/' ),
 	);
 }

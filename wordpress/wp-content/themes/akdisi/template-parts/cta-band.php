@@ -28,6 +28,7 @@ $cta = wp_parse_args(
 		'btn_primary_url'     => home_url( '/kontak/' ),
 		'btn_secondary_label' => __( 'Lihat karya kami', 'akdisi' ),
 		'btn_secondary_url'   => home_url( '/projects/' ),
+		'visual_mode'         => 'reply', // 'reply' | 'process'
 	)
 );
 ?>
@@ -57,24 +58,43 @@ $cta = wp_parse_args(
 					</div>
 				</div>
 
-				<!-- Visual: reply-speed card (desktop only) -->
+				<!-- Visual: process-flow card (desktop only) -->
 				<div class="hidden lg:block">
-					<div class="ml-auto w-full max-w-xs rounded-2xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm">
-						<div class="flex items-center gap-2 text-sm text-stone-300">
-							<span class="h-2 w-2 rounded-full bg-brand" aria-hidden="true"></span>
-							<span class="font-medium">Rata-rata balasan pertama</span>
-						</div>
-						<p class="mt-5 font-display text-5xl font-bold leading-none text-white">1 hari</p>
-						<p class="mt-3 text-sm leading-relaxed text-stone-400">Kirim brief — balasan matang dalam satu hari kerja, bukan seminggu.</p>
-						<div class="mt-7 flex items-center gap-3">
-							<div class="flex -space-x-2">
-								<span class="h-9 w-9 rounded-full border-2 border-ink bg-brand/80" aria-hidden="true"></span>
-								<span class="h-9 w-9 rounded-full border-2 border-ink bg-[#b9a48d]" aria-hidden="true"></span>
-								<span class="h-9 w-9 rounded-full border-2 border-ink bg-white/20" aria-hidden="true"></span>
+					<?php if ( 'process' === $cta['visual_mode'] ) : ?>
+						<div class="ml-auto w-full max-w-xs rounded-2xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm">
+							<div class="flex items-center gap-2 text-sm text-stone-300">
+								<span class="h-2 w-2 rounded-full bg-brand" aria-hidden="true"></span>
+								<span class="font-medium">Proses kami</span>
 							</div>
-							<p class="text-xs text-stone-400">Strategi, desain &amp; engineering siap merespons.</p>
+							<p class="mt-5 font-display text-2xl font-bold leading-snug text-white">Analisis proses → Rancang solusi → Bangun aplikasi</p>
+							<p class="mt-3 text-sm leading-relaxed text-stone-400">Kami mulai dari memahami alur kerja Anda, bukan dari template.</p>
+							<div class="mt-7 flex items-center gap-3">
+								<div class="flex -space-x-2">
+									<span class="h-9 w-9 rounded-full border-2 border-ink bg-brand/80" aria-hidden="true"></span>
+									<span class="h-9 w-9 rounded-full border-2 border-ink bg-[#b9a48d]" aria-hidden="true"></span>
+									<span class="h-9 w-9 rounded-full border-2 border-ink bg-white/20" aria-hidden="true"></span>
+								</div>
+								<p class="text-xs text-stone-400">Analis, perancang &amp; engineer di tiap proyek.</p>
+							</div>
 						</div>
-					</div>
+					<?php else : ?>
+						<div class="ml-auto w-full max-w-xs rounded-2xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm">
+							<div class="flex items-center gap-2 text-sm text-stone-300">
+								<span class="h-2 w-2 rounded-full bg-brand" aria-hidden="true"></span>
+								<span class="font-medium">Rata-rata balasan pertama</span>
+							</div>
+							<p class="mt-5 font-display text-5xl font-bold leading-none text-white">1 hari</p>
+							<p class="mt-3 text-sm leading-relaxed text-stone-400">Kirim brief — balasan matang dalam satu hari kerja, bukan seminggu.</p>
+							<div class="mt-7 flex items-center gap-3">
+								<div class="flex -space-x-2">
+									<span class="h-9 w-9 rounded-full border-2 border-ink bg-brand/80" aria-hidden="true"></span>
+									<span class="h-9 w-9 rounded-full border-2 border-ink bg-[#b9a48d]" aria-hidden="true"></span>
+									<span class="h-9 w-9 rounded-full border-2 border-ink bg-white/20" aria-hidden="true"></span>
+								</div>
+								<p class="text-xs text-stone-400">Strategi, desain &amp; engineering siap merespons.</p>
+							</div>
+						</div>
+					<?php endif; ?>
 				</div>
 			</div>
 

@@ -6,6 +6,68 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.6.0 — Use Case Page Realignment: Sector-Based, Bukan Agency Marketing 2026-09-07
+
+Halaman `/use-cases/` diarahkan ulang agar konsisten dengan positioning yang
+terkunci (custom application development untuk proses bisnis) — bukan kesan
+software house website/branding/marketing. Rasio sektor dijaga 3 properti : 1
+non-properti, sekaligus jadi bridge ke landing page solusi per industri.
+
+### Hero (`page-use-cases.php`)
+- Eyebrow "Use Case" → **"Solusi per industri"**.
+- Headline: *"Kami mengubah proses manual jadi sistem yang terukur."*
+- Sub: *"Dari Excel dan WhatsApp, menjadi aplikasi yang benar-benar dipakai tim
+  operasional Anda sehari-hari."*
+
+### 4 card sektor (menggantikan card layanan marketing/SaaS/branding)
+- **01 Properti** — Manajemen unit & sales perumahan · *"Dari Excel dan grup WA
+  jadi sistem booking real-time dengan peta kavling interaktif"* · `Web app · CRM ·
+  Dashboard` → link `/solutions/developer/`.
+- **02 Properti** — Iuran & pengaduan perumahan digital · *"Billing otomatis,
+  portal warga, dan tracking maintenance dalam satu sistem"* · `Billing · Portal
+  warga` → link `/solutions/property/`.
+- **03 Asosiasi** — Keanggotaan & sertifikasi digital · *"Data anggota dan event
+  asosiasi yang sebelumnya tersebar kini terpusat dan otomatis"* · `Membership ·
+  Event` → link `/solutions/organization/`.
+- **04 Bisnis Lain** — Inventori multi-gudang & distribusi · bukti AKDISI
+  melayani proses operasional kompleks di luar properti · `Inventory ·
+  Multi-lokasi` → link `/projects/`.
+- Card kini `<a>` utuh (bukan `<article>`) — seluruh permukaan clickable,
+  `data-ga-track="use_case_card"`, hover border brand.
+
+### CTA band (`cta-band.php` + use-cases)
+- Argumen baru `visual_mode` (default `'reply'`): panel kanan menjadi komponen
+  dua varian. Home & semua halaman lain tetap menampilkan kartu "Rata-rata
+  balasan pertama — 1 hari" (no regresi, terverifikasi).
+- Use-cases pakai `'process'`: eyebrow **"Proses kami"** + *"Analisis proses →
+  Rancang solusi → Bangun aplikasi"* (reuse flow diagram brand story) + 3 avatar
+  tetap — menggantikan klaim kecepatan yang terkesan template studio generik.
+- Headline CTA use-cases: *"Siap mengubah proses bisnis Anda jadi sistem yang
+  terintegrasi?"* (accent `terintegrasi?`); sub: *"Sesi 30 menit untuk memetakan
+  proses kerja Anda saat ini dan melihat potensi solusinya."*
+
+### Footer Layanan (`inc/helpers.php`)
+- 4 link lama (Pengembangan Website, Desain UI/UX, Identitas Brand, Pemasaran
+  Digital — kesan digital agency umum) diganti **4 layanan inti** yang masing-
+  masing mengarah ke halaman detailnya: Pengembangan Aplikasi Kustom →
+  `/layanan/application-development/`, Digitalisasi Proses Bisnis →
+  `/layanan/business-process-digitalization/`, Sistem Administrasi & Data →
+  `/layanan/data-administration-systems/`, Solusi Bisnis Kustom →
+  `/layanan/custom-business-solutions/`.
+
+### QA v4.6.0 (Playwright Chromium, DDEV)
+- `/use-cases/`: hero copy lengkap (eyebrow `SOLUSI PER INDUSTRI` via CSS
+  uppercase), 4 card judul/badge/stack benar, hrefs card cocok 4 target
+  (developer/property/organization/projects), CTA copy baru + panel "Proses
+  kami", panel reply tidak lagi tampil di halaman ini, footer 4 layanan inti
+  dengan link detail yang benar, tidak ada label agency lama tersisa.
+- Home: CTA tetap kartu reply ("Rata-rata balasan pertama" ada, "Proses kami"
+  tidak muncul) — tidak ada regresi pada default CTA.
+- Overflow horizontal 0px desktop 1440 & mobile 390, `pageerror` 0.
+- PHP lint bersih (page-use-cases.php, cta-band.php, helpers.php).
+
+---
+
 ## v4.5.1 — Fix: Gallery Section Container Alignment 2026-09-07
 
 Section galeri di halaman detail proyek menempel ke tepi layar karena ditaruh
