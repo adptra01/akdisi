@@ -1,0 +1,30 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "21st": {
+      "url": "https://21st.dev/api/mcp",
+      "headers": {
+        "x-api-key": "21st_sk_••••••••••••64ae"
+      }
+    },
+    "obsidian": {
+      "type": "remote",
+      "url": "http://127.0.0.1:27123/mcp/",
+      "headers": {
+        "Authorization": "Bearer {env:OBSIDIAN_API_KEY}"
+      },
+      "enabled": true,
+      "oauth": false
+    },
+    "docker": {
+      "enabled": true
+    },
+    "github": {
+      "enabled": true
+    }
+  },
+  "lsp": true,
+  "instructions": [
+    "/mnt/DiskD/Workspace/Notes/README.md"
+  ]
+}
