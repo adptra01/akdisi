@@ -6,6 +6,57 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v3.0.0 — Cohesive Section Rhythm + CSS Audit Rewrite 2026-09-06
+
+Refactor total `style.css` v2 → v3 (685 → 842 baris), menanggapi audit bahwa
+section tidak konsisten warnanya (dark/light/alt nyampur) dan sejumlah class
+template belum ter-cover. Seluruh layout & konten homepage v2.x dipertahankan —
+yang dirombak adalah **fondasi CSS agar warna/rhythm/coverage deterministik**.
+Font stack v2 user-approved dipertahankan utuh.
+
+### Design token v3 (`:root`, single source of truth)
+- **Section rhythm eksplisit**: `--bg-hero` (void), `--bg-dark` (abyss),
+  `--bg-light` (paper), `--bg-surface` (light alt `#eef1f5`), `--bg-panel`.
+- Kelas section konsisten: `.section-dark`, `.section-light`, `.section-hero`,
+  `.section-panel`, `.section-surface`/`.section-alt` — bukan lagi background
+  ad-hoc per section.
+- **Legacy aliases lengkap** (50+): semua `--bg-*`, `--text-*`, `--primary`,
+  `--tertiary`, `--radius-*`, `--shadow-*`, dll. — seluruh template 20+ PHP
+  jalan tanpa edit. Tambah `--text-light`, `--text-muted` (rindu di v2).
+- **Fix** `--bg-surface` double-defined (ambigu: pernah light & dark) →
+  satu nilai light alt. Hapus `var(--bg-void)` tak terdefinisi di
+  `.site-footer`/`.error-404-page` → `var(--color-void)` (footer kini void
+  `rgb(5,8,12)`, sebelumnya transparan `rgba(0,0,0,0)`).
+
+### Section rhythm terverifikasi (Playwright computed style)
+- Homepage: `hero`(void) → `marquee`(void) → **D-L-D-L-D-L-D** homeostasis:
+  `#05080c` → `#fafafa` → `#0a0f1a` → `#fafafa` → ... → footer `#05080c`.
+- Tidak ada lagi section nyasar warna atau duplikasi surface berurutan.
+
+### Coverage gap ditutup (class template yang tadi tidak ter-definisi)
+- `form-field`/`field-error`/`form-general-error` (contact & booth),
+- `feature-item` (single-portfolio), `post-card*` (archive/index insight),
+- `hero-content`/`hero-headline`/`hero-line` (kinetic 3-baris),
+- `process-steps`/`process-step-number` (about), `proc-steps`/`proc-step` (home),
+- `related-block`/`related-cards`, `project-meta-block`, `project-gallery`,
+- `portfolio-filters`, `split-intro`, `side-note`, `widget*`,
+- `whatsapp-float`/`sticky-cta` alias, `serif-zero`, `gallery-item`.
+- `folio-item.span2/3/4/5` + `grid-auto-flow:dense` → kolase 5-col asimetris
+  rapi tanpa celah (item pertama `span2` dari template kini benar-benar melebar).
+
+### QA v3.0.0 (Playwright Chromium, DDEV)
+- 10 URL (home, 8 inner, 404): semua `200` (404 → 404), `pageerror` 0,
+  h-overflow `0px` (desktop 1440).
+- Tokens: body `Outfit`, btn-primary gradient `linear-gradient(135deg,#34d399,#10b981)`,
+  hero h1 `text-align:start`, bento 5-col (252.8×5), proof `742/593` (1.25fr/1fr),
+  value 4-col asimetris, folio 5-col + `span2`, marquee beranimasi
+  (`transform translateX -55.8`), footer `rgb(5,8,12)`.
+- Anti-slop: no `Inter`, no pure-black surface, no pill `btn`, single emerald.
+- Catatan (di luar scope CSS): detail portfolio `features` meta kosong di DB
+  (9 project tanpa `feature-item`/`section-alt`) — isu data terpisah, bukan regresi.
+
+---
+
 ## v2.0.1 — Liquid Glass v2 + Visual QA 2026-09-06
 
 Adaptasi pola "liquid glass card" komunitas 21st.dev — diimplementasi ulang
