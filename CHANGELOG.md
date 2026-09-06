@@ -6,6 +6,31 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.2.2 — Fix: Typewriter Entity Leak ("&amp;" Rendered Literally) 2026-09-06
+
+`akdisi_render_typewriter()` memecah karakter dari **string yang masih ber-entity**
+(`&amp;`) → `preg_split` menghasilkan 5 char (`&`,`a`,`m`,`p`,`;`) → `esc_html('&')`
+tampil sebagai `&amp;` → di layar terbaca literal **"&amp;"** (hero h1:
+"We design &amp; build digital products…").
+
+### Fix
+- `inc/typewriter.php`: `html_entity_decode()` kini dipakai **sebelum** split
+  karakter (tidak hanya untuk perbandingan accent). `&amp;` → `&` (1 char) →
+  `esc_html` men-encode ulang aman → render `&` tunggal.
+- Audit tema: semua entity lain (`&copy;`, `&ldquo;`, `&#10003;`, `&amp;` di
+  cta-band) adalah literal HTML langsung di template (bukan lewat escape)
+  → sudah benar, tidak disentuh.
+
+### QA v4.2.2 (Playwright Chromium, DDEV)
+- Hero h1 `inner_text()` = "We design & build digital products that move the
+  needle." (bukan "&amp;").
+- `document.body.innerText.includes('&amp;')` = false — tidak ada literal entity
+  bocor di halaman home.
+- CTA band bersih ("Have a product idea worth building?"), `pageerror` 0.
+- Kata `&` pada hero = 1 `.tw-char` (bukan 5).
+
+---
+
 ## v4.2.1 — Fix: Tailwind Config Order (Custom Colors Dead) + Footer Contrast 2026-09-06
 
 Bug lintas-versi (sejak v4.0.0): inline `tailwind.config` di-enqueue dengan posisi
