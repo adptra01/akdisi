@@ -6,6 +6,75 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.0.0 — Fresh Digital Agency Theme (Deep Rose + Tailwind CDN) 2026-09-06
+
+Tema `akdisi` dibangun ulang dari nol setelah penghapusan total theme v3 (commit
+`e06a22d`). Arah: digital agency multi-halaman (NexStudio/TailGrids-inspired
+structure) dengan bahasa visual **warm editorial** — putus total dari emerald lama.
+
+### Keputusan user (konfirmasi eksplisit)
+- **Aksen baru: deep rose / merah bata** `#c2543d` (bukan emerald `#10b981`,
+  bukan biru-indigo brief) — hangat, tegas, pembeda.
+- **Styling: Tailwind via CDN** (`cdn.tailwindcss.com`, runtime) — no build step;
+  konfigurasi palette/font via `tailwind.config` inline. *Catatan: Play CDN untuk
+  staging/dev — sebelum produksi disarankan compile statis.*
+- **Konten: mulai bersih** — CPT baru (`akdisi_project`, `akdisi_insight`,
+  `akdisi_faq`, `akdisi_testimonial`) tanpa bentrok data lama; pages baru
+  (`/layanan/`, `/tentang/`, `/testimoni/`, `/use-cases/`, `/kontak/`) dengan
+  slug segar; menu Primary & Footer dibangun ulang.
+
+### Design system v4
+- **Palet warm stone**: ink `#1c1917` (bukan pure black) / body `#57534e`,
+  paper `#ffffff`, alt `#f7f5f2`, border `#e7e2dc`; aksen tunggal deep rose
+  `#c2543d` + hover `#a8432f` + soft `#fbe9e6`.
+- **Fonts**: Satoshi (display, Fontshare) + Outfit (body, Google) — stack v2 yang
+  user-approved, dipertahankan (bukan Inter brief, sesuai anti-slop).
+- **Shape**: button 8px, card 14px, badge pill 9999px; container 1280px;
+  section padding `clamp(4rem,8vw,6.5rem)` (≈80–120px desktop ✓ brief).
+- **Motion**: reveal on scroll (IntersectionObserver) + sticky header shadow,
+  `data-reveal`, `prefers-reduced-motion` kill-switch. Tanpa GSAP (no dep).
+
+### Arsitektur tema (16 file)
+- `functions.php` — enqueue Tailwind CDN + 2 font; CPT + taxonomy fresh;
+  menus; sizes; body_class.
+- `style.css` — theme header + tokens + komponen custom (btn, card, badge,
+  zebra sections, prose editorial, reveal).
+- `header.php`/`footer.php` — sticky header + mobile menu (aria), footer 4-col
+  (brand, company menu, services, newsletter) + fallback menus.
+- `front-page.php` — Hero asymmetric (stats strip + mockup CSS), trusted marquee,
+  services 4-col, why dark band (stats), featured projects (CPT, empty-state
+  graceful), process 4-step, testimonials (CPT), insights preview (CPT), CTA band.
+- Pages: `page-layanan.php` (services + engagement models), `page-tentang.php`
+  (story + stats + values), `page-testimoni…`, `page-use-cases.php`,
+  `page-kontak.php` (form AJAX), `page.php`.
+- Archives/singles: `archive-akdisi_project.php`, `archive-akdisi_insight.php`
+  (featured first post span), `single-akdisi_project.php` (facts sidebar),
+  `single-akdisi_insight.php`, `index.php`, `archive.php`, `single.php`,
+  `404.php`.
+- `inc/helpers.php` (fallback menus, footer services) + `inc/contact.php`
+  (AJAX lead → option `akdisi_leads` + `wp_mail`) + `assets/js/main.js`.
+
+### QA v4.0.0 (Playwright Chromium, DDEV)
+- **9 URL** (home, 6 pages, 2 archive CPT): semua 200 (404 → 404),
+  `pageerror` 0, h-overflow **0px** (desktop 1440 & mobile 390).
+- Tokens via computed style: h1 Satoshi 72px (`clamp` terpakai), body Outfit,
+  btn-primary `rgb(194,84,61)` = `#c2543d`, dark band `#1c1917` (bukan black),
+  btn radius 8px, badge pill.
+- Section rhythm home (computed bg): white → white(strip) → white →
+  dark `#1c1917` → alt `#f7f5f2` → white → alt → white → CTA dark-band.
+- Mobile: menu toggle buka/tutup OK (aria-expanded ter-update).
+- Form kontak AJAX end-to-end: submit sukses → message success tampil,
+  lead tersimpan (`akdisi_leads`), `pageerror` 0.
+- PHP lint bersih (15 file via DDEV), `node --check` main.js OK.
+
+### Catatan
+- Play CDN menyuntik utility via runtime — konten tampil tanpa-JS sebagai
+  unstyled HTML (acceptable untuk staging; produksi → compile Tailwind statis).
+- Screenshots QA desktop/mobile diambil (home + contact) — visual verified via
+  computed styles (model QA ini tidak support image input).
+
+---
+
 ## v3.0.0 — Cohesive Section Rhythm + CSS Audit Rewrite 2026-09-06
 
 Refactor total `style.css` v2 → v3 (685 → 842 baris), menanggapi audit bahwa

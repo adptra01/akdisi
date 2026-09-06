@@ -1,0 +1,129 @@
+/*
+Theme Name: AKDISI
+Theme URI: https://akdisi.local
+Author: AKAR Digital Solusi
+Description: Digital agency multi-page WordPress theme for AKDISI. Warm editorial aesthetic, single deep-rose accent, Tailwind utility styling. Fonts: Satoshi (display) + Outfit (body).
+Version: 4.0.0
+Requires at least: 6.4
+Tested up to: 6.7
+Requires PHP: 8.1
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: akdisi
+Tags: portfolio, blog, one-column, custom-menu, featured-images, threaded-comments
+*/
+
+/* ================================================================
+   AKDISI v4.0.0 — Digital Agency (fresh build)
+   Warm editorial · single deep-rose accent · light-first
+   Tailwind CDN provides utilities; this file adds tokens + theme css.
+   ================================================================ */
+
+/* ---- Design tokens (consumed by custom CSS below) ---- */
+:root {
+  /* Accent — deep rose / brick (single accent, warm) */
+  --p-primary:        #c2543d;
+  --p-primary-dark:   #a8432f;
+  --p-primary-soft:   #fbe9e6;
+  --p-primary-softer: #fdf3f1;
+
+  /* Neutrals — warm stone family (consistent warm, no pure black) */
+  --p-dark:     #1c1917;   /* stone-900 */
+  --p-dark-2:   #292524;   /* stone-800 */
+  --p-heading:  #1c1917;
+  --p-body:     #57534e;   /* stone-600 */
+  --p-bg:       #ffffff;
+  --p-bg-alt:   #f7f5f2;   /* warm off-white, zebra sections */
+  --p-border:   #e7e2dc;
+
+  /* Status */
+  --p-success: #2f9e63;
+
+  /* Radii — consistent scale */
+  --r-btn: 8px;        /* button */
+  --r-card: 14px;      /* card */
+  --r-badge: 9999px;   /* pill badges */
+
+  /* Shadow — soft, warm-tinted */
+  --shadow-card: 0 4px 24px rgba(28,25,23,0.06);
+  --shadow-card-hover: 0 14px 40px rgba(28,25,23,0.12);
+}
+
+/* ---- Base ---- */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'Outfit',-apple-system,'Segoe UI',sans-serif;color:var(--p-body);background:var(--p-bg);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:hidden}
+h1,h2,h3,h4,h5,h6{font-family:'Satoshi','Outfit',-apple-system,sans-serif;color:var(--p-heading);font-weight:700;line-height:1.15;text-wrap:balance}
+a{color:inherit;text-decoration:none;transition:color .2s ease}
+img{max-width:100%;height:auto;display:block}
+:focus-visible{outline:2px solid var(--p-primary);outline-offset:3px;border-radius:2px}
+
+/* ---- Typography helpers ---- */
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--p-primary)}
+.eyebrow::before{content:"";width:24px;height:1px;background:var(--p-primary)}
+.section-title{font-size:clamp(1.75rem,3.4vw,2.5rem);letter-spacing:-.02em}
+.section-sub{color:var(--p-body);max-width:34rem}
+.font-mono{font-family:'Outfit',menlo,monospace}
+
+/* ---- Helpers ---- */
+.container-x{width:100%;max-width:1280px;margin-inline:auto;padding-inline:clamp(1rem,4vw,2.5rem)}
+.container-narrow{max-width:1000px}
+.text-balance{text-wrap:balance}
+
+/* ---- Buttons (custom, tactile) ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:var(--r-btn);font-weight:600;line-height:1;cursor:pointer;border:1px solid transparent;transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .25s,background .2s,color .2s,opacity .2s;white-space:nowrap}
+.btn:active{transform:scale(.97)}
+.btn svg{width:16px;height:16px}
+.btn-primary{background:var(--p-primary);color:#fff;padding:.85rem 1.6rem;font-size:.95rem}
+.btn-primary:hover{background:var(--p-primary-dark);transform:translateY(-2px);box-shadow:0 10px 24px rgba(194,84,61,0.28)}
+.btn-outline{background:transparent;color:var(--p-heading);padding:.85rem 1.6rem;font-size:.95rem;border-color:var(--p-border)}
+.btn-outline:hover{border-color:var(--p-primary);color:var(--p-primary);transform:translateY(-2px)}
+.btn-on-dark{background:#fff;color:var(--p-dark);padding:.85rem 1.6rem;font-size:.95rem}
+.btn-on-dark:hover{background:var(--p-primary);color:#fff;transform:translateY(-2px)}
+.btn-lg{padding:1.05rem 2rem;font-size:1rem}
+
+/* ---- Badge / label pill ---- */
+.badge{display:inline-flex;align-items:center;border-radius:var(--r-badge);font-size:.7rem;font-weight:600;letter-spacing:.06em;padding:.28rem .7rem}
+.badge-soft{background:var(--p-primary-soft);color:var(--p-primary)}
+.badge-neutral{background:var(--p-bg-alt);color:var(--p-body)}
+
+/* ---- Card ---- */
+.card{border:1px solid var(--p-border);border-radius:var(--r-card);background:#fff;overflow:hidden;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+.card:hover{transform:translateY(-6px);box-shadow:var(--shadow-card-hover)}
+
+/* ---- Section rhythm (zebra, warm) ---- */
+.section{ padding:clamp(4rem,8vw,6.5rem) 0 }
+.section-bg{background:var(--p-bg)}
+.section-alt{background:var(--p-bg-alt)}
+.section-dark{background:var(--p-dark);color:#d6d3d1}
+.section-dark h1,.section-dark h2,.section-dark h3,.section-dark h4{color:#fff}
+
+/* ---- Reveal animations (CSS, no external lib for scroll) ---- */
+[data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+[data-reveal].is-visible{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  *,[data-reveal]{animation:none!important;transition:none!important;opacity:1!important;transform:none!important}
+}
+
+/* ---- Misc component css ---- */
+.mask-fade-b{ -webkit-mask-image:linear-gradient(#000 70%,transparent); mask-image:linear-gradient(#000 70%,transparent) }
+
+/* ---- Editorial prose (single page content) ---- */
+.prose-akdisi > * + *{margin-top:1.1em}
+.prose-akdisi h1,.prose-akdisi h2,.prose-akdisi h3,.prose-akdisi h4{color:var(--p-heading);font-family:'Satoshi','Outfit',sans-serif;margin-top:1.8em;line-height:1.2}
+.prose-akdisi h2{font-size:1.65rem}
+.prose-akdisi h3{font-size:1.3rem}
+.prose-akdisi a{color:var(--p-primary);text-decoration:underline;text-underline-offset:3px}
+.prose-akdisi a:hover{color:var(--p-primary-dark)}
+.prose-akdisi ul,.prose-akdisi ol{padding-left:1.4rem}
+.prose-akdisi ul{list-style:disc}
+.prose-akdisi ol{list-style:decimal}
+.prose-akdisi li + li{margin-top:.4em}
+.prose-akdisi blockquote{border-left:3px solid var(--p-primary);padding:.6rem 0 .6rem 1.2rem;color:var(--p-heading);font-style:italic;background:var(--p-bg-alt);border-radius:0 8px 8px 0}
+.prose-akdisi code{font-family:'Outfit',monospace;font-size:.9em;background:var(--p-bg-alt);padding:.15em .4em;border-radius:4px}
+.prose-akdisi img{border-radius:12px;margin-block:1.4em}
+.prose-akdisi figure{margin-block:1.6em}
+.prose-akdisi figcaption{font-size:.8rem;color:var(--p-ink-faint,#78716c);margin-top:.5em;text-align:center}
+.prose-akdisi table{width:100%;border-collapse:collapse;font-size:.95rem}
+.prose-akdisi th,.prose-akdisi td{border:1px solid var(--p-border);padding:.6rem .8rem;text-align:left}
+.prose-akdisi th{background:var(--p-bg-alt);color:var(--p-heading)}
