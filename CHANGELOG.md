@@ -6,6 +6,25 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.5.1 — Fix: Gallery Section Container Alignment 2026-09-07
+
+Section galeri di halaman detail proyek menempel ke tepi layar karena ditaruh
+langsung di dalam `<section>` (yang hanya punya padding vertikal) di luar
+`container mx-auto` — container itulah yang memberikan inset horizontal pada
+seluruh konten halaman.
+
+### Fix
+- `single-akdisi_project.php`: blok galeri dibungkus `<div class="container mx-auto">`
+  → heading & grid galeri kini tepat sejajar dengan konten lain (breadcrumb,
+  thumbnail, fakta proyek).
+
+### QA v4.5.1 (Playwright Chromium, DDEV)
+- Desktop 1440: heading galeri l=120 / r=1320 = persis container (sebelumnya
+  menempel ke tepi section) — sama dengan nav breadcrumb.
+- Mobile 390: heading galeri l=16 / r=374 (inset container), h-overflow 0px.
+
+---
+
 ## v4.5.0 — Plugin AKDISI Project Manager (Kelola Detail Proyek) 2026-09-07
 
 Plugin sederhana baru untuk mengelola konten terstruktur halaman detail proyek
