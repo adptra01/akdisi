@@ -683,3 +683,33 @@ html.no-js [data-reveal], html.no-js .js-stagger > * { opacity: 1 !important; tr
     opacity: 0; transition: opacity var(--dur);
 }
 .bento-card:hover::before, .proof-card:hover::before { opacity: 1; }
+
+/* ------------------------------------------------------------------
+   16. LIQUID GLASS v2 — specular highlight + hover sheen sweep
+   Pattern adapted from 21st.dev community "liquid glass" cards,
+   re-implemented natively in AKDISI tokens (no deps, GPU-safe).
+   ------------------------------------------------------------------ */
+.card, .bento-card, .proof-card, .hero-mockup, .contact-form-shell {
+    position: relative;
+    background-image:
+        linear-gradient(115deg, rgba(255,255,255,0.075) 0%, rgba(255,255,255,0.015) 22%, transparent 40%),
+        var(--grad-glass);
+}
+.section-light .card, .section .card, .contact-form-shell, .transform-node, .value-item {
+    background-image:
+        linear-gradient(115deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 35%),
+        linear-gradient(135deg, rgba(16,185,129,0.03), transparent 45%);
+}
+/* Sheen sweep — diagonal light band, transform-only */
+.card::after, .bento-card::after, .proof-card::after {
+    content: ''; position: absolute; top: -60%; bottom: -60%; left: -30%; width: 36%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.09), transparent);
+    transform: translateX(-220%) rotate(8deg); border-radius: inherit; pointer-events: none;
+}
+.card:hover::after, .bento-card:hover::after, .proof-card:hover::after {
+    transform: translateX(560%) rotate(8deg);
+    transition: transform 0.9s var(--ease-expo);
+}
+@media (prefers-reduced-motion: reduce) {
+    .card::after, .bento-card::after, .proof-card::after { display: none; }
+}

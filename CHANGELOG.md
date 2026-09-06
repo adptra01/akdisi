@@ -6,6 +6,30 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v2.0.1 — Liquid Glass v2 + Visual QA 2026-09-06
+
+Adaptasi pola "liquid glass card" komunitas 21st.dev — diimplementasi ulang
+native dalam token AKDISI (tanpa dependensi, tanpa copy-paste kode).
+
+### Liquid Glass v2 (`style.css` §16)
+- **Specular highlight**: gradient cahaya sudut kiri-atas di semua permukaan
+  kaca (card, bento, proof, hero mockup, form shell) — light/dark aware.
+- **Sheen sweep on hover**: pita cahaya diagonal menyapu permukaan saat hover
+  (`transform` only, 0.9s expo; disabled di `prefers-reduced-motion`).
+- Digabung dengan spotlight cursor glow (`--mx`/`--my`) yang sudah ada —
+  depth berlapis: specular + spotlight + sheen.
+
+### Visual QA (Playwright Chromium, DDEV)
+- 7 URL desktop + 3 mobile: semua 200, `pageerror` 0, mobile h-overflow 0px.
+- Token terverifikasi: spark `#10b981`, void `#05080c`, Satoshi 80px H1
+  left-aligned, marquee + 4 bento + 3 hero-lines present.
+- Anti-slop audit: no Inter, no pure-black bg, no pill buttons, hero `start`,
+  grids 5/2/4-col (never 3-equal), glass `blur(20px)`, no purple
+  (match hanya WP core preset, inert).
+- Hover bento: sheen mid-sweep + spotlight opacity 1 terkonfirmasi via
+  computed style, tanpa JS error.
+
+---
 ## v2.0.0 — Editorial Asymmetric Redesign (Awwwards/Dribbble Grade) 2026-09-06
 
 Redesign total karena tema v1.x terasa "AI slop". Arah baru: Editorial Asymmetric +
