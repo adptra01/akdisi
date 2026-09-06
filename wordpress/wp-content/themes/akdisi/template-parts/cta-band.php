@@ -5,7 +5,7 @@
  * Usage:
  *   get_template_part( 'template-parts/cta-band', null, array(
  *       'title'             => 'Ready to build something worth launching?', // plain text, words separated by spaces
- *       'accent_words'      => array( 'something' ),                        // substrings to render in deep rose
+ *       'accent_words'      => array( 'something' ),                        // words to render in deep rose
  *       'sub'               => 'A 30-minute intro call is enough to know if we are the right fit.',
  *       'btn_primary_label' => 'Start a project',
  *       'btn_primary_url'   => home_url( '/kontak/' ),
@@ -13,7 +13,7 @@
  *       'btn_secondary_url'   => home_url( '/projects/' ),
  *   ) );
  *
- * Defaults match the copy used across archive/single/template pages.
+ * Defaults (Bahasa Indonesia) match the copy used across archive/single/template pages.
  *
  * @package AKDISI
  */
@@ -21,12 +21,12 @@
 $cta = wp_parse_args(
 	$args ?? array(),
 	array(
-		'title'               => __( 'Ready to build something worth launching?', 'akdisi' ),
+		'title'               => __( 'Siap membangun produk yang layak diluncurkan?', 'akdisi' ),
 		'accent_words'        => array(),
-		'sub'                 => __( 'A 30-minute intro call is enough to know if we are the right fit.', 'akdisi' ),
-		'btn_primary_label'   => __( 'Start a project', 'akdisi' ),
+		'sub'                 => __( 'Panggilan perkenalan 30 menit cukup untuk mengetahui apakah kami cocok.', 'akdisi' ),
+		'btn_primary_label'   => __( 'Mulai proyek', 'akdisi' ),
 		'btn_primary_url'     => home_url( '/kontak/' ),
-		'btn_secondary_label' => __( 'See our work', 'akdisi' ),
+		'btn_secondary_label' => __( 'Lihat karya kami', 'akdisi' ),
 		'btn_secondary_url'   => home_url( '/projects/' ),
 	)
 );
@@ -45,7 +45,7 @@ $cta = wp_parse_args(
 				<div>
 					<p class="mb-5 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.14em]" style="color:#f0a48f">
 						<span class="inline-block h-px w-10 bg-brand" aria-hidden="true"></span>
-						<?php echo esc_html( __( "Let's talk", 'akdisi' ) ); ?>
+						<?php echo esc_html( __( 'Mari bicara', 'akdisi' ) ); ?>
 					</p>
 					<h2 data-typewriter class="tw-heading max-w-xl font-display text-[clamp(2rem,4.5vw,3.4rem)] font-bold leading-[1.08] tracking-tight text-white">
 						<?php echo akdisi_render_typewriter( $cta['title'], $cta['accent_words'] ); ?><span class="tw-cursor" aria-hidden="true"></span>
@@ -62,17 +62,17 @@ $cta = wp_parse_args(
 					<div class="ml-auto w-full max-w-xs rounded-2xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm">
 						<div class="flex items-center gap-2 text-sm text-stone-300">
 							<span class="h-2 w-2 rounded-full bg-brand" aria-hidden="true"></span>
-							<span class="font-medium">Average first response</span>
+							<span class="font-medium">Rata-rata balasan pertama</span>
 						</div>
-						<p class="mt-5 font-display text-5xl font-bold leading-none text-white">1 day</p>
-						<p class="mt-3 text-sm leading-relaxed text-stone-400">Send the brief — expect a thoughtful reply within one business day, not a week.</p>
+						<p class="mt-5 font-display text-5xl font-bold leading-none text-white">1 hari</p>
+						<p class="mt-3 text-sm leading-relaxed text-stone-400">Kirim brief — balasan matang dalam satu hari kerja, bukan seminggu.</p>
 						<div class="mt-7 flex items-center gap-3">
 							<div class="flex -space-x-2">
 								<span class="h-9 w-9 rounded-full border-2 border-ink bg-brand/80" aria-hidden="true"></span>
 								<span class="h-9 w-9 rounded-full border-2 border-ink bg-[#b9a48d]" aria-hidden="true"></span>
 								<span class="h-9 w-9 rounded-full border-2 border-ink bg-white/20" aria-hidden="true"></span>
 							</div>
-							<p class="text-xs text-stone-400">Strategy, design &amp; engineering on the reply.</p>
+							<p class="text-xs text-stone-400">Strategi, desain &amp; engineering siap merespons.</p>
 						</div>
 					</div>
 				</div>

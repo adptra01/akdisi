@@ -17,7 +17,7 @@
 <header id="site-header" class="akdisi-header sticky top-0 z-50 w-full border-b border-paper-line bg-white/85 backdrop-blur-md">
 	<div class="container mx-auto flex h-20 items-center justify-between gap-6">
 		<!-- Brand -->
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-2" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?> home">
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-2" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?> beranda">
 			<?php if ( has_custom_logo() ) : ?>
 				<?php the_custom_logo(); ?>
 			<?php else : ?>
@@ -28,7 +28,7 @@
 		</a>
 
 		<!-- Desktop nav -->
-		<nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
+		<nav class="hidden items-center gap-8 lg:flex" aria-label="Navigasi utama">
 			<?php
 			wp_nav_menu(
 				array(
@@ -45,15 +45,15 @@
 
 		<!-- CTA + mobile toggle -->
 		<div class="flex items-center gap-3">
-			<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary hidden sm:inline-flex">Start a project</a>
-			<button type="button" id="nav-toggle" class="flex h-10 w-10 items-center justify-center rounded-lg border border-paper-line lg:hidden" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+			<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary hidden sm:inline-flex">Mulai proyek</a>
+			<button type="button" id="nav-toggle" class="flex h-10 w-10 items-center justify-center rounded-lg border border-paper-line lg:hidden" aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
 				<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
 			</button>
 		</div>
 	</div>
 
 	<!-- Mobile menu -->
-	<nav id="mobile-menu" class="hidden border-t border-paper-line bg-white lg:hidden" aria-label="Mobile primary">
+	<nav id="mobile-menu" class="hidden border-t border-paper-line bg-white lg:hidden" aria-label="Menu utama">
 		<div class="container mx-auto py-4">
 			<?php
 			wp_nav_menu(
@@ -67,7 +67,7 @@
 				)
 			);
 			?>
-			<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary mt-4 w-full">Start a project</a>
+			<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary mt-4 w-full">Mulai proyek</a>
 		</div>
 	</nav>
 </header>

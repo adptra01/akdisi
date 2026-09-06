@@ -9,9 +9,9 @@
 get_header();
 
 get_template_part( 'template-parts/page-hero', null, array(
-	'eyebrow' => __( 'Use cases', 'akdisi' ),
-	'title'   => __( 'Where we make a measurable dent.', 'akdisi' ),
-	'sub'     => __( 'Patterns of work we repeatedly execute well — and the outcomes that follow.', 'akdisi' ),
+	'eyebrow' => __( 'Use case', 'akdisi' ),
+	'title'   => __( 'Tempat kami memberikan dampak yang terukur.', 'akdisi' ),
+	'sub'     => __( 'Pola pekerjaan yang rutin kami eksekusi dengan baik — beserta hasil yang menyertainya.', 'akdisi' ),
 ) );
 ?>
 
@@ -21,26 +21,26 @@ get_template_part( 'template-parts/page-hero', null, array(
 			<?php
 			$cases = array(
 				array(
-					'title'  => __( 'Marketing sites that convert', 'akdisi' ),
-					'desc'   => __( 'From brochure-ware to revenue-generating presence: messaging, design systems, and fast builds.', 'akdisi' ),
+					'title'  => __( 'Website marketing yang menghasilkan', 'akdisi' ),
+					'desc'   => __( 'Dari sekadar brosur online menjadi mesin pendapatan: pesan yang tepat, design system, dan build yang cepat.', 'akdisi' ),
 					'stack'  => 'WordPress · Astro · Vercel',
 					'tag'    => 'Web',
 				),
 				array(
-					'title'  => __( 'SaaS platform launch', 'akdisi' ),
-					'desc'   => __( 'MVP to production in weeks — auth, billing, dashboards, and the analytics to know what works.', 'akdisi' ),
+					'title'  => __( 'Peluncuran platform SaaS', 'akdisi' ),
+					'desc'   => __( 'Dari MVP ke produksi dalam hitungan minggu — auth, billing, dashboard, dan analitik untuk tahu apa yang bekerja.', 'akdisi' ),
 					'stack'  => 'React · Node · Postgres',
-					'tag'    => 'Product',
+					'tag'    => 'Produk',
 				),
 				array(
-					'title'  => __( 'Internal tooling overhaul', 'akdisi' ),
-					'desc'   => __( 'Replace spreadsheets and tribal knowledge with structured systems your team actually uses.', 'akdisi' ),
-					'stack'  => 'Web app · Admin panel',
+					'title'  => __( 'Perombakan sistem internal', 'akdisi' ),
+					'desc'   => __( 'Ganti spreedsheet dan pengetahuan yang tersebar dengan sistem terstruktur yang benar-benar dipakai tim Anda.', 'akdisi' ),
+					'stack'  => 'Web app · Panel admin',
 					'tag'    => 'Digital',
 				),
 				array(
-					'title'  => __( 'Brand + launch campaign', 'akdisi' ),
-					'desc'   => __( 'Identity refresh paired with a landing system and SEO foundation for a memorable launch.', 'akdisi' ),
+					'title'  => __( 'Brand + kampanye peluncuran', 'akdisi' ),
+					'desc'   => __( 'Penyegaran identitas dipadukan sistem landing page dan fondasi SEO untuk peluncuran yang berkesan.', 'akdisi' ),
 					'stack'  => 'Brand · Landing · SEO',
 					'tag'    => 'Growth',
 				),

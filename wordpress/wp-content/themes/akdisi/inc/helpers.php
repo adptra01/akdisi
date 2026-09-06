@@ -16,11 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function akdisi_fallback_menu( $args = array() ) {
 	$items = array(
-		__( 'Services', 'akdisi' ) => home_url( '/layanan/' ),
-		__( 'Projects', 'akdisi' ) => home_url( '/projects/' ),
-		__( 'About', 'akdisi' )    => home_url( '/tentang/' ),
-		__( 'Insight', 'akdisi' )  => home_url( '/insight/' ),
-		__( 'Contact', 'akdisi' )  => home_url( '/kontak/' ),
+		__( 'Layanan', 'akdisi' )    => home_url( '/layanan/' ),
+		__( 'Proyek', 'akdisi' )     => home_url( '/projects/' ),
+		__( 'Tentang', 'akdisi' )    => home_url( '/tentang/' ),
+		__( 'Insight', 'akdisi' )    => home_url( '/insight/' ),
+		__( 'Kontak', 'akdisi' )     => home_url( '/kontak/' ),
 	);
 	printf( '<ul class="%s">', isset( $args['menu_class'] ) ? esc_attr( $args['menu_class'] ) : '' );
 	foreach ( $items as $label => $url ) {
@@ -35,10 +35,10 @@ function akdisi_fallback_menu( $args = array() ) {
  */
 function akdisi_fallback_footer() {
 	$links = array(
-		__( 'About', 'akdisi' )   => home_url( '/tentang/' ),
-		__( 'Projects', 'akdisi' ) => home_url( '/projects/' ),
-		__( 'Insight', 'akdisi' ) => home_url( '/insight/' ),
-		__( 'Contact', 'akdisi' ) => home_url( '/kontak/' ),
+		__( 'Tentang', 'akdisi' )   => home_url( '/tentang/' ),
+		__( 'Proyek', 'akdisi' )    => home_url( '/projects/' ),
+		__( 'Insight', 'akdisi' )   => home_url( '/insight/' ),
+		__( 'Kontak', 'akdisi' )    => home_url( '/kontak/' ),
 	);
 	echo '<ul class="space-y-2 text-sm">';
 	foreach ( $links as $label => $url ) {
@@ -54,9 +54,9 @@ function akdisi_fallback_footer() {
  */
 function akdisi_footer_services() {
 	return array(
-		__( 'Web Development', 'akdisi' )  => home_url( '/layanan/' ),
-		__( 'UI/UX Design', 'akdisi' )     => home_url( '/layanan/' ),
-		__( 'Brand Identity', 'akdisi' )   => home_url( '/layanan/' ),
-		__( 'Digital Marketing', 'akdisi' ) => home_url( '/layanan/' ),
+		__( 'Pengembangan Website', 'akdisi' )  => home_url( '/layanan/' ),
+		__( 'Desain UI/UX', 'akdisi' )          => home_url( '/layanan/' ),
+		__( 'Identitas Brand', 'akdisi' )       => home_url( '/layanan/' ),
+		__( 'Pemasaran Digital', 'akdisi' )     => home_url( '/layanan/' ),
 	);
 }

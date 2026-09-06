@@ -40,23 +40,23 @@ $testimonials = new WP_Query(
 	<div class="container mx-auto grid items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
 		<!-- Copy -->
 		<div data-reveal>
-			<p class="eyebrow mb-5">Digital agency for growing teams</p>
+			<p class="eyebrow mb-5">Mitra digital untuk bisnis yang ingin tumbuh</p>
 			<h1 data-typewriter class="tw-heading font-display text-[clamp(2.6rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-ink">
-				<?php echo akdisi_render_typewriter( 'We design &amp; build digital products that move the needle.', array( 'needle.' ) ); ?><span class="tw-cursor" aria-hidden="true"></span>
+				<?php echo akdisi_render_typewriter( 'Website &amp; aplikasi yang mendatangkan pelanggan untuk bisnis Anda.', array( 'pelanggan' ) ); ?><span class="tw-cursor" aria-hidden="true"></span>
 			</h1>
 			<p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
-				AKDISI is a full-cycle digital partner — strategy, product design, and engineering —
-				helping ambitious teams turn ideas into products people love.
+				AKDISI adalah mitra digital full-cycle — strategi, desain produk, dan engineering —
+				membantu bisnis Anda tampil profesional, ditemukan pelanggan, dan beroperasi lebih efisien.
 			</p>
 			<div class="mt-8 flex flex-wrap gap-4">
-				<a href="<?php echo esc_url( home_url( '/layanan/' ) ); ?>" class="btn btn-primary btn-lg">Explore services</a>
-				<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-outline btn-lg">Start a project</a>
+				<a href="<?php echo esc_url( home_url( '/layanan/' ) ); ?>" class="btn btn-primary btn-lg">Lihat layanan</a>
+				<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-outline btn-lg">Mulai proyek</a>
 			</div>
 			<!-- Stats strip -->
 			<dl class="mt-12 flex flex-wrap gap-x-10 gap-y-6 border-t border-paper-line pt-8">
-				<div><dt class="text-3xl font-bold text-ink font-display">40+</dt><dd class="mt-1 text-sm text-ink-faint">Projects shipped</dd></div>
-				<div><dt class="text-3xl font-bold text-ink font-display">12</dt><dd class="mt-1 text-sm text-ink-faint">Industries served</dd></div>
-				<div><dt class="text-3xl font-bold text-ink font-display">98%</dt><dd class="mt-1 text-sm text-ink-faint">Client retention</dd></div>
+				<div><dt class="text-3xl font-bold text-ink font-display">40+</dt><dd class="mt-1 text-sm text-ink-faint">Proyek selesai</dd></div>
+				<div><dt class="text-3xl font-bold text-ink font-display">12</dt><dd class="mt-1 text-sm text-ink-faint">Industri dilayani</dd></div>
+				<div><dt class="text-3xl font-bold text-ink font-display">98%</dt><dd class="mt-1 text-sm text-ink-faint">Klien kembali</dd></div>
 			</dl>
 		</div>
 
@@ -67,7 +67,7 @@ $testimonials = new WP_Query(
 					<span class="h-2.5 w-2.5 rounded-full bg-[#f0b3a4]"></span>
 					<span class="h-2.5 w-2.5 rounded-full bg-[#e7e2dc]"></span>
 					<span class="h-2.5 w-2.5 rounded-full bg-[#d6d0c8]"></span>
-					<span class="ml-auto rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">Live</span>
+					<span class="ml-auto rounded-full bg-brand-soft px-3 py-1 text-xs font-semibold text-brand">Tayang</span>
 				</div>
 				<div class="space-y-3">
 					<div class="h-3 w-3/4 rounded-full bg-ink/80"></div>
@@ -101,8 +101,8 @@ $testimonials = new WP_Query(
 			</div>
 			<!-- Floating badge -->
 			<div class="absolute -bottom-6 -left-4 rounded-xl border border-paper-line bg-white px-5 py-3 shadow-[var(--shadow-card)] md:-left-8">
-				<p class="text-xs text-ink-faint">Avg. time-to-value</p>
-				<p class="font-display text-lg font-bold text-ink">6 weeks <span class="text-sm font-medium text-brand">to launch</span></p>
+				<p class="text-xs text-ink-faint">Rata-rata waktu menuju hasil</p>
+				<p class="font-display text-lg font-bold text-ink">6 minggu <span class="text-sm font-medium text-brand">hingga tayang</span></p>
 			</div>
 		</div>
 	</div>
@@ -111,7 +111,7 @@ $testimonials = new WP_Query(
 <!-- ============ TRUSTED MARQUEE ============ -->
 <section class="border-y border-paper-line bg-white py-8">
 	<div class="container mx-auto">
-		<p class="mb-6 text-center text-xs font-semibold uppercase tracking-[0.2em] text-ink-faint">Trusted by product teams at</p>
+		<p class="mb-6 text-center text-xs font-semibold uppercase tracking-[0.2em] text-ink-faint">Dipercaya tim produk di</p>
 		<div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 opacity-70">
 			<span class="font-display text-xl font-bold text-ink/60">NORTHBOUND</span>
 			<span class="font-display text-xl font-bold text-ink/60">Halcyon</span>
@@ -128,11 +128,11 @@ $testimonials = new WP_Query(
 	<div class="container mx-auto">
 		<div class="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
 			<div data-reveal>
-				<p class="eyebrow mb-4">What we do</p>
-				<h2 class="section-title">Full-stack digital services,<br>one accountable team.</h2>
+				<p class="eyebrow mb-4">Apa yang kami kerjakan</p>
+				<h2 class="section-title">Layanan digital lengkap,<br>satu tim yang bertanggung jawab.</h2>
 			</div>
 			<p data-reveal class="section-sub text-right">
-				From first sketch to shipped product — strategy, design, engineering, and growth under one roof.
+				Dari ide pertama hingga produk tayang — strategi, desain, engineering, dan pertumbuhan dalam satu tim.
 			</p>
 		</div>
 
@@ -141,23 +141,23 @@ $testimonials = new WP_Query(
 			$services = array(
 				array(
 					'icon'  => 'M3 17l6-6 4 4 8-8M3 21h18',
-					'title' => __( 'Product Strategy', 'akdisi' ),
-					'desc'  => __( 'Market research, roadmaps, and positioning that de-risk what you build.', 'akdisi' ),
+					'title' => __( 'Strategi Produk', 'akdisi' ),
+					'desc'  => __( 'Riset pasar, peta jalan, dan positioning yang memastikan Anda membangun hal yang benar sejak awal.', 'akdisi' ),
 				),
 				array(
 					'icon'  => 'M12 19l9 2-9-18-9 18 9-2zm0 0v-8',
-					'title' => __( 'UI/UX Design', 'akdisi' ),
-					'desc'  => __( 'Interfaces and design systems that feel inevitable — researched, tested, refined.', 'akdisi' ),
+					'title' => __( 'Desain UI/UX', 'akdisi' ),
+					'desc'  => __( 'Antarmuka yang mudah dipakai sehingga pengunjung betah dan kembali lagi — diteliti, diuji, disempurnakan.', 'akdisi' ),
 				),
 				array(
 					'icon'  => 'M8 9l3 3-3 3m5 0h3M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5z',
-					'title' => __( 'Web & App Development', 'akdisi' ),
-					'desc'  => __( 'Fast, accessible, maintainable products built with modern stacks end-to-end.', 'akdisi' ),
+					'title' => __( 'Pengembangan Website & Aplikasi', 'akdisi' ),
+					'desc'  => __( 'Website dan aplikasi yang cepat, aman, dan siap berkembang — dari profil perusahaan hingga platform SaaS.', 'akdisi' ),
 				),
 				array(
 					'icon'  => 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
-					'title' => __( 'Growth & Marketing', 'akdisi' ),
-					'desc'  => __( 'SEO, analytics, and conversion programs that compound after launch.', 'akdisi' ),
+					'title' => __( 'Pertumbuhan & Pemasaran', 'akdisi' ),
+					'desc'  => __( 'SEO, analitik, dan program konversi yang mendatangkan pelanggan baru secara konsisten.', 'akdisi' ),
 				),
 			);
 			foreach ( $services as $i => $s ) :
@@ -169,7 +169,7 @@ $testimonials = new WP_Query(
 					<h3 class="mb-2 text-lg font-semibold text-ink"><?php echo esc_html( $s['title'] ); ?></h3>
 					<p class="text-sm leading-relaxed text-ink-soft"><?php echo esc_html( $s['desc'] ); ?></p>
 					<a href="<?php echo esc_url( home_url( '/layanan/' ) ); ?>" class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand">
-						Learn more
+						Pelajari lebih lanjut
 						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-1"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
 					</a>
 				</article>
@@ -182,30 +182,30 @@ $testimonials = new WP_Query(
 <section class="akdisi-why section-dark">
 	<div class="container mx-auto grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr]">
 		<div data-reveal>
-			<p class="eyebrow mb-4" style="color:#f0a48f">Why AKDISI</p>
-			<h2 class="section-title text-white">A partner, not a vendor.</h2>
+			<p class="eyebrow mb-4" style="color:#f0a48f">Mengapa AKDISI</p>
+			<h2 class="section-title text-white">Mitra, bukan sekadar vendor.</h2>
 			<ul class="mt-8 space-y-4 text-stone-300">
-				<li class="flex gap-3"><span class="mt-1 text-brand">&#10003;</span> Senior-only teams — no hand-offs, no juniors learning on your budget.</li>
-				<li class="flex gap-3"><span class="mt-1 text-brand">&#10003;</span> Transparent weekly demos and a shared backlog you actually see.</li>
-				<li class="flex gap-3"><span class="mt-1 text-brand">&#10003;</span> Fixed-scope pricing with clear milestones — predictable spend.</li>
+				<li class="flex gap-3"><span class="mt-1 text-brand">&#10003;</span> Tim senior yang menangani langsung — tanpa operan, tanpa yang belajar sambil jalan.</li>
+				<li class="flex gap-3"><span class="mt-1 text-brand">&#10003;</span> Demo mingguan yang transparan dan backlog bersama yang bisa Anda lihat langsung.</li>
+				<li class="flex gap-3"><span class="mt-1 text-brand">&#10003;</span> Harga paket tetap dengan milestone yang jelas — anggaran terukur sejak awal.</li>
 			</ul>
 		</div>
 		<div data-reveal class="grid grid-cols-2 gap-6">
 			<div class="rounded-2xl border border-stone-700/60 bg-stone-800/40 p-7">
 				<p class="font-display text-4xl font-bold text-white">40+</p>
-				<p class="mt-2 text-sm text-stone-400">Projects delivered across 12 industries</p>
+				<p class="mt-2 text-sm text-stone-400">Proyek selesai di 12 industri</p>
 			</div>
 			<div class="rounded-2xl border border-stone-700/60 bg-stone-800/40 p-7">
-				<p class="font-display text-4xl font-bold text-white">6 wks</p>
-				<p class="mt-2 text-sm text-stone-400">Average landing-to-launch cycle</p>
+				<p class="font-display text-4xl font-bold text-white">6 mgg</p>
+				<p class="mt-2 text-sm text-stone-400">Rata-rata waktu konsep hingga tayang</p>
 			</div>
 			<div class="rounded-2xl border border-stone-700/60 bg-stone-800/40 p-7">
 				<p class="font-display text-4xl font-bold text-white">98%</p>
-				<p class="mt-2 text-sm text-stone-400">Clients who return after round one</p>
+				<p class="mt-2 text-sm text-stone-400">Klien yang kembali untuk proyek berikutnya</p>
 			</div>
 			<div class="rounded-2xl border border-stone-700/60 bg-stone-800/40 p-7">
 				<p class="font-display text-4xl font-bold text-white">4.9/5</p>
-				<p class="mt-2 text-sm text-stone-400">Average partner rating</p>
+				<p class="mt-2 text-sm text-stone-400">Rating rata-rata dari klien</p>
 			</div>
 		</div>
 	</div>
@@ -216,10 +216,10 @@ $testimonials = new WP_Query(
 	<div class="container mx-auto">
 		<div class="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
 			<div data-reveal>
-				<p class="eyebrow mb-4">Selected work</p>
-				<h2 class="section-title">Recent projects we're proud of.</h2>
+				<p class="eyebrow mb-4">Karya pilihan</p>
+				<h2 class="section-title">Proyek terbaru yang kami banggakan.</h2>
 			</div>
-			<a href="<?php echo esc_url( home_url( '/projects/' ) ); ?>" class="btn btn-outline">View all projects</a>
+			<a href="<?php echo esc_url( home_url( '/projects/' ) ); ?>" class="btn btn-outline">Lihat semua proyek</a>
 		</div>
 
 		<?php if ( $projects->have_posts() ) : ?>
@@ -239,7 +239,7 @@ $testimonials = new WP_Query(
 							<?php endif; ?>
 						</div>
 						<div class="p-6">
-							<span class="badge badge-soft mb-3"><?php echo esc_html( wp_strip_all_tags( get_the_term_list( get_the_ID(), 'akdisi_project_cat', '', ', ', '' ) ) ?: __( 'Case study', 'akdisi' ) ); ?></span>
+							<span class="badge badge-soft mb-3"><?php echo esc_html( wp_strip_all_tags( get_the_term_list( get_the_ID(), 'akdisi_project_cat', '', ', ', '' ) ) ?: __( 'Studi kasus', 'akdisi' ) ); ?></span>
 							<h3 class="text-lg font-semibold text-ink transition-colors group-hover:text-brand"><?php the_title(); ?></h3>
 							<p class="mt-2 text-sm text-ink-soft"><?php echo esc_html( get_the_excerpt() ); ?></p>
 						</div>
@@ -248,8 +248,8 @@ $testimonials = new WP_Query(
 			</div>
 		<?php else : ?>
 			<div data-reveal class="rounded-2xl border border-dashed border-paper-line bg-white p-10 text-center">
-				<p class="text-ink-faint">Projects will appear here once the team publishes the first case study.</p>
-				<p class="mt-2 text-sm text-ink-faint">Meanwhile, peek at our <a href="<?php echo esc_url( home_url( '/tentang/' ) ); ?>" class="text-brand underline underline-offset-2">process</a>.</p>
+				<p class="text-ink-faint">Proyek akan tampil di sini saat kami mempublikasikan studi kasus pertama.</p>
+				<p class="mt-2 text-sm text-ink-faint">Sambil menunggu, lihat <a href="<?php echo esc_url( home_url( '/tentang/' ) ); ?>" class="text-brand underline underline-offset-2">proses kami</a>.</p>
 			</div>
 		<?php endif; ?>
 	</div>
@@ -259,18 +259,18 @@ $testimonials = new WP_Query(
 <section class="akdisi-process section section-bg">
 	<div class="container mx-auto">
 		<div data-reveal class="mb-14 max-w-2xl">
-			<p class="eyebrow mb-4">How we work</p>
-			<h2 class="section-title">A process built for momentum.</h2>
-			<p class="section-sub mt-4">Four phases, weekly check-ins, zero surprises.</p>
+			<p class="eyebrow mb-4">Cara kami bekerja</p>
+			<h2 class="section-title">Proses yang menjaga momentum.</h2>
+			<p class="section-sub mt-4">Empat fase, check-in mingguan, tanpa kejutan.</p>
 		</div>
 
 		<ol class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
 			<?php
 			$steps = array(
-				array( '01', __( 'Discover', 'akdisi' ), __( 'Deep-dive workshops, user research, and a crisp definition of done.', 'akdisi' ) ),
-				array( '02', __( 'Design', 'akdisi' ), __( 'Wireframes to polished UI, validated with real users at each pass.', 'akdisi' ) ),
-				array( '03', __( 'Build', 'akdisi' ), __( 'Sprint-based engineering with demos every Friday — no black box.', 'akdisi' ) ),
-				array( '04', __( 'Launch & Grow', 'akdisi' ), __( 'Ship, measure, iterate. We stay on for optimisation and support.', 'akdisi' ) ),
+				array( '01', __( 'Temukan', 'akdisi' ), __( 'Workshop mendalam, riset pengguna, dan definisi selesai yang jelas.', 'akdisi' ) ),
+				array( '02', __( 'Rancang', 'akdisi' ), __( 'Dari wireframe hingga UI final, divalidasi pengguna nyata di tiap tahap.', 'akdisi' ) ),
+				array( '03', __( 'Bangun', 'akdisi' ), __( 'Engineering berbasis sprint dengan demo setiap Jumat — bukan kotak hitam.', 'akdisi' ) ),
+				array( '04', __( 'Luncurkan & Kembangkan', 'akdisi' ), __( 'Tayang, ukur, perbaiki. Kami tetap mendampingi untuk optimasi dan dukungan.', 'akdisi' ) ),
 			);
 			foreach ( $steps as $i => $step ) :
 				?>
@@ -288,8 +288,8 @@ $testimonials = new WP_Query(
 <section class="akdisi-testimonials section section-alt">
 	<div class="container mx-auto">
 		<div data-reveal class="mb-14 max-w-2xl">
-			<p class="eyebrow mb-4">Kind words</p>
-			<h2 class="section-title">What partners say after launch.</h2>
+			<p class="eyebrow mb-4">Kata mereka</p>
+			<h2 class="section-title">Apa kata mitra setelah tayang.</h2>
 		</div>
 
 		<?php if ( $testimonials->have_posts() ) : ?>
@@ -299,7 +299,7 @@ $testimonials = new WP_Query(
 					$testimonials->the_post();
 					?>
 					<figure data-reveal class="card flex flex-col p-7">
-						<div class="mb-4 text-brand" aria-label="5 stars">
+						<div class="mb-4 text-brand" aria-label="5 bintang">
 							★★★★★
 						</div>
 						<blockquote class="flex-1 text-[15px] leading-relaxed text-ink-soft">&ldquo;<?php echo esc_html( get_the_excerpt() ?: wp_trim_words( get_the_content(), 28 ) ); ?>&rdquo;</blockquote>
@@ -308,14 +308,14 @@ $testimonials = new WP_Query(
 								<?php echo esc_html( mb_substr( get_the_title(), 0, 1 ) ); ?>
 							</div>
 							<p class="mt-2 text-sm font-semibold text-ink"><?php the_title(); ?></p>
-							<p class="text-xs text-ink-faint"><?php echo esc_html( get_post_meta( get_the_ID(), 'role', true ) ?: __( 'Client partner', 'akdisi' ) ); ?></p>
+							<p class="text-xs text-ink-faint"><?php echo esc_html( get_post_meta( get_the_ID(), 'role', true ) ?: __( 'Mitra klien', 'akdisi' ) ); ?></p>
 						</figcaption>
 					</figure>
 				<?php endwhile; wp_reset_postdata(); ?>
 			</div>
 		<?php else : ?>
 			<div data-reveal class="rounded-2xl border border-dashed border-paper-line bg-white p-10 text-center text-ink-faint">
-				Testimonials will appear here as client stories come in.
+				Testimoni klien akan tampil di sini seiring cerita klien masuk.
 			</div>
 		<?php endif; ?>
 	</div>
@@ -326,10 +326,10 @@ $testimonials = new WP_Query(
 	<div class="container mx-auto">
 		<div class="mb-14 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
 			<div data-reveal>
-				<p class="eyebrow mb-4">From the blog</p>
-				<h2 class="section-title">Ideas we're thinking about.</h2>
+				<p class="eyebrow mb-4">Dari blog</p>
+				<h2 class="section-title">Ide yang sedang kami pikirkan.</h2>
 			</div>
-			<a href="<?php echo esc_url( home_url( '/insight/' ) ); ?>" class="btn btn-outline">All insights</a>
+			<a href="<?php echo esc_url( home_url( '/insight/' ) ); ?>" class="btn btn-outline">Semua insight</a>
 		</div>
 
 		<?php if ( $insights->have_posts() ) : ?>
@@ -354,7 +354,7 @@ $testimonials = new WP_Query(
 			</div>
 		<?php else : ?>
 			<div data-reveal class="rounded-2xl border border-dashed border-paper-line bg-paper-alt p-10 text-center text-ink-faint">
-				Perspectives on product, design, and growth will land here soon.
+				Perspektif soal produk, desain, dan pertumbuhan akan segera hadir di sini.
 			</div>
 		<?php endif; ?>
 	</div>
@@ -376,8 +376,8 @@ $faqs = new WP_Query(
 	<div class="container mx-auto grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
 		<div data-reveal>
 			<p class="eyebrow mb-4">FAQ</p>
-			<h2 class="section-title">Common questions, straight answers.</h2>
-			<p class="section-sub mt-4">Something not covered? <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="text-brand underline underline-offset-2">Ask us directly</a> — replies within a business day.</p>
+			<h2 class="section-title">Pertanyaan umum, jawaban langsung.</h2>
+			<p class="section-sub mt-4">Pertanyaan lain? <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="text-brand underline underline-offset-2">Tanya langsung</a> — dibalas dalam satu hari kerja.</p>
 		</div>
 		<div data-reveal class="space-y-3">
 			<?php
@@ -410,12 +410,12 @@ get_template_part(
 	'template-parts/cta-band',
 	null,
 	array(
-		'title'               => __( 'Have a product idea worth building?', 'akdisi' ),
-		'accent_words'        => array( 'building?' ),
-		'sub'                 => __( 'Tell us where you want to go — we will map the shortest, safest route there.', 'akdisi' ),
-		'btn_primary_label'   => __( 'Start the conversation', 'akdisi' ),
+		'title'               => __( 'Punya ide produk yang layak dibangun?', 'akdisi' ),
+		'accent_words'        => array( 'dibangun?' ),
+		'sub'                 => __( 'Ceritakan tujuan Anda — kami akan memetakan rute terpendek dan teraman ke sana.', 'akdisi' ),
+		'btn_primary_label'   => __( 'Mulai percakapan', 'akdisi' ),
 		'btn_primary_url'     => home_url( '/kontak/' ),
-		'btn_secondary_label' => __( 'See use cases', 'akdisi' ),
+		'btn_secondary_label' => __( 'Lihat use case', 'akdisi' ),
 		'btn_secondary_url'   => home_url( '/use-cases/' ),
 	)
 );

@@ -9,9 +9,9 @@
 get_header();
 
 get_template_part( 'template-parts/page-hero', null, array(
-	'eyebrow' => __( 'Services', 'akdisi' ),
-	'title'   => __( 'Full-cycle digital services', 'akdisi' ),
-	'sub'     => __( 'Strategy, design, engineering, and growth — one senior team from first sketch to shipped product.', 'akdisi' ),
+	'eyebrow' => __( 'Layanan', 'akdisi' ),
+	'title'   => __( 'Layanan digital full-cycle', 'akdisi' ),
+	'sub'     => __( 'Strategi, desain, engineering, dan pertumbuhan — satu tim senior dari ide pertama hingga produk tayang.', 'akdisi' ),
 ) );
 ?>
 
@@ -23,27 +23,27 @@ get_template_part( 'template-parts/page-hero', null, array(
 			$services = array(
 				array(
 					'num'    => '01',
-					'title'  => __( 'Product Strategy', 'akdisi' ),
-					'desc'   => __( 'Market research, competitor teardowns, and prioritised roadmaps that de-risk what you build.', 'akdisi' ),
-					'points' => array( 'Discovery workshops', 'MVP scoping & roadmaps', 'Positioning & naming', 'Competitive analysis' ),
+					'title'  => __( 'Strategi Produk', 'akdisi' ),
+					'desc'   => __( 'Riset pasar, analisis kompetitor, dan peta jalan prioritas yang memastikan Anda membangun hal yang tepat.', 'akdisi' ),
+					'points' => array( 'Workshop penemuan', 'Scoping MVP & peta jalan', 'Positioning & penamaan', 'Analisis kompetitif' ),
 				),
 				array(
 					'num'    => '02',
-					'title'  => __( 'UI/UX Design', 'akdisi' ),
-					'desc'   => __( 'Interfaces and design systems that feel inevitable — researched, prototyped, and tested with real users.', 'akdisi' ),
-					'points' => array( 'Wireframes & prototypes', 'Design systems', 'Usability testing', 'Design tokens & docs' ),
+					'title'  => __( 'Desain UI/UX', 'akdisi' ),
+					'desc'   => __( 'Antarmuka dan design system yang terasa pas — diteliti, diprototipe, dan diuji dengan pengguna nyata.', 'akdisi' ),
+					'points' => array( 'Wireframe & prototipe', 'Design system', 'Uji kegunaan', 'Design token & dokumentasi' ),
 				),
 				array(
 					'num'    => '03',
-					'title'  => __( 'Web & App Development', 'akdisi' ),
-					'desc'   => __( 'Fast, accessible, maintainable products built on modern stacks — from marketing sites to SaaS platforms.', 'akdisi' ),
-					'points' => array( 'Custom WordPress themes', 'React / Node applications', 'API design & integration', 'Performance & accessibility' ),
+					'title'  => __( 'Pengembangan Website & Aplikasi', 'akdisi' ),
+					'desc'   => __( 'Produk cepat, aman, dan mudah dirawat di atas stack modern — dari situs marketing hingga platform SaaS.', 'akdisi' ),
+					'points' => array( 'Tema WordPress kustom', 'Aplikasi React / Node', 'Desain & integrasi API', 'Performa & aksesibilitas' ),
 				),
 				array(
 					'num'    => '04',
-					'title'  => __( 'Growth & Marketing', 'akdisi' ),
-					'desc'   => __( 'SEO, analytics, and conversion programs that compound after launch — not vanity metrics.', 'akdisi' ),
-					'points' => array( 'Technical SEO', 'Analytics & funnels', 'Landing page systems', 'Content operations' ),
+					'title'  => __( 'Pertumbuhan & Pemasaran', 'akdisi' ),
+					'desc'   => __( 'SEO, analitik, dan program konversi yang terus memberi hasil setelah tayang — bukan metrik vanity.', 'akdisi' ),
+					'points' => array( 'SEO teknis', 'Analitik & funnel', 'Sistem landing page', 'Operasi konten' ),
 				),
 			);
 			foreach ( $services as $i => $s ) :
@@ -51,7 +51,7 @@ get_template_part( 'template-parts/page-hero', null, array(
 				<article data-reveal class="card p-8 md:p-10" style="transition-delay:<?php echo esc_attr( $i * 60 ); ?>ms">
 					<div class="flex items-baseline justify-between">
 						<span class="font-display text-sm font-bold text-brand"><?php echo esc_html( $s['num'] ); ?></span>
-						<span class="badge badge-neutral">On retainer or per project</span>
+						<span class="badge badge-neutral">Retainer atau per proyek</span>
 					</div>
 					<h2 class="mt-4 flex items-center gap-3 text-2xl font-semibold text-ink">
 						<?php echo esc_html( $s['title'] ); ?>
@@ -75,16 +75,16 @@ get_template_part( 'template-parts/page-hero', null, array(
 	<div class="container mx-auto">
 		<div data-reveal class="mb-12 grid items-end gap-6 lg:grid-cols-[1fr_auto]">
 			<div>
-				<p class="eyebrow mb-4">Engagement</p>
-				<h2 class="section-title">Three ways to work together.</h2>
+				<p class="eyebrow mb-4">Skema kerja sama</p>
+				<h2 class="section-title">Tiga cara bekerja bersama.</h2>
 			</div>
 		</div>
 		<div class="grid gap-6 md:grid-cols-3">
 			<?php
 			$models = array(
-				array( __( 'Sprint Teams', 'akdisi' ), __( 'Senior team embedded with yours for a fixed sprint (2–4 wks). Weekly demos, full transparency.', 'akdisi' ), __( 'Best when you have momentum and need capacity fast.', 'akdisi' ) ),
-				array( __( 'Product Retainer', 'akdisi' ), __( 'Ongoing design + engineering partnership with a shared backlog and monthly priorities.', 'akdisi' ), __( 'Best when you ship continuously and want one accountable team.', 'akdisi' ) ),
-				array( __( 'Fixed Scope', 'akdisi' ), __( 'Clearly defined deliverables, milestones, and price. Ideal for a specific launch or rebuild.', 'akdisi' ), __( 'Best when scope is known and budget is fixed.', 'akdisi' ) ),
+				array( __( 'Tim Sprint', 'akdisi' ), __( 'Tim senior bergabung dengan tim Anda untuk satu sprint tetap (2–4 minggu). Demo mingguan, transparan penuh.', 'akdisi' ), __( 'Cocok saat Anda punya momentum dan butuh kapasitas cepat.', 'akdisi' ) ),
+				array( __( 'Retainer Produk', 'akdisi' ), __( 'Kemitraan desain + engineering berkelanjutan dengan backlog bersama dan prioritas bulanan.', 'akdisi' ), __( 'Cocok jika Anda rilis terus-menerus dan ingin satu tim yang bertanggung jawab.', 'akdisi' ) ),
+				array( __( 'Lingkup Tetap', 'akdisi' ), __( 'Deliverable, milestone, dan harga yang jelas. Ideal untuk peluncuran atau rebuild tertentu.', 'akdisi' ), __( 'Cocok saat lingkup sudah pasti dan anggaran tetap.', 'akdisi' ) ),
 			);
 			foreach ( $models as $i => $m ) :
 				?>

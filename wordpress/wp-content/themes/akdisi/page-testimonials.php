@@ -18,9 +18,9 @@ $testimonials = new WP_Query(
 );
 
 get_template_part( 'template-parts/page-hero', null, array(
-	'eyebrow' => __( 'Testimonials', 'akdisi' ),
-	'title'   => __( "Don't take our word for it.", 'akdisi' ),
-	'sub'     => __( "A few words from the founders and operators we've shipped with.", 'akdisi' ),
+	'eyebrow' => __( 'Testimoni', 'akdisi' ),
+	'title'   => __( "Jangan percaya kata kami begitu saja.", 'akdisi' ),
+	'sub'     => __( "Beberapa kata dari founder dan operator yang pernah kami dampingi.", 'akdisi' ),
 ) );
 ?>
 
@@ -34,7 +34,7 @@ get_template_part( 'template-parts/page-hero', null, array(
 					$role = get_post_meta( get_the_ID(), 'role', true );
 					?>
 					<figure data-reveal class="card flex flex-col p-7">
-						<div class="mb-4 flex gap-1 text-brand" aria-label="5 stars">★★★★★</div>
+						<div class="mb-4 flex gap-1 text-brand" aria-label="5 bintang">★★★★★</div>
 						<blockquote class="flex-1 text-[15px] leading-relaxed text-ink-soft">&ldquo;<?php echo esc_html( get_the_excerpt() ?: wp_trim_words( get_the_content(), 32 ) ); ?>&rdquo;</blockquote>
 						<figcaption class="mt-6 flex items-center gap-3 border-t border-paper-line pt-5">
 							<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-soft font-display text-sm font-bold text-brand">
@@ -42,7 +42,7 @@ get_template_part( 'template-parts/page-hero', null, array(
 							</div>
 							<div>
 								<p class="text-sm font-semibold text-ink"><?php the_title(); ?></p>
-								<p class="text-xs text-ink-faint"><?php echo esc_html( $role ?: __( 'Client partner', 'akdisi' ) ); ?></p>
+								<p class="text-xs text-ink-faint"><?php echo esc_html( $role ?: __( 'Mitra klien', 'akdisi' ) ); ?></p>
 							</div>
 						</figcaption>
 					</figure>
@@ -50,8 +50,8 @@ get_template_part( 'template-parts/page-hero', null, array(
 			</div>
 		<?php else : ?>
 			<div data-reveal class="rounded-2xl border border-dashed border-paper-line bg-paper-alt p-12 text-center">
-				<p class="text-ink-faint">Client stories will be published here as they come in.</p>
-				<p class="mt-3 text-sm text-ink-faint">Want to be first? <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="text-brand underline underline-offset-2">Start a project</a>.</p>
+				<p class="text-ink-faint">Cerita klien akan diterbitkan di sini seiring datangnya.</p>
+				<p class="mt-3 text-sm text-ink-faint">Mau jadi yang pertama? <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="text-brand underline underline-offset-2">Mulai proyek</a>.</p>
 			</div>
 		<?php endif; ?>
 	</div>

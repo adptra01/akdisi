@@ -42,7 +42,7 @@ while ( have_posts() ) :
 			<div class="mt-12 border-t border-paper-line pt-8">
 				<a href="<?php echo esc_url( home_url( '/insight/' ) ); ?>" class="inline-flex items-center gap-2 text-sm font-semibold text-brand">
 					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
-					All insights
+					Semua insight
 				</a>
 			</div>
 		</div>

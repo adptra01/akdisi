@@ -9,8 +9,8 @@ get_header();
 
 get_template_part( 'template-parts/page-hero', null, array(
 	'eyebrow' => __( 'Insight', 'akdisi' ),
-	'title'   => __( 'Ideas we are thinking about.', 'akdisi' ),
-	'sub'     => __( 'Perspectives on product, design, engineering, and growth from the AKDISI team.', 'akdisi' ),
+	'title'   => __( 'Ide yang sedang kami pikirkan.', 'akdisi' ),
+	'sub'     => __( 'Perspektif soal produk, desain, engineering, dan pertumbuhan dari tim AKDISI.', 'akdisi' ),
 ) );
 ?>
 
@@ -48,7 +48,7 @@ get_template_part( 'template-parts/page-hero', null, array(
 			</div>
 		<?php else : ?>
 			<div data-reveal class="rounded-2xl border border-dashed border-paper-line bg-paper-alt p-12 text-center">
-				<p class="text-ink-faint">Insights are on the way. Meanwhile, peek at our <a href="<?php echo esc_url( home_url( '/projects/' ) ); ?>" class="text-brand underline underline-offset-2">work</a>.</p>
+				<p class="text-ink-faint">Insight segera hadir. Sambil menunggu, lihat <a href="<?php echo esc_url( home_url( '/projects/' ) ); ?>" class="text-brand underline underline-offset-2">karya kami</a>.</p>
 			</div>
 		<?php endif; ?>
 	</div>

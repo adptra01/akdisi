@@ -8,9 +8,9 @@
 get_header();
 
 get_template_part( 'template-parts/page-hero', null, array(
-	'eyebrow' => is_search() ? __( 'Search results', 'akdisi' ) : __( 'Archive', 'akdisi' ),
-	'title'   => is_search() ? sprintf( __( 'Results for &ldquo;%s&rdquo;', 'akdisi' ), get_search_query() ) : get_the_archive_title(),
-	'sub'     => __( 'Everything worth publishing, in one place.', 'akdisi' ),
+	'eyebrow' => is_search() ? __( 'Hasil pencarian', 'akdisi' ) : __( 'Arsip', 'akdisi' ),
+	'title'   => is_search() ? sprintf( __( 'Hasil untuk &ldquo;%s&rdquo;', 'akdisi' ), get_search_query() ) : get_the_archive_title(),
+	'sub'     => __( 'Semua yang layak diterbitkan, dalam satu tempat.', 'akdisi' ),
 ) );
 ?>
 
@@ -38,14 +38,14 @@ get_template_part( 'template-parts/page-hero', null, array(
 			<div data-reveal class="mx-auto max-w-2xl rounded-2xl border border-dashed border-paper-line bg-paper-alt p-12 text-center">
 				<p class="font-display text-5xl font-bold text-ink/20"><?php echo is_search() ? '0' : '404'; ?></p>
 				<h2 class="mt-4 text-xl font-semibold text-ink">
-					<?php echo is_search() ? esc_html__( 'Nothing matched your search.', 'akdisi' ) : esc_html__( 'Nothing here yet.', 'akdisi' ); ?>
+					<?php echo is_search() ? esc_html__( 'Tidak ada yang cocok dengan pencarian Anda.', 'akdisi' ) : esc_html__( 'Belum ada apa pun di sini.', 'akdisi' ); ?>
 				</h2>
 				<p class="mt-2 text-ink-soft">
 					<?php
 					if ( is_search() ) {
-						printf( __( 'Try different keywords, or <a href="%s" class="text-brand underline underline-offset-2">browse the services</a>.', 'akdisi' ), esc_url( home_url( '/layanan/' ) ) );
+						printf( __( 'Coba kata kunci lain, atau <a href="%s" class="text-brand underline underline-offset-2">jelajahi layanan kami</a>.', 'akdisi' ), esc_url( home_url( '/layanan/' ) ) );
 					} else {
-						printf( __( 'Head <a href="%s" class="text-brand underline underline-offset-2">home</a> to get oriented.', 'akdisi' ), esc_url( home_url( '/' ) ) );
+						printf( __( 'Kembali ke <a href="%s" class="text-brand underline underline-offset-2">beranda</a> untuk mulai menjelajah.', 'akdisi' ), esc_url( home_url( '/' ) ) );
 					}
 					?>
 				</p>

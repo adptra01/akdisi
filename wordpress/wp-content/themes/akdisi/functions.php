@@ -22,8 +22,8 @@ function akdisi_setup() {
 
 	register_nav_menus(
 		array(
-			'primary' => __( 'Primary Menu', 'akdisi' ),
-			'footer'  => __( 'Footer Menu', 'akdisi' ),
+			'primary' => __( 'Menu Utama', 'akdisi' ),
+			'footer'  => __( 'Menu Footer', 'akdisi' ),
 		)
 	);
 
@@ -86,6 +86,38 @@ function akdisi_scripts() {
 add_action( 'wp_enqueue_scripts', 'akdisi_scripts' );
 
 /**
+ * SEO meta description + Open Graph — Bahasa Indonesia, fallback ke tagline.
+ */
+function akdisi_seo_meta() {
+	$desc = get_bloginfo( 'description' );
+	if ( is_singular() ) {
+		$excerpt = get_the_excerpt();
+		if ( $excerpt ) {
+			$desc = $excerpt;
+		}
+	}
+	$desc = wp_strip_all_tags( $desc );
+	$desc = wp_html_excerpt( $desc, 160, '&hellip;' );
+	if ( '' === $desc ) {
+		$desc = 'AKDISI — mitra digital untuk website dan aplikasi yang mendatangkan pelanggan.';
+	}
+	echo '<meta name="description" content="' . esc_attr( $desc ) . '">' . "\n";
+
+	$og_title = is_singular() ? get_the_title() : get_bloginfo( 'name' );
+	echo '<meta property="og:title" content="' . esc_attr( $og_title ) . '">' . "\n";
+	echo '<meta property="og:description" content="' . esc_attr( $desc ) . '">' . "\n";
+	echo '<meta property="og:type" content="' . ( is_singular( 'akdisi_project' ) ? 'article' : 'website' ) . '">' . "\n";
+	echo '<meta property="og:url" content="' . esc_url( get_permalink() ?: home_url( '/' ) ) . '">' . "\n";
+	echo '<meta property="og:site_name" content="' . esc_attr( get_bloginfo( 'name' ) ) . '">' . "\n";
+	echo '<meta property="og:locale" content="id_ID">' . "\n";
+
+	if ( is_singular() && has_post_thumbnail() ) {
+		echo '<meta property="og:image" content="' . esc_url( (string) get_the_post_thumbnail_url( null, 'akdisi-wide' ) ) . '">' . "\n";
+	}
+}
+add_action( 'wp_head', 'akdisi_seo_meta', 5 );
+
+/**
  * Tailwind v3 CDN runtime config — palette & fonts.
  */
 function akdisi_tailwind_config() {
@@ -130,9 +162,9 @@ function akdisi_register_post_types() {
 		'akdisi_project',
 		array(
 			'labels'       => array(
-				'name'          => __( 'Projects', 'akdisi' ),
-				'singular_name' => __( 'Project', 'akdisi' ),
-				'add_new_item'  => __( 'Add New Project', 'akdisi' ),
+				'name'          => __( 'Proyek', 'akdisi' ),
+				'singular_name' => __( 'Proyek', 'akdisi' ),
+				'add_new_item'  => __( 'Tambah Proyek Baru', 'akdisi' ),
 			),
 			'public'       => true,
 			'has_archive'  => true,
@@ -147,7 +179,7 @@ function akdisi_register_post_types() {
 		'akdisi_project_cat',
 		'akdisi_project',
 		array(
-			'labels'          => array( 'name' => __( 'Project Categories', 'akdisi' ) ),
+			'labels'          => array( 'name' => __( 'Kategori Proyek', 'akdisi' ) ),
 			'hierarchical'    => true,
 			'show_admin_column'=> true,
 			'show_in_rest'    => true,
@@ -159,7 +191,7 @@ function akdisi_register_post_types() {
 		'akdisi_insight',
 		array(
 			'labels'       => array(
-				'name'          => __( 'Insights', 'akdisi' ),
+				'name'          => __( 'Insight', 'akdisi' ),
 				'singular_name' => __( 'Insight', 'akdisi' ),
 			),
 			'public'       => true,
@@ -174,7 +206,7 @@ function akdisi_register_post_types() {
 	register_post_type(
 		'akdisi_faq',
 		array(
-			'labels'       => array( 'name' => __( 'FAQs', 'akdisi' ), 'singular_name' => __( 'FAQ', 'akdisi' ) ),
+			'labels'       => array( 'name' => __( 'FAQ', 'akdisi' ), 'singular_name' => __( 'FAQ', 'akdisi' ) ),
 			'public'       => false,
 			'show_ui'      => true,
 			'menu_icon'    => 'dashicons-editor-help',
@@ -192,7 +224,7 @@ function akdisi_register_testimonials() {
 	register_post_type(
 		'akdisi_testimonial',
 		array(
-			'labels'       => array( 'name' => __( 'Testimonials', 'akdisi' ), 'singular_name' => __( 'Testimonial', 'akdisi' ) ),
+			'labels'       => array( 'name' => __( 'Testimoni', 'akdisi' ), 'singular_name' => __( 'Testimoni', 'akdisi' ) ),
 			'public'       => true,
 			'has_archive'  => false,
 			'menu_icon'    => 'dashicons-format-quote',

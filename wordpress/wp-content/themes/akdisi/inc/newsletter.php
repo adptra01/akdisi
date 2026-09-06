@@ -49,7 +49,7 @@ function akdisi_handle_newsletter() {
 	$email = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
 
 	if ( ! is_email( $email ) ) {
-		wp_send_json_error( array( 'message' => __( 'Please enter a valid email address.', 'akdisi' ) ), 422 );
+		wp_send_json_error( array( 'message' => __( 'Mohon masukkan alamat email yang valid.', 'akdisi' ) ), 422 );
 	}
 
 	// Throttle: max 5 subscriptions per IP per hour.
@@ -60,7 +60,7 @@ function akdisi_handle_newsletter() {
 		$fr = array_filter( $fr, fn( $t ) => $now - $t < 3600 );
 	}
 	if ( is_array( $fr ) && count( $fr ) >= 5 ) {
-		wp_send_json_error( array( 'message' => __( 'Too many attempts. Please try again later.', 'akdisi' ) ), 429 );
+		wp_send_json_error( array( 'message' => __( 'Terlalu banyak percobaan. Silakan coba lagi nanti.', 'akdisi' ) ), 429 );
 	}
 	$fr[]    = $now;
 	update_option( 'akdisi_nl_rate', $fr );
@@ -69,7 +69,7 @@ function akdisi_handle_newsletter() {
 
 	wp_send_json_success(
 		array(
-			'message' => __( 'You are on the list — watch your inbox for the next issue.', 'akdisi' ),
+			'message' => __( 'Anda sudah terdaftar — pantau inbox Anda untuk edisi berikutnya.', 'akdisi' ),
 		)
 	);
 }

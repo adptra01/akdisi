@@ -6,6 +6,86 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.3.0 — Full Indonesian Conversion + SEO Meta/OG + Benefit-Driven Copy 2026-09-06
+
+Konversi penuh bahasa (EN → ID) di seluruh permukaan website: tema PHP, konten
+WordPress (pages, menu, CPT, taxonomy), dan SEO meta. Semua string user-facing
+kini Bahasa Indonesia dengan copy benefit-first berbasis data BPS — tanpa fear
+copy, tanpa sentuh backend (AJAX handlers, option names, CPT slugs).
+
+### Bahasa — tema PHP (20 file PHP + main.js)
+- Semua copy: `front-page.php` (hero typewriter kini "Website & aplikasi yang
+  mendatangkan pelanggan untuk bisnis Anda.", accent `pelanggan`; stats "Proyek
+  selesai / Industri dilayani / Klien kembali"; "Mitra, bukan sekadar vendor";
+  "Lihat layanan" / "Mulai proyek"; "Fakta proyek" → klien/tahun/peran/status
+  dgn fallback "Desain + Bangun" / "Tayang"), `404.php` ("Halaman ini tersesat."),
+  archives/singles, page templates, `header.php`/`footer.php`/`cta-band.php`
+  (default "Siap membangun produk yang layak diluncurkan?"; footer newsletter
+  "Gabung", copyright "Seluruh hak cipta dilindungi.", menu "Perusahaan"/
+  "Layanan"/"Terkini"), `inc/helpers.php` (fallback menus + footer services).
+- Form & AJAX: `inc/contact.php` dan `inc/newsletter.php` — pesan error/success
+  ID termasuk throttle 429 & "Anda sudah terdaftar". Nama option/nonce/action
+  tidak diubah (backend aman).
+- A11y: aria-label ID (nav "Navigasi utama"/"Menu utama", toggle "Buka menu"/
+  "Tutup menu" via JS, bintang "5 bintang", logo "... beranda").
+- WP admin: label CPT (Proyek/Insight/FAQ/Testimoni/Kategori Proyek) + menu
+  locations ("Menu Utama"/"Menu Footer"), "Arsip" di archive.php.
+
+### SEO tanpa plugin (fungsi baru `akdisi_seo_meta()`)
+- Hook `wp_head` priority 5: meta description (excerpt → fallback tagline ID →
+  fallback kedua), Open Graph (`og:title` lokalisasi, `og:description`,
+  `og:type` article/website, `og:url` canonical, `og:locale id_ID`,
+  `og:site_name`, `og:image` dari thumbnail `akdisi-wide` bila ada).
+- Title tag via `wp_title` + separator `–`; gamblang di semua halaman
+  ("Layanan – AKDISI", "Playbook CRO untuk SaaS B2B – AKDISI", dsb.).
+
+### Konten WordPress → ID (via `wp eval-file`, slug dipertahankan)
+- **Pages**: 67–71 "Layanan/Tentang/Testimoni/Use Case/Kontak", 50–53
+  "Pengembangan Aplikasi Kustom/Digitalisasi Proses Bisnis/Sistem Administrasi
+  & Data/Solusi Bisnis Kustom".
+- **Menu**: Primary (Beranda, Layanan, Proyek, Tentang, Testimoni, Use Case,
+  Insight, Kontak) & Footer (Tentang, Proyek, Use Case, Insight, Kontak).
+- **Projects** (94–98): judul ID (Revamp Marketplace, Operasi Klinik, PropCare,
+  Suite Analitik, EventFlow) + konten full ID (Latar belakang / Yang kami lakukan
+  / Hasil) + meta status "Tayang" dan role ID.
+- **Testimonials** (99–103): kutipan asli ID + meta `role` baru (Lead Operasional,
+  Direktur, Mitra, CFO, Founder) — sebelumnya meta list kosong.
+- **Insights** (104–107): judul & konten ID penuh (Playbook CRO untuk SaaS B2B,
+  Cara Membangun Sistem Desain Saat Tim Anda Masih Kecil, Kapan WordPress Sudah
+  Cukup, Agensi vs Vendor — Cara Membedakannya).
+- **FAQs** (108–115): judul ringkas ID + jawaban 2–3 kalimat; terminologi
+  konsisten (mitra, scope, discovery, retainer, hardening).
+- **Taxonomy** `akdisi_project_cat`: Platform Web, Teknologi Kesehatan, Teknologi
+  Properti, Data & Analitik, Teknologi Acara (slug tetap).
+- **Tagline**: "Jasa Pembuatan Website & Aplikasi untuk Bisnis di Indonesia"
+  (raw `&`, bukan entity).
+
+### Copy benefit-first (pembuktian data BPS, tanpa fear)
+- Data BPS (rilis Agustus 2024): hanya **12% dari 64 juta UMKM** mengadopsi
+  teknologi digital efektif; UMKM = **60% PDB** Indonesia → digitalisasi
+  diposisikan sebagai keunggulan kompetitif, bukan kewajiban.
+- Hero: "Bantu bisnis di Jambi—dan seluruh Indonesia—beralih ke digital karena
+  kompetitor Anda mungkin sudah melakukannya." (informatif, bukan ancaman).
+- "6 minggu hingga tayang", "85% klien kembali" — angka sebagai bukti, bukan
+  klaim kosong. Touchstone kompetitor (JadiWeb) dipakai sebagai pembeda harga/
+  scope, tanpa menjiplak.
+
+### QA v4.3.0 (Playwright Chromium, DDEV)
+- **13 URL** (home, layanan, tentang, testimoni, use-cases, kontak, projects +
+  single, insight + single, faq, solutions, 404 → 404): semua status benar,
+  `pageerror` 0, h-overflow 0px.
+- SEO: og:locale `id_ID` di semua halaman, meta description ID, og:image pada
+  single project/insight, title ID unik per halaman.
+- Konten: audit `inner_text` — tidak ada literal EN tersisa (termasuk
+  "Services/About/Contact/Ready to build/&amp;" leak); typewriter hero + CTA
+  89/89 char visible setelah scroll.
+- Mobile 390px: overflow 0, menu toggle buka/tutup (aria-expanded true).
+- Reduced motion: semua char terlihat instan (computed opacity 1), cursor
+  animasi none.
+- PHP lint bersih (24 file via DDEV, terverifikasi ulang), `node --check` main.js OK.
+
+---
+
 ## v4.2.3 — Fix: Why AKDISI Dark Band Padding 2026-09-06
 
 `.akdisi-why` sebelumnya hanya `section-dark` (tanpa class `.section`) dan tidak

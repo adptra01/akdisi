@@ -16,7 +16,7 @@
 		const setOpen = ( open ) => {
 			mobileMenu.classList.toggle( 'hidden', ! open );
 			toggle.setAttribute( 'aria-expanded', String( open ) );
-			toggle.setAttribute( 'aria-label', open ? 'Close menu' : 'Toggle menu' );
+			toggle.setAttribute( 'aria-label', open ? 'Tutup menu' : 'Buka menu' );
 		};
 		toggle.addEventListener( 'click', () => {
 			setOpen( mobileMenu.classList.contains( 'hidden' ) );

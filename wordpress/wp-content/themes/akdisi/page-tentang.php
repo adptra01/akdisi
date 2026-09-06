@@ -9,9 +9,9 @@
 get_header();
 
 get_template_part( 'template-parts/page-hero', null, array(
-	'eyebrow' => __( 'About AKDISI', 'akdisi' ),
-	'title'   => __( 'We build digital products for teams that ship.', 'akdisi' ),
-	'sub'     => __( 'A senior-only studio from Jambi, partnering with growing businesses across Indonesia and beyond.', 'akdisi' ),
+	'eyebrow' => __( 'Tentang AKDISI', 'akdisi' ),
+	'title'   => __( 'Kami membangun produk digital untuk tim yang suka mengeksekusi.', 'akdisi' ),
+	'sub'     => __( 'Studio khusus senior dari Jambi, bermitra dengan bisnis yang bertumbuh di Indonesia dan luar negeri.', 'akdisi' ),
 ) );
 ?>
 
@@ -19,34 +19,34 @@ get_template_part( 'template-parts/page-hero', null, array(
 <section class="section section-bg">
 	<div class="container mx-auto grid items-start gap-12 lg:grid-cols-[1fr_1.1fr]">
 		<div data-reveal>
-			<p class="eyebrow mb-4">Our story</p>
-			<h2 class="section-title">Born from a simple frustration.</h2>
+			<p class="eyebrow mb-4">Cerita kami</p>
+			<h2 class="section-title">Lahir dari satu frustrasi sederhana.</h2>
 			<div class="mt-6 space-y-4 leading-relaxed text-ink-soft">
-				<p>Too many digital projects fail — not because the team isn't skilled, but because nobody owns the outcome. Requirements drift, hand-offs lose context, and "done" means whatever the last invoice said.</p>
-				<p>AKDISI started as a counter to that. A small, senior team where the people who design your product are the same people who build it — and who stay accountable after launch.</p>
-				<p>Today we partner with founders, operators, and institutions on everything from marketing sites to full SaaS platforms. Same principle, bigger projects.</p>
+				<p>Terlalu banyak proyek digital gagal — bukan karena timnya tidak mumpuni, tapi karena tidak ada yang benar-benar bertanggung jawab atas hasilnya. Kebutuhan bergeser, serah-terima kehilangan konteks, dan kata "selesai" berarti apa pun yang tertulis di invoice terakhir.</p>
+				<p>AKDISI lahir sebagai jawaban atas hal itu. Tim kecil berisi senior, tempat orang yang merancang produk Anda adalah orang yang sama yang membangunnya — dan tetap bertanggung jawab setelah tayang.</p>
+				<p>Kini kami bermitra dengan founder, operator, dan institusi — dari situs marketing hingga platform SaaS penuh. Prinsip yang sama, proyek yang lebih besar.</p>
 			</div>
 			<div class="mt-8 flex flex-wrap gap-4">
-				<a href="<?php echo esc_url( home_url( '/projects/' ) ); ?>" class="btn btn-primary">See our work</a>
-				<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-outline">Get in touch</a>
+				<a href="<?php echo esc_url( home_url( '/projects/' ) ); ?>" class="btn btn-primary">Lihat karya kami</a>
+				<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-outline">Hubungi kami</a>
 			</div>
 		</div>
 		<div data-reveal class="grid gap-6 sm:grid-cols-2">
 			<div class="rounded-2xl bg-brand-soft p-8">
 				<p class="font-display text-5xl font-bold text-brand">2019</p>
-				<p class="mt-3 text-sm text-ink-soft">Founded in Jambi as a two-person web studio.</p>
+				<p class="mt-3 text-sm text-ink-soft">Didirikan di Jambi sebagai studio web dua orang.</p>
 			</div>
 			<div class="rounded-2xl border border-paper-line bg-paper-alt p-8">
 				<p class="font-display text-5xl font-bold text-ink">40+</p>
-				<p class="mt-3 text-sm text-ink-soft">Projects shipped across 12 industries.</p>
+				<p class="mt-3 text-sm text-ink-soft">Proyek selesai di 12 industri.</p>
 			</div>
 			<div class="rounded-2xl border border-paper-line bg-paper-alt p-8">
 				<p class="font-display text-5xl font-bold text-ink">12</p>
-				<p class="mt-3 text-sm text-ink-soft">People, all senior — no juniors learning on your budget.</p>
+				<p class="mt-3 text-sm text-ink-soft">Orang, semua senior — tanpa yang belajar sambil jalan.</p>
 			</div>
 			<div class="rounded-2xl bg-ink p-8">
 				<p class="font-display text-5xl font-bold text-white">98%</p>
-				<p class="mt-3 text-sm text-stone-400">Of clients return for a second engagement.</p>
+				<p class="mt-3 text-sm text-stone-400">Klien kembali untuk kerja sama berikutnya.</p>
 			</div>
 		</div>
 	</div>
@@ -56,15 +56,15 @@ get_template_part( 'template-parts/page-hero', null, array(
 <section class="section section-alt">
 	<div class="container mx-auto">
 		<div data-reveal class="mb-12 max-w-2xl">
-			<p class="eyebrow mb-4">Values</p>
-			<h2 class="section-title">What we refuse to compromise.</h2>
+			<p class="eyebrow mb-4">Nilai kami</p>
+			<h2 class="section-title">Apa yang tidak pernah kami kompromikan.</h2>
 		</div>
 		<div class="grid gap-6 md:grid-cols-3">
 			<?php
 			$values = array(
-				array( __( 'Own the outcome', 'akdisi' ), __( 'We measure success by your metrics — launches, conversions, retention — not by hours billed.', 'akdisi' ) ),
-				array( __( 'Senior, always', 'akdisi' ), __( 'The person in your kickoff is the person shipping the work. No bait-and-switch staffing.', 'akdisi' ) ),
-				array( __( 'Boring reliability', 'akdisi' ), __( 'Consistent demos, honest timelines, plain language. Excitement should come from the product.', 'akdisi' ) ),
+				array( __( 'Bertanggung jawab atas hasil', 'akdisi' ), __( 'Kami diukur dari metrik Anda — peluncuran, konversi, retensi — bukan dari jam yang ditagih.', 'akdisi' ) ),
+				array( __( 'Senior, selalu', 'akdisi' ), __( 'Orang di kickoff Anda adalah orang yang mengerjakan produknya. Tanpa jualan nama lalu operan.', 'akdisi' ) ),
+				array( __( 'Keandalan yang membosankan', 'akdisi' ), __( 'Demo konsisten, timeline jujur, bahasa yang jelas. Kegembiraan seharusnya datang dari produknya.', 'akdisi' ) ),
 			);
 			foreach ( $values as $i => $v ) :
 				?>

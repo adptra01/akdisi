@@ -8,7 +8,7 @@
 get_header();
 
 get_template_part( 'template-parts/page-hero', null, array(
-	'eyebrow' => __( 'Archive', 'akdisi' ),
+	'eyebrow' => __( 'Arsip', 'akdisi' ),
 	'title'   => wp_strip_all_tags( get_the_archive_title() ),
 ) );
 ?>
@@ -35,7 +35,7 @@ get_template_part( 'template-parts/page-hero', null, array(
 			</div>
 		<?php else : ?>
 			<div data-reveal class="rounded-2xl border border-dashed border-paper-line bg-paper-alt p-12 text-center">
-				<p class="text-ink-faint">Nothing published yet.</p>
+				<p class="text-ink-faint">Belum ada yang dipublikasikan.</p>
 			</div>
 		<?php endif; ?>
 	</div>

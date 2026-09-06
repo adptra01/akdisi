@@ -15,7 +15,7 @@ while ( have_posts() ) :
 	<section class="section-bg border-b border-paper-line pt-16 pb-12">
 		<div class="container mx-auto">
 			<nav class="mb-6 text-sm text-ink-faint" aria-label="Breadcrumb">
-				<a href="<?php echo esc_url( home_url( '/projects/' ) ); ?>" class="hover:text-brand">Projects</a>
+				<a href="<?php echo esc_url( home_url( '/projects/' ) ); ?>" class="hover:text-brand">Proyek</a>
 				<span class="mx-2">/</span>
 				<span class="text-ink"><?php the_title(); ?></span>
 			</nav>
@@ -47,14 +47,14 @@ while ( have_posts() ) :
 				</div>
 				<aside data-reveal class="lg:sticky lg:top-28 lg:self-start">
 					<div class="rounded-2xl border border-paper-line bg-paper-alt p-7 space-y-4">
-						<h2 class="text-sm font-semibold uppercase tracking-wide text-ink">Project facts</h2>
+						<h2 class="text-sm font-semibold uppercase tracking-wide text-ink">Fakta proyek</h2>
 						<dl class="space-y-3 text-sm">
-							<div class="flex justify-between gap-4"><dt class="text-ink-faint">Client</dt><dd class="text-ink font-medium"><?php echo esc_html( get_post_meta( get_the_ID(), 'client', true ) ?: '—' ); ?></dd></div>
-							<div class="flex justify-between gap-4"><dt class="text-ink-faint">Year</dt><dd class="text-ink font-medium"><?php echo esc_html( get_the_date( 'Y' ) ); ?></dd></div>
-							<div class="flex justify-between gap-4"><dt class="text-ink-faint">Role</dt><dd class="text-ink font-medium"><?php echo esc_html( get_post_meta( get_the_ID(), 'role', true ) ?: 'Design + Build' ); ?></dd></div>
-							<div class="flex justify-between gap-4"><dt class="text-ink-faint">Status</dt><dd class="text-brand font-medium"><?php echo esc_html( get_post_meta( get_the_ID(), 'status', true ) ?: 'Live' ); ?></dd></div>
+							<div class="flex justify-between gap-4"><dt class="text-ink-faint">Klien</dt><dd class="text-ink font-medium"><?php echo esc_html( get_post_meta( get_the_ID(), 'client', true ) ?: '—' ); ?></dd></div>
+							<div class="flex justify-between gap-4"><dt class="text-ink-faint">Tahun</dt><dd class="text-ink font-medium"><?php echo esc_html( get_the_date( 'Y' ) ); ?></dd></div>
+							<div class="flex justify-between gap-4"><dt class="text-ink-faint">Peran</dt><dd class="text-ink font-medium"><?php echo esc_html( get_post_meta( get_the_ID(), 'role', true ) ?: 'Desain + Bangun' ); ?></dd></div>
+							<div class="flex justify-between gap-4"><dt class="text-ink-faint">Status</dt><dd class="text-brand font-medium"><?php echo esc_html( get_post_meta( get_the_ID(), 'status', true ) ?: 'Tayang' ); ?></dd></div>
 						</dl>
-						<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary w-full justify-center">Discuss a similar project</a>
+						<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary w-full justify-center">Diskusikan proyek serupa</a>
 					</div>
 				</aside>
 			</div>

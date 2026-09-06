@@ -53,7 +53,7 @@ function akdisi_save_lead( $name, $email, $company, $budget, $message ) {
 	$saved = update_option( 'akdisi_leads', array_slice( $leads, -200 ) );
 
 	if ( ! $saved ) {
-		return new WP_Error( 'save_failed', __( 'Could not save the lead.', 'akdisi' ) );
+		return new WP_Error( 'save_failed', __( 'Lead gagal disimpan.', 'akdisi' ) );
 	}
 
 	return count( $leads );
@@ -72,7 +72,7 @@ function akdisi_handle_contact() {
 	$message = isset( $_POST['message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['message'] ) ) : '';
 
 	if ( '' === $name || ! is_email( $email ) || mb_strlen( $message ) < 10 ) {
-		wp_send_json_error( array( 'message' => __( 'Please fill in all required fields correctly.', 'akdisi' ) ), 422 );
+		wp_send_json_error( array( 'message' => __( 'Mohon isi semua kolom wajib dengan benar.', 'akdisi' ) ), 422 );
 	}
 
 	// Expecting the white-label @akdisi.com inbox; extendable via filter.
@@ -89,12 +89,12 @@ function akdisi_handle_contact() {
 
 	$lead_id = akdisi_save_lead( $name, $email, $company, $budget, $message );
 	if ( is_wp_error( $lead_id ) ) {
-		wp_send_json_error( array( 'message' => __( 'Could not record the lead. Please email us directly.', 'akdisi' ) ), 500 );
+		wp_send_json_error( array( 'message' => __( 'Lead gagal tersimpan. Mohon email kami langsung.', 'akdisi' ) ), 500 );
 	}
 
 	wp_send_json_success(
 		array(
-			'message' => __( 'Thanks — your message is on its way. We reply within one business day.', 'akdisi' ),
+			'message' => __( 'Terima kasih — pesan Anda sudah dalam perjalanan. Kami membalas dalam satu hari kerja.', 'akdisi' ),
 			'id'      => $lead_id,
 		)
 	);

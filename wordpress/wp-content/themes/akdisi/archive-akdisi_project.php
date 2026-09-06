@@ -8,9 +8,9 @@
 get_header();
 
 get_template_part( 'template-parts/page-hero', null, array(
-	'eyebrow' => __( 'Selected work', 'akdisi' ),
-	'title'   => __( 'Projects', 'akdisi' ),
-	'sub'     => __( "A selection of products, platforms, and campaigns we've designed and built.", 'akdisi' ),
+	'eyebrow' => __( 'Karya pilihan', 'akdisi' ),
+	'title'   => __( 'Proyek', 'akdisi' ),
+	'sub'     => __( "Pilihan produk, platform, dan kampanye yang kami rancang dan bangun.", 'akdisi' ),
 ) );
 ?>
 
@@ -33,7 +33,7 @@ get_template_part( 'template-parts/page-hero', null, array(
 							</div>
 							<div class="p-6">
 								<span class="badge badge-soft mb-3">
-									<?php echo esc_html( wp_strip_all_tags( get_the_term_list( get_the_ID(), 'akdisi_project_cat', '', ', ', '' ) ) ?: __( 'Case study', 'akdisi' ) ); ?>
+									<?php echo esc_html( wp_strip_all_tags( get_the_term_list( get_the_ID(), 'akdisi_project_cat', '', ', ', '' ) ) ?: __( 'Studi kasus', 'akdisi' ) ); ?>
 								</span>
 								<h2 class="text-lg font-semibold text-ink transition-colors group-hover:text-brand"><?php the_title(); ?></h2>
 								<p class="mt-2 text-sm text-ink-soft"><?php echo esc_html( get_the_excerpt() ); ?></p>
@@ -46,7 +46,7 @@ get_template_part( 'template-parts/page-hero', null, array(
 			<?php the_posts_pagination( array( 'mid_size' => 1, 'prev_text' => '&larr;', 'next_text' => '&rarr;' ) ); ?>
 		<?php else : ?>
 			<div data-reveal class="rounded-2xl border border-dashed border-paper-line bg-paper-alt p-12 text-center">
-				<p class="text-ink-faint">No projects published yet. Check back soon — or <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="text-brand underline underline-offset-2">start one with us</a>.</p>
+				<p class="text-ink-faint">Belum ada proyek yang dipublikasikan. Nantikan segera — atau <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="text-brand underline underline-offset-2">mulai proyek bersama kami</a>.</p>
 			</div>
 		<?php endif; ?>
 	</div>
