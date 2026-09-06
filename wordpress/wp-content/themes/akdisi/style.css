@@ -127,3 +127,15 @@ img{max-width:100%;height:auto;display:block}
 .prose-akdisi table{width:100%;border-collapse:collapse;font-size:.95rem}
 .prose-akdisi th,.prose-akdisi td{border:1px solid var(--p-border);padding:.6rem .8rem;text-align:left}
 .prose-akdisi th{background:var(--p-bg-alt);color:var(--p-heading)}
+
+/* ---- Typewriter effect ---- */
+.tw-word{display:inline-block;overflow:hidden;vertical-align:bottom}
+.tw-char{display:inline-block;opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease}
+.tw-char.is-visible{opacity:1;transform:translateY(0)}
+.tw-cursor{display:inline-block;width:3px;margin-left:2px;background:var(--p-primary,#c2543d);border-radius:2px;animation:tw-blink 1s step-end infinite}
+@keyframes tw-blink{0%,100%{opacity:1}50%{opacity:0}}
+/* Respect reduced motion: no animation, everything visible instantly */
+@media(prefers-reduced-motion:reduce){
+  .tw-char{opacity:1!important;transform:none!important;transition:none!important}
+  .tw-cursor{animation:none!important;opacity:1}
+}

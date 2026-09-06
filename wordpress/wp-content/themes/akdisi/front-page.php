@@ -41,8 +41,17 @@ $testimonials = new WP_Query(
 		<!-- Copy -->
 		<div data-reveal>
 			<p class="eyebrow mb-5">Digital agency for growing teams</p>
-			<h1 class="font-display text-[clamp(2.6rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-ink">
-				We design &amp; build digital products that <span class="text-brand">move the needle</span>.
+			<h1 data-typewriter class="font-display text-[clamp(2.6rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-ink">
+				<span class="tw-word"><span class="tw-char">W</span><span class="tw-char">e</span></span>
+				<span class="tw-word"><span class="tw-char">d</span><span class="tw-char">e</span><span class="tw-char">s</span><span class="tw-char">i</span><span class="tw-char">g</span><span class="tw-char">n</span></span>
+				<span class="tw-word"><span class="tw-char">&amp;</span></span>
+				<span class="tw-word"><span class="tw-char">b</span><span class="tw-char">u</span><span class="tw-char">i</span><span class="tw-char">l</span><span class="tw-char">d</span></span>
+				<span class="tw-word"><span class="tw-char">d</span><span class="tw-char">i</span><span class="tw-char">g</span><span class="tw-char">i</span><span class="tw-char">t</span><span class="tw-char">a</span><span class="tw-char">l</span></span>
+				<span class="tw-word"><span class="tw-char">p</span><span class="tw-char">r</span><span class="tw-char">o</span><span class="tw-char">d</span><span class="tw-char">u</span><span class="tw-char">c</span><span class="tw-char">t</span><span class="tw-char">s</span></span>
+				<span class="tw-word"><span class="tw-char">t</span><span class="tw-char">h</span><span class="tw-char">a</span><span class="tw-char">t</span></span>
+				<span class="tw-word"><span class="tw-char">m</span><span class="tw-char">o</span><span class="tw-char">v</span><span class="tw-char">e</span></span>
+				<span class="tw-word"><span class="tw-char">t</span><span class="tw-char">h</span><span class="tw-char">e</span></span>
+				<span class="tw-word text-brand"><span class="tw-char">n</span><span class="tw-char">e</span><span class="tw-char">e</span><span class="tw-char">d</span><span class="tw-char">l</span><span class="tw-char">e</span><span class="tw-char">.</span></span><span class="tw-cursor" aria-hidden="true"></span>
 			</h1>
 			<p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
 				AKDISI is a full-cycle digital partner — strategy, product design, and engineering —
