@@ -6,6 +6,64 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.4.0 — 10 Proyek Portofolio Baru (Demo Klien Nyata) 2026-09-07
+
+Penambahan 10 proyek `akdisi_project` dari demo use case klien nyata (fetch via
+Playwright dari demo-host klien: sibanyu.com, laundry-websystem, futsal,
+booking-kost, medical-web, expression-hairsalon, booking-wedding, kas-system,
+glad2glow, akar-solution) — konten Bahasa Indonesia penuh gaya v4.3.0
+(Latar belakang / Yang kami lakukan / Hasil), kategori taxonomy benar, thumbnail
+branded `akdisi-wide` untuk og:image. Portofolio kini **15 proyek** (5 lama + 10 baru).
+
+### Konten baru (IDs 125–134, via `wp_insert_post` + `wp_set_object_terms` by slug)
+- **125 Sibanyu — Portal Berita Daerah** (Platform Web): portal berita lokal multi-bagian,
+  kategori + slot iklan, demo free hosting .
+- **126 Laundry Al-Farizi — Sistem Manajemen Laundry** (Platform Web): login sistem,
+  manajemen pesanan langganan layanan.
+- **127 FutsalKu — Sewa Lapangan Futsal** (Platform Web): pemesanan lapangan + jadwal
+  waktu, Alpama Futsal.
+- **128 Nusantara Kost — Booking Kamar Kost** (Teknologi Properti): cari/sewa kamar
+  kost, listing kamar kosong.
+- **129 Klinik Dokter ABC — Sistem Informasi Klinik** (Teknologi Kesehatan): pendaftaran
+  pasien, antrean, info layanan (demo klinik).
+- **130 Expression Hairsalon — Website Salon Premium** (Platform Web): multi-halaman,
+  produk salon (Kérastase/L'Oréal), ekspresi brand.
+- **131 Wedding Gallery — Katalog Vendor Pernikahan** (Teknologi Acara): direktori
+  vendor (Muaro Jambi), galeri + kontak.
+- **132 Sistem Kas Tanah Adat Dusun Kebun** (Data & Analitik): pencatatan transaksi
+  kas adat ber-otorisasi, laporan bulanan, basis data tersimpan.
+- **133 Glad2Glow — E-commerce Skincare** (Platform Web): katalog + rutinitas 3-langkah,
+  ulasan produk (BPOM).
+- **134 Akar Solution — Website Profil Perusahaan** (Platform Web): layanan, harga,
+  portofolio, blog — "mitra digital lokal Jambi".
+
+### Teknis
+- **Fix relasi term via slug**: pelajaran dari bug WP-CLI seeding v4.1.0 (argumen numerik
+  `wp post term set` membuat term baru bernama angka) → semua proyek baru di-assign
+  memakai `wp_set_object_terms(..., slug)`; verifikasi DB `wp_term_relationships`:
+  125–127→Platform Web(15), 128→Teknologi Properti(17), 129→Teknologi Kesehatan(16),
+  130→Platform Web, 131→Teknologi Acara(19), 132→Data & Analitik(18), 133–134→Platform Web.
+- **Fix count taxonomy**: `count` semua term `akdisi_project_cat` di-set via SQL
+  (recount dari `wp_term_relationships`) → Platform Web 7, Teknologi Kesehatan 2,
+  Teknologi Properti 2, Data & Analitik 2, Teknologi Acara 2 = 15 proyek.
+  (`wp term recount` CLI tidak memperbaiki count yang salah — perlu SQL manual.)
+- **Thumbnail**: 10 SVG branded (gradient deep-rose→ink, motif per kategori: lines,
+  ring, diamond, grid, cross, sparkle, rings, bars, droplet, roots) → PNG 1600×1000
+  via `rsvg-convert` → import media (IDs 135–144, `Thumb project-<slug>`) → `_thumbnail_id`
+  di-set. Image sizes `akdisi-wide` (1280×720) otomatis di-generate → `og:image` aktif
+  di semua single project baru.
+
+### QA v4.4.0 (Playwright Chromium, DDEV)
+- **30 URL**: 11 core (home, layanan, tentang, testimoni, use-cases, kontak, insight,
+  faq, solutions, projects, 404→404) + 15 single project (10 baru + 5 lama) + archive:
+  semua status benar, `pageerror` 0, h-overflow 0px desktop & mobile 390px.
+- Badge kategori single & archive menampilkan nama term ID (bukan angka orphạn "15"–"19").
+- Konten single: "Latar belakang / Yang kami lakukan / Hasil" ada; audit EN leak
+  ("Background/What we did/Results/Client:/Role:/Status:") 0; og:image present di 15/15.
+- Mobile 390px: archive & single h-overflow 0px.
+
+---
+
 ## v4.3.0 — Full Indonesian Conversion + SEO Meta/OG + Benefit-Driven Copy 2026-09-06
 
 Konversi penuh bahasa (EN → ID) di seluruh permukaan website: tema PHP, konten
