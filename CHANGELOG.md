@@ -6,6 +6,23 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.2.3 — Fix: Why AKDISI Dark Band Padding 2026-09-06
+
+`.akdisi-why` sebelumnya hanya `section-dark` (tanpa class `.section`) dan tidak
+punya rule padding sendiri → konten menempel ke section atas (trusted marquee)
+dan bawah (featured projects).
+
+### Fix
+- `style.css`: `.akdisi-why.section-dark{ padding:clamp(5rem,9vw,7.5rem) 0 }` —
+  lebih tinggi dari rhythm `.section` standar (4rem→6.5rem), memberi ruang napas
+  ekstra pada dark band.
+
+### QA v4.2.3 (Playwright Chromium, DDEV)
+- Home: padding-top/bottom `.akdisi-why` computed = **120px** (sebelumnya 0px).
+- Background tetap ink `rgb(28,25,23)`, h-overflow 0px, `pageerror` 0.
+
+---
+
 ## v4.2.2 — Fix: Typewriter Entity Leak ("&amp;" Rendered Literally) 2026-09-06
 
 `akdisi_render_typewriter()` memecah karakter dari **string yang masih ber-entity**
