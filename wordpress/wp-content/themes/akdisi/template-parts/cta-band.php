@@ -66,7 +66,7 @@ $cta = wp_parse_args(
 								<span class="h-2 w-2 rounded-full bg-brand" aria-hidden="true"></span>
 								<span class="font-medium">Proses kami</span>
 							</div>
-							<p class="mt-5 font-display text-2xl font-bold leading-snug text-white">Analisis proses → Rancang solusi → Bangun aplikasi</p>
+							<p class="mt-5 font-display text-2xl font-bold leading-snug text-white">Analisis proses · Rancang solusi · Bangun aplikasi</p>
 							<p class="mt-3 text-sm leading-relaxed text-stone-400">Kami mulai dari memahami alur kerja Anda, bukan dari template.</p>
 							<div class="mt-7 flex items-center gap-3">
 								<div class="flex -space-x-2">

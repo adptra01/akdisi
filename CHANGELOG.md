@@ -39,8 +39,8 @@ non-properti, sekaligus jadi bridge ke landing page solusi per industri.
 - Argumen baru `visual_mode` (default `'reply'`): panel kanan menjadi komponen
   dua varian. Home & semua halaman lain tetap menampilkan kartu "Rata-rata
   balasan pertama — 1 hari" (no regresi, terverifikasi).
-- Use-cases pakai `'process'`: eyebrow **"Proses kami"** + *"Analisis proses →
-  Rancang solusi → Bangun aplikasi"* (reuse flow diagram brand story) + 3 avatar
+- Use-cases pakai `'process'`: eyebrow **"Proses kami"** + *"Analisis proses ·
+  Rancang solusi · Bangun aplikasi"* (reuse flow diagram brand story) + 3 avatar
   tetap — menggantikan klaim kecepatan yang terkesan template studio generik.
 - Headline CTA use-cases: *"Siap mengubah proses bisnis Anda jadi sistem yang
   terintegrasi?"* (accent `terintegrasi?`); sub: *"Sesi 30 menit untuk memetakan
