@@ -51,9 +51,14 @@
 		<div>
 			<h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Stay in the loop</h3>
 			<p class="mb-4 text-sm">Product insights, no spam.</p>
-			<form class="flex w-full max-w-xs gap-2" action="<?php echo esc_url( home_url( '/' ) ); ?>" method="get">
-				<input type="email" name="s" placeholder="Your email" required class="min-w-0 flex-1 rounded-lg border border-stone-700 bg-transparent px-3 py-2 text-sm text-white placeholder:text-stone-500 focus:border-brand focus:outline-none">
-				<button type="submit" class="btn btn-primary rounded-lg px-4 py-2 text-sm">Join</button>
+			<form id="akdisi-newsletter-form" class="w-full max-w-xs" novalidate>
+				<div class="flex gap-2">
+					<input type="email" name="nl-email" placeholder="Your email" required autocomplete="email" aria-label="Email address"
+						class="min-w-0 flex-1 rounded-lg border border-stone-700 bg-transparent px-3 py-2 text-sm text-white placeholder:text-stone-500 focus:border-brand focus:outline-none">
+					<button type="submit" class="btn btn-primary rounded-lg px-4 py-2 text-sm">Join</button>
+				</div>
+				<?php wp_nonce_field( 'akdisi_newsletter', 'akdisi_nl_nonce' ); ?>
+				<p class="akdisi-nl-status mt-3 hidden text-xs text-stone-400"></p>
 			</form>
 		</div>
 	</div>

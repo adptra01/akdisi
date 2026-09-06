@@ -73,6 +73,64 @@ structure) dengan bahasa visual **warm editorial** — putus total dari emerald 
 - Screenshots QA desktop/mobile diambil (home + contact) — visual verified via
   computed styles (model QA ini tidak support image input).
 
+## v4.1.0 — Content Seeding + Newsletter + FAQ Accordion 2026-09-06
+
+Konten CPT fresh, FAQ section di homepage, newsletter AJAX, thumbnails branded.
+
+### Content CPT (data fresh — lama tidak disentuh)
+- **5 projects** (`akdisi_project`, slug `/projects/<name>/`): Marketplace Revamp,
+  Clinic Ops, PropCare, Analytics Suite, EventFlow — masing-masing: full content
+  (h2+ul/ol), excerpt, meta (client/role/status), featured image (branded SVG→PNG
+  1600×1000, warna gradient deep-rose→ink), category (`akdisi_project_cat`):
+  Web Platform, Health Tech, Property Tech, Data & Analytics, Event Tech.
+- **5 testimonials** (`akdisi_testimonial`): Andri Setiawan, Nita Haryanto,
+  Budi Pratama, Devi Anggraini, Fajar Rizki — masing-masing: name, role,
+  content-quote original. Ditampilkan di `/testimoni/` (blockquote grid 5 kolom).
+- **4 insights** (`akdisi_insight`, slug `/insight/<name>/`): CRO Playbook for B2B
+  SaaS, How to Bootstrap a Design System When You Are Small, When WordPress Is
+  Enough, Agency vs Vendor — How to Tell the Difference — full h2 editorial content,
+  excerpt, branded thumbnail.
+- **8 FAQs** (`akdisi_faq`): pricing, timeline, tech-stack, ongoing-support,
+  security, hosting, size, not-fit — content original, Bahasa Indonesia ringkas.
+
+### Home FAQ accordion
+- Section baru `akdisi-faq` (section-alt) sebelum CTA band: 2-col editorial layout
+  (judul kiri + `<details>` accordion kanan). 8 FAQ dari CPT, first item `open`.
+- Expand/collapse via native `<details>` — no JS needed; CSS `group-open:rotate-45`
+  pada `+` chevron.
+
+### Newsletter AJAX
+- `inc/newsletter.php` baru: `akdisi_subscribe()` + AJAX action `akdisi_newsletter`.
+  - Nonce validation, email format check, throttle 5/jam/IP, simpan ke option
+    `akdisi_subscribers` (last 2000 entries, chronological), `wp_mail` ke admin
+    (filterable via `akdisi_newsletter_to`).
+- Footer newsletter form: dirubah dari form `action="/"` → form id
+  `akdisi-newsletter-form` + nonce field (`akdisi_nl_nonce`), no JS fail.
+- `main.js`: handler `#akdisi-newsletter-form` — validate, `akdisi_newsletter` AJAX,
+  tampilkan status `.akdisi-nl-status` (success/error/network), disable button
+  selama request.
+
+### Thumbnails (SVG→PNG)
+- 9 branded thumbnails generated (`rsvg-convert`, 1600×1000) dari SVG gradient
+  (deep-rose + ink, motif bervariasi per kategori: grid, card, map, bars, ring, text).
+- Projects: marketplace-gradient, clinic-gradient, propcare-gradient,
+  analytics-gradient, eventflow-gradient.
+- Insights: cro-gradient, design-systems-gradient, wordpress-gradient, agency-gradient.
+- Semua attached sebagai `featured_image` via `wp post meta update _thumbnail_id`.
+
+### QA v4.1.0 (Playwright Chromium, DDEV)
+- **11 URLs**: semua 200 (404 → 404), `pageerror` 0, h-overflow 0px (desktop 1440
+  & mobile 390).
+- Home content: h1 ✓, 8 FAQ accordion (1 open / 7 closed) ✓, newsletter form ✓,
+  featured projects & insights sections populated ✓.
+- Projects archive: 5 cards rendered; single project: facts sidebar + thumbnail ✓.
+- Insights archive: 4 cards rendered; single insight: thumbnail ✓.
+- Testimonials: 5 blockquotes on `/testimoni/`.
+- Contact AJAX E2E: success message "Thanks — your message is on its way..." ✓.
+- Newsletter AJAX E2E: success message "You are on the list..." ✓.
+- Contact inline errors (empty submit): 3 errors shown ✓.
+- Token spot-check: btn `rgb(194, 84, 61)` = `#c2543d`, h1 font Satoshi ✓.
+
 ---
 
 ## v3.0.0 — Cohesive Section Rhythm + CSS Audit Rewrite 2026-09-06

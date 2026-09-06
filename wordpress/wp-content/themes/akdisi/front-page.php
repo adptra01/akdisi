@@ -360,6 +360,50 @@ $testimonials = new WP_Query(
 	</div>
 </section>
 
+<!-- ============ FAQ ============ -->
+<?php
+$faqs = new WP_Query(
+	array(
+		'post_type'      => 'akdisi_faq',
+		'posts_per_page' => 8,
+		'no_found_rows'  => true,
+		'post_status'    => 'publish',
+	)
+);
+?>
+<?php if ( $faqs->have_posts() ) : ?>
+<section class="akdisi-faq section section-alt">
+	<div class="container mx-auto grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+		<div data-reveal>
+			<p class="eyebrow mb-4">FAQ</p>
+			<h2 class="section-title">Common questions, straight answers.</h2>
+			<p class="section-sub mt-4">Something not covered? <a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="text-brand underline underline-offset-2">Ask us directly</a> — replies within a business day.</p>
+		</div>
+		<div data-reveal class="space-y-3">
+			<?php
+			$i = 0;
+			while ( $faqs->have_posts() ) :
+				$faqs->the_post();
+				?>
+				<details class="group rounded-xl border border-paper-line bg-white" <?php echo 0 === $i ? 'open' : ''; ?>>
+					<summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-ink [&::-webkit-details-marker]:hidden">
+						<span class="font-semibold"><?php the_title(); ?></span>
+						<span class="text-lg leading-none text-brand transition-transform duration-300 group-open:rotate-45">+</span>
+					</summary>
+					<div class="px-6 pb-6 text-sm leading-relaxed text-ink-soft">
+						<?php the_content(); ?>
+					</div>
+				</details>
+				<?php
+				$i++;
+			endwhile;
+			wp_reset_postdata();
+			?>
+		</div>
+	</div>
+</section>
+<?php endif; ?>
+
 <!-- ============ CTA BAND ============ -->
 <section class="section">
 	<div class="container mx-auto">

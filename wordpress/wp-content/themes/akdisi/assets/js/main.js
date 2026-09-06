@@ -128,4 +128,51 @@
 			}
 		} );
 	}
+
+	/* ---------- Newsletter form (AJAX) ---------- */
+	const nlForm = document.getElementById( 'akdisi-newsletter-form' );
+	if ( nlForm && window.akdisiData ) {
+		const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		const nlEmail = nlForm.querySelector( 'input[name="nl-email"]' );
+		const nlStatus = nlForm.querySelector( '.akdisi-nl-status' );
+
+		nlForm.addEventListener( 'submit', async ( e ) => {
+			e.preventDefault();
+			const email = nlEmail.value.trim();
+			if ( ! emailRe.test( email ) ) {
+				nlStatus.textContent = 'Please enter a valid email.';
+				nlStatus.classList.remove( 'hidden' );
+				nlEmail.focus();
+				return;
+			}
+			const btn = nlForm.querySelector( 'button[type="submit"]' );
+			const original = btn.innerHTML;
+			btn.disabled = true;
+			btn.innerHTML = 'Joining&hellip;';
+
+			const body = new URLSearchParams();
+			body.set( 'action', 'akdisi_newsletter' );
+			body.set( 'nonce', nlForm.querySelector( '#akdisi_nl_nonce' ).value );
+			body.set( 'email', email );
+
+			try {
+				const res = await fetch( window.akdisiData.ajaxUrl, { method: 'POST', body } );
+				const data = await res.json();
+				nlStatus.textContent = data.success ? data.data.message : ( data.data && data.data.message ) || 'Could not subscribe. Try again.';
+				if ( data.success ) {
+					nlEmail.value = '';
+					nlStatus.classList.add( 'text-brand-soft', 'text-brand', 'font-medium' );
+				} else {
+					nlStatus.classList.remove( 'text-brand-soft', 'text-brand', 'font-medium' );
+				}
+				nlStatus.classList.remove( 'hidden' );
+			} catch ( err ) {
+				nlStatus.textContent = 'Network error — please try again.';
+				nlStatus.classList.remove( 'hidden', 'text-brand-soft', 'text-brand', 'font-medium' );
+			} finally {
+				btn.disabled = false;
+				btn.innerHTML = original;
+			}
+		} );
+	}
 } )();
