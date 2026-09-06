@@ -6,6 +6,44 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v1.5.0 — Portfolio & Insight Detail Templates 2026-09-06
+
+Lengkapi arsitektur konten dengan template detail untuk Portfolio dan Insight,
+sesuai spesifikasi PRD §47, §86, §89 dan implementation docs (05-wordpress-technical-spec.md).
+
+### New Templates
+
+#### `single-portfolio.php` — Portfolio Detail Page
+- **Hero**: breadcrumb + status badge (CONCEPT/DEMO/ACTUAL) + konteks + headline
+- **Problem & Solution**: dual-column layout side-by-side
+- **Key Features**: grid dengan ikon checkmark
+- **Gallery**: auto-grid responsive screenshots
+- **Expected Outcome**: centered callout
+- **Related Service**: link ke halaman layanan terkait
+- **Related Portfolio**: 3 project serupa by category
+- **CTA Band**: reusable dark rounded dengan glow emerald
+
+#### `single-insight.php` — Insight/Article Detail
+- **Hero**: breadcrumb + kategori + tanggal + headline + excerpt
+- **Article**: editorial content dengan entry-content styling
+- **Related Insights**: 3 artikel terbaru terkait
+- **CTA Band**: reusable dark rounded
+
+### Implementation Notes
+- Semua template mengikuti design system v1.4.0 (Precision Engineering)
+- Data-driven: memakai meta fields dari metabox admin (portfolio) / standard WP fields (insight)
+- Reusable components: `template-parts/cta-band.php`, breadcrumb, eyebrow, magnetic buttons
+- GA4 tracking via `data-ga-track` pada semua CTA
+- GSAP ScrollTrigger reveal animations via `[data-reveal]` dan `.js-stagger`
+
+### Technical
+- PHP lint clean (single-portfolio.php, single-insight.php)
+- WordPress coding standards: escaping, sanitization, nonce, capability checks
+- Responsive: mobile-first grid, min-h-[100dvh] hero
+- Accessibility: semantic HTML, aria labels, focus states, prefers-reduced-motion respected
+
+---
+
 ## v1.4.0 — Precision Engineering & Architecture Redesign 2026-09-06
 
 Overhaul visual penuh ke "Precision Engineering & Architecture" — Corporate
@@ -86,7 +124,7 @@ tanpa dependency baru.
 
 ### Template rewrite (11 file)
 - **archive.php** — portfolio: filter bar + folio-grid asymmetric (first item
-  full-bleed `span2`, sisanya pairs); insight: editorial post-list; FAQ fallback.
+  full-bleed `span2`, sisanya pasangan); insight: editorial post-list; FAQ fallback.
 - **single.php** — portfolio detail: page-hero + facts-bar (type/konteks/status/
   tahun), thumb rounded, meta blocks, `feature-list`, gallery, related
   service/solution + related portfolio, CTA band. Insight: editorial article +
@@ -280,3 +318,4 @@ Implementasi major terhadap PRD v5. Menutup gap sitemap, konten, dan arsitektur.
 - CPT: `akdisi_portfolio`, `akdisi_insight`, `akdisi_faq`; taxonomy `portfolio_category`.
 - Konten: 8 concept portfolio, 7 FAQ, 1 insight; pages Home/About/Layanan/Portfolio/Insight/FAQ/Kontak/Booth.
 - Form lead gen (AJAX, nonce, simpan ke option), WhatsApp float, security hardening, schema.org org.
+
