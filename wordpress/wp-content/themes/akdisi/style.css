@@ -128,11 +128,16 @@ img{max-width:100%;height:auto;display:block}
 .prose-akdisi th,.prose-akdisi td{border:1px solid var(--p-border);padding:.6rem .8rem;text-align:left}
 .prose-akdisi th{background:var(--p-bg-alt);color:var(--p-heading)}
 
+/* ---- CTA band (v2 split editorial) ---- */
+.akdisi-cta{box-shadow:0 24px 60px -30px rgba(28,25,23,.45)}
+.akdisi-cta-grid{background-image:linear-gradient(to right,rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.5) 1px,transparent 1px);background-size:46px 46px}
+
 /* ---- Typewriter effect ---- */
 .tw-word{display:inline-block;overflow:hidden;vertical-align:bottom}
 .tw-char{display:inline-block;opacity:0;transform:translateY(8px);transition:opacity .3s ease,transform .3s ease}
 .tw-char.is-visible{opacity:1;transform:translateY(0)}
 .tw-cursor{display:inline-block;width:3px;margin-left:2px;background:var(--p-primary,#c2543d);border-radius:2px;animation:tw-blink 1s step-end infinite}
+.tw-heading .tw-word{will-change:transform,opacity}
 @keyframes tw-blink{0%,100%{opacity:1}50%{opacity:0}}
 /* Respect reduced motion: no animation, everything visible instantly */
 @media(prefers-reduced-motion:reduce){

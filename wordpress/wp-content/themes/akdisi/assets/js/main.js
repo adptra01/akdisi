@@ -55,31 +55,35 @@
 		document.querySelectorAll( '[data-reveal]' ).forEach( ( el ) => el.classList.add( 'is-visible' ) );
 	}
 
-	/* ---------- Typewriter headline ---------- */
-	const twHeadline = document.querySelector( '[data-typewriter]' );
-	if ( twHeadline ) {
-		const trigger = () => {
-			const chars = twHeadline.querySelectorAll( '.tw-char' );
-			chars.forEach( ( c, i ) => {
-				setTimeout( () => c.classList.add( 'is-visible' ), i * 45 );
-			} );
-		};
-		if ( prefersReduced || ! window.IntersectionObserver ) {
-			trigger(); // reveal everything immediately
-		} else {
-			const twObserver = new IntersectionObserver(
-				( entries ) => {
-					entries.forEach( ( entry ) => {
-						if ( entry.isIntersecting ) {
-							trigger();
-							twObserver.disconnect();
-						}
-					} );
-				},
-				{ threshold: 0.4 }
-			);
-			twObserver.observe( twHeadline );
-		}
+	/* ---------- Typewriter headline(s) ---------- */
+	const triggerTypewriter = ( el ) => {
+		// Skip if already revealed (avoid re-trigger after re-render).
+		if ( el.dataset.twDone ) return;
+		el.dataset.twDone = '1';
+		const step = el.dataset.twStep ? parseInt( el.dataset.twStep, 10 ) : 45;
+		const chars = el.querySelectorAll( '.tw-char' );
+		chars.forEach( ( c, i ) => {
+			setTimeout( () => c.classList.add( 'is-visible' ), i * step );
+		} );
+	};
+
+	const twHeadlines = document.querySelectorAll( '[data-typewriter]' );
+	if ( twHeadlines.length && ! prefersReduced && window.IntersectionObserver ) {
+		const twObserver = new IntersectionObserver(
+			( entries ) => {
+				entries.forEach( ( entry ) => {
+					if ( entry.isIntersecting ) {
+						triggerTypewriter( entry.target );
+						twObserver.unobserve( entry.target );
+					}
+				} );
+			},
+			{ threshold: 0.35, rootMargin: '0px 0px -40px 0px' }
+		);
+		twHeadlines.forEach( ( el ) => twObserver.observe( el ) );
+	} else if ( twHeadlines.length ) {
+		// Reduced motion or no observer: reveal everything immediately.
+		twHeadlines.forEach( triggerTypewriter );
 	}
 
 	/* ---------- Contact form (AJAX) ---------- */

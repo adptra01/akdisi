@@ -6,7 +6,78 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
-## v4.0.0 — Fresh Digital Agency Theme (Deep Rose + Tailwind CDN) 2026-09-06
+## v4.2.0 — Reusable Typewriter Helper + CTA Band Redesign 2026-09-06
+
+Klarifikasi user soal "ubah cta": animasi typewriter diterapkan juga di heading CTA
+band (bukan hanya hero) **dan** CTA band di-redesign sebagai komponen UI sendiri.
+
+### `inc/typewriter.php` (baru, auto-loaded via glob)
+- Helper `akdisi_render_typewriter( $text, $accent_words )` — render `.tw-word`
+  berisi `.tw-char` per karakter + `.tw-cursor`; kata yang masuk `$accent_words`
+  diberi class `text-brand` (deep rose).
+- **A11y fix**: spasi asli (` `) antar kata di-emit setiap `.tw-word` (kecuali
+  terakhir) — screen reader membacanya per-kata; margin CSS dihapus (supaya tidak
+  double-spacing). Verifikasi: `inner_text()` kini "Ready to build something worth
+  launching?" bukan "Readytobuildsomethingworthlaunching?".
+- Hero h1 di `front-page.php` di-refactor memakai helper (teks + accent `needle.`
+  tetap sama, DOM text tidak berubah).
+
+### `template-parts/cta-band.php` → komponen split-editorial parameterized
+- `$args` (via `wp_parse_args`): `title`, `accent_words`, `sub`,
+  `btn_primary_label/url`, `btn_secondary_label/url`; fallback default tetap.
+- Layout `lg:grid-cols-[1.15fr_0.85fr]` (verifikasi computed: 648.6px/479.4px):
+  kiri = eyebrow (garis `h-px w-10 bg-brand` + label) + heading typewriter + sub +
+  2 tombol (`btn-primary`, `btn-secondary`); kanan = kartu visual
+  "Average first response — 1 day" (`hidden lg:block`, desktop-only).
+- Panel: `rounded-2xl bg-ink` + glow rose ganda (`bg-brand/25 blur-[110px]`,
+  aria-hidden) + tekstur grid `.akdisi-cta-grid` (linear-gradient 46px) —
+  estetika v4 (warm stone + deep rose), `data-reveal` dipertahankan.
+- `front-page.php` CTA band → `get_template_part('template-parts/cta-band', null,
+  array( ... ))` dengan copy khusus home ("Have a product idea worth building?",
+  accent `building?`, tombol "Start the conversation" / "See use cases").
+
+### `main.js` — typewriter multi-elemen
+- Satu IntersectionObserver (threshold 0.35, rootMargin `0px 0px -40px 0px`)
+  melayani **N** elemen `[data-typewriter]`; `triggerTypewriter(el)` di-guard
+  `el.dataset.twDone` (tidak restart), stagger default 45ms atau `data-tw-step`.
+- Fallback instan untuk `prefers-reduced-motion` / tanpa observer.
+
+### QA v4.2.0 (Playwright Chromium, DDEV)
+- Home: `.akdisi-cta` 1, grid split 648.6/479.4px (1.15fr/0.85fr), kartu visual ada,
+  typewriter CTA 30/30 char visible, 2 tombol, glow 2, grid texture 1,
+  `pageerror` 0, h-overflow desktop **0px**.
+- `/projects/` (default args): typewriter 36/36, kartu visual, heading terbaca
+  ("Ready to build something worth launching?").
+- Mobile 390px: h-overflow **0px**, kartu visual tersembunyi (desktop-only).
+- `prefers-reduced-motion`: char CTa opacity 1 instan, cursor anim `none`.
+- PHP lint bersih (cta-band.php, front-page.php, typewriter.php), `node --check`
+  main.js OK.
+
+---
+
+## v4.1.1 — Aceternity-Style Typewriter Hero (Vanilla JS) 2026-09-06
+
+Adaptasi `TypewriterEffect` dari Aceternity UI (React + framer-motion) ke vanilla
+JS/CSS — tanpa React, tanpa dependency baru (repo: WP + Tailwind CDN).
+
+### Implementasi
+- Hero h1 `front-page.php`: "We design &amp; build digital products that move the
+  needle." — kata aksen (`needle.`) berwarna **deep rose** `text-brand`; markup
+  `.tw-word > .tw-char` (per karakter) + `.tw-cursor`.
+- `style.css`: `.tw-char` default opacity 0 + translateY(8px), `.is-visible`
+  opacity 1/translateY(0) 200ms `cubic-bezier(.4,0,.2,1)`; `.tw-cursor` blink
+  `tw-blink` 0.7s, berwarna `#c2543d`; `prefers-reduced-motion` → semua char
+  langsung terlihat + blink off.
+- `main.js`: IntersectionObserver trigger saat heading masuk viewport, stagger
+  **45ms** per char (hero ~47 char ≈ 2.1s), guard total length, safe fallback.
+
+### QA v4.1.1 (Playwright Chromium, DDEV)
+- 47/47 chars visible setelah stagger selesai (~4s), cursor `tw-blink`,
+  h-overflow 0px desktop + mobile, pindah tab saat animasi → semua char tetap
+  ter-reveal (guard tidak stuck), `pageerror` 0.
+- Reduced motion: opacity 1 + animation none.
+
+---
 
 Tema `akdisi` dibangun ulang dari nol setelah penghapusan total theme v3 (commit
 `e06a22d`). Arah: digital agency multi-halaman (NexStudio/TailGrids-inspired

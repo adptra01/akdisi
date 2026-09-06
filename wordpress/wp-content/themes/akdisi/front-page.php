@@ -41,17 +41,8 @@ $testimonials = new WP_Query(
 		<!-- Copy -->
 		<div data-reveal>
 			<p class="eyebrow mb-5">Digital agency for growing teams</p>
-			<h1 data-typewriter class="font-display text-[clamp(2.6rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-ink">
-				<span class="tw-word"><span class="tw-char">W</span><span class="tw-char">e</span></span>
-				<span class="tw-word"><span class="tw-char">d</span><span class="tw-char">e</span><span class="tw-char">s</span><span class="tw-char">i</span><span class="tw-char">g</span><span class="tw-char">n</span></span>
-				<span class="tw-word"><span class="tw-char">&amp;</span></span>
-				<span class="tw-word"><span class="tw-char">b</span><span class="tw-char">u</span><span class="tw-char">i</span><span class="tw-char">l</span><span class="tw-char">d</span></span>
-				<span class="tw-word"><span class="tw-char">d</span><span class="tw-char">i</span><span class="tw-char">g</span><span class="tw-char">i</span><span class="tw-char">t</span><span class="tw-char">a</span><span class="tw-char">l</span></span>
-				<span class="tw-word"><span class="tw-char">p</span><span class="tw-char">r</span><span class="tw-char">o</span><span class="tw-char">d</span><span class="tw-char">u</span><span class="tw-char">c</span><span class="tw-char">t</span><span class="tw-char">s</span></span>
-				<span class="tw-word"><span class="tw-char">t</span><span class="tw-char">h</span><span class="tw-char">a</span><span class="tw-char">t</span></span>
-				<span class="tw-word"><span class="tw-char">m</span><span class="tw-char">o</span><span class="tw-char">v</span><span class="tw-char">e</span></span>
-				<span class="tw-word"><span class="tw-char">t</span><span class="tw-char">h</span><span class="tw-char">e</span></span>
-				<span class="tw-word text-brand"><span class="tw-char">n</span><span class="tw-char">e</span><span class="tw-char">e</span><span class="tw-char">d</span><span class="tw-char">l</span><span class="tw-char">e</span><span class="tw-char">.</span></span><span class="tw-cursor" aria-hidden="true"></span>
+			<h1 data-typewriter class="tw-heading font-display text-[clamp(2.6rem,6vw,4.5rem)] font-bold leading-[1.05] tracking-tight text-ink">
+				<?php echo akdisi_render_typewriter( 'We design &amp; build digital products that move the needle.', array( 'needle.' ) ); ?><span class="tw-cursor" aria-hidden="true"></span>
 			</h1>
 			<p class="mt-6 max-w-xl text-lg leading-relaxed text-ink-soft">
 				AKDISI is a full-cycle digital partner — strategy, product design, and engineering —
@@ -414,20 +405,20 @@ $faqs = new WP_Query(
 <?php endif; ?>
 
 <!-- ============ CTA BAND ============ -->
-<section class="section">
-	<div class="container mx-auto">
-		<div data-reveal class="overflow-hidden rounded-3xl bg-ink px-8 py-16 text-center md:px-16 md:py-20">
-			<p class="eyebrow mb-5" style="color:#f0a48f">Let's talk</p>
-			<h2 class="mx-auto max-w-2xl font-display text-[clamp(1.9rem,4vw,3rem)] font-bold leading-tight text-white">
-				Have a product idea worth building?
-			</h2>
-			<p class="mx-auto mt-4 max-w-xl text-stone-400">Tell us where you want to go — we'll map the shortest, safest route there.</p>
-			<div class="mt-9 flex flex-wrap justify-center gap-4">
-				<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary btn-lg">Start the conversation</a>
-				<a href="<?php echo esc_url( home_url( '/use-cases/' ) ); ?>" class="btn btn-on-dark btn-lg">See use cases</a>
-			</div>
-		</div>
-	</div>
-</section>
+<?php
+get_template_part(
+	'template-parts/cta-band',
+	null,
+	array(
+		'title'               => __( 'Have a product idea worth building?', 'akdisi' ),
+		'accent_words'        => array( 'building?' ),
+		'sub'                 => __( 'Tell us where you want to go — we will map the shortest, safest route there.', 'akdisi' ),
+		'btn_primary_label'   => __( 'Start the conversation', 'akdisi' ),
+		'btn_primary_url'     => home_url( '/kontak/' ),
+		'btn_secondary_label' => __( 'See use cases', 'akdisi' ),
+		'btn_secondary_url'   => home_url( '/use-cases/' ),
+	)
+);
+?>
 
 <?php get_footer(); ?>
