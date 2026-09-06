@@ -6,6 +6,36 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.2.1 — Fix: Tailwind Config Order (Custom Colors Dead) + Footer Contrast 2026-09-06
+
+Bug lintas-versi (sejak v4.0.0): inline `tailwind.config` di-enqueue dengan posisi
+`'before'` pada CDN Play — dieksekusi **sebelum** `cdn.tailwindcss.com` ter-load,
+saat `typeof tailwind === 'undefined'` → IIFE `return` dini → config **tidak pernah
+ter-assign**. Akibatnya semua custom color (`bg-ink`, `text-brand`, `bg-brand/25`,
+`bg-brand-soft`, `text-ink-faint`, dst.) tidak di-generate Tailwind — hanya palette
+default (stone-400, white) yang jalan. Teks terang di area gelap (CTA band, footer,
+`text-brand` aksen) tampil di atas putih `body` → nyaris tak terlihat. Persis
+keluhan user: "beberapa teks yang sama dengan warna bg nya seperti di CTA dan footer".
+
+### Fix
+- `functions.php`: `wp_add_inline_script( ..., 'before' )` → `'after'` — config
+  dijalankan setelah Tailwind CDN parsed (pola resmi Play CDN).
+- `footer.php`: bar bawah (copyright/Privacy/Contact) `text-stone-500` →
+  `text-stone-400` — kontras 3.65:1 → ~6.9:1 di atas ink (AA untuk teks 12px).
+- QA kontras (Playwright computed): rapat audit semua leaf text node di
+  `.akdisi-cta` & `.akdisi-footer` — tidak ada lagi 1:1 white-on-white.
+
+### QA v4.2.1 (Playwright Chromium, DDEV)
+- 8 URL (home, layanan, tentang, testimoni, use-cases, kontak, projects, insight):
+  semua 200, `pageerror` 0, h-overflow 0px, footer bg ink `rgb(28,25,23)` di semua
+  halaman.
+- CTA: bg ink ✓, typewriter 30/30 char visible, accent `rgb(194,84,61)` = `#c2543d`.
+- Mobile 390px: overflow 0, footer ink ✓.
+- Kartu visual CTA (white/4% di atas ink) dikonfirmasi aman secara manual
+  (compositing): stone-300 ≈ 10.6:1, white "1 day" ≈ 15.9:1.
+
+---
+
 ## v4.2.0 — Reusable Typewriter Helper + CTA Band Redesign 2026-09-06
 
 Klarifikasi user soal "ubah cta": animasi typewriter diterapkan juga di heading CTA

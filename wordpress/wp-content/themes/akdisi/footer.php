@@ -64,7 +64,7 @@
 	</div>
 
 	<div class="border-t border-stone-800">
-		<div class="container mx-auto flex flex-col items-center justify-between gap-3 py-6 text-xs text-stone-500 sm:flex-row">
+		<div class="container mx-auto flex flex-col items-center justify-between gap-3 py-6 text-xs text-stone-400 sm:flex-row">
 			<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. All rights reserved.</p>
 			<div class="flex gap-6">
 				<a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>" class="hover:text-white">Privacy</a>

@@ -68,7 +68,10 @@ function akdisi_scripts() {
 		'3.4.16',
 		false
 	);
-	wp_add_inline_script( 'akdisi-tailwind', akdisi_tailwind_config(), 'before' );
+	// Config MUST run AFTER the CDN script is parsed: with 'before' the IIFE saw
+	// `typeof tailwind === 'undefined'` and bailed, so custom colors (ink, brand,
+	// paper) were never registered → bg-ink/text-brand etc. silently missing.
+	wp_add_inline_script( 'akdisi-tailwind', akdisi_tailwind_config(), 'after' );
 
 	// Theme css (tokens + components; no cross-type deps — Tailwind CDN injects its own <style>).
 	wp_enqueue_style( 'akdisi-style', get_stylesheet_uri(), array(), AKDISI_VERSION );
