@@ -79,11 +79,17 @@ add_action('after_setup_theme', 'akdisi_setup');
  */
 function akdisi_enqueue_assets(): void
 {
-    // Fonts: Plus Jakarta Sans (display) + Inter (body) + JetBrains Mono (metadata/telemetry) — v1.4.0
+    // Fonts v2.0: Satoshi (display, Fontshare) + Outfit (body) + Space Grotesk (accent) + JetBrains Mono (mono)
+    wp_enqueue_style(
+        'akdisi-fonts-display',
+        'https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap',
+        [],
+        null
+    );
     wp_enqueue_style(
         'akdisi-fonts',
-        'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap',
-        [],
+        'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap',
+        ['akdisi-fonts-display'],
         null
     );
 
@@ -116,7 +122,7 @@ function akdisi_enqueue_assets(): void
         'akdisi-main',
         get_template_directory_uri() . '/assets/js/main.js',
         ['gsap-core', 'gsap-st'],
-        '1.4.0',
+        '2.0.0',
         true
     );
 

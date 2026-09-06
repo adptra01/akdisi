@@ -6,6 +6,63 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v2.0.0 — Editorial Asymmetric Redesign (Awwwards/Dribbble Grade) 2026-09-06
+
+Redesign total karena tema v1.x terasa "AI slop". Arah baru: Editorial Asymmetric +
+Liquid Glass + Kinetic Typography — distinctive, premium, restrained. Single accent
+emerald dipertahankan (brand continuity), Inter dihapus total.
+
+### Design system v2 (`docs/implementation/00-design-system-v2.md`)
+- **Fonts**: Satoshi (display, Fontshare) + Outfit (body) + Space Grotesk (accent) +
+  JetBrains Mono (mono). Plus Jakarta Sans + Inter dihapus.
+- **Palet**: Deep space `#05080c`/`#0a0f1a`/`#111827` (no pure black), paper `#fafafa`,
+  single emerald `#10b981`/`#34d399`. Ghost borders, tonal shadows, glow emerald.
+- **Layout**: asymmetric — golden-ratio split, editorial 3-col, bento 5-col
+  (wide 3 / narrow 2, never 3-equal), solution rows zig-zag indent, proof 1.25fr/1fr.
+- **Material**: liquid glass — backdrop-blur + inner refraction border + inner highlight
+  + spotlight cursor glow (`--mx`/`--my`).
+- **Motion**: transform/opacity only, spring easing, stagger, ScrollTrigger storytelling,
+  magnetic buttons (fine pointer), marquee kinetic strip (pause on hover),
+  prefers-reduced-motion kill-switch.
+
+### style.css rewrite (v1 1490+ baris → v2 685 baris, lean)
+- Tokens v2 + legacy aliases (`--bg-deep`, `--primary`, dll.) agar template lama tetap jalan.
+- Hero v2: asymmetric split (konten kiri / mockup kanan), kinetic 3-baris headline,
+  hero-meta stats organik, marquee strip.
+- Section rhythm: header-split (judul kiri / note kanan), CTA split (bukan centered).
+- Komponen: btn-glass, bento 5-col, proof asymmetric, value 4-col asymmetric,
+  folio 5-col asymmetric, spotlight hover.
+- Anti-slop: no centered hero, no 3-col equal cards, no Inter, no pure black,
+  no oversaturated accent, no generic copy.
+
+### front-page.php rewrite (v2.0.0)
+- Copy PRD dipertahankan kata-per-kata (hanya layout berubah).
+- Hero 3-baris (Custom Application / Development / Partner.) + meta stats.
+- Marquee kinetic strip (4 layanan, loop).
+- Problem: golden-ratio editorial (judul kiri / lead+flow kanan).
+- Services/solutions/proof/why/process/FAQ/CTA: asymmetric splits.
+- CTA: split layout (teks kiri / tombol kanan), bukan centered.
+
+### functions.php
+- Fonts v2 enqueue (Fontshare Satoshi + Google Outfit/Space Grotesk/JetBrains Mono).
+- main.js version bump 2.0.0. GSAP CDN tetap (3.12.5).
+
+### main.js v2.0.0
+- Existing dipertahankan: header scroll, mobile menu, FAQ accordion, GSAP hero
+  clip-reveal, [data-reveal], .js-stagger, parallax, horizontal portfolio pin,
+  process pin, magnetic buttons, AJAX portfolio filter, contact form inline errors,
+  GA4 tracking.
+- Baru: marquee pause-on-hover, spotlight cursor glow (`--mx`/`--my`) untuk
+  bento/proof/card (fine pointer only, transform/opacity only).
+- `node --check` clean.
+
+### QA
+- JS syntax OK (`node --check`).
+- Backup pre-redesign: `.backup-v1.5.0-20260906/` (style.css, front-page.php, functions.php, main.js).
+- PHP lint menyusul via DDEV (php tidak tersedia di host).
+
+---
+
 ## v1.5.0 — Portfolio & Insight Detail Templates 2026-09-06
 
 Lengkapi arsitektur konten dengan template detail untuk Portfolio dan Insight,

@@ -1,6 +1,6 @@
 /**
  * AKDISI Theme - Main JavaScript
- * v1.3.0 — Modern Digital Enterprise motion (GSAP + ScrollTrigger)
+ * v2.0.0 — Editorial Asymmetric motion (GSAP + ScrollTrigger + magnetic + marquee)
  * Motion guards: prefers-reduced-motion + no-JS (html.js class swap in header).
  */
 (function () {
@@ -339,6 +339,31 @@
         gtag('event', type === 'booth' ? 'booth_visit' : type + '_view', {
             'event_category': 'content',
             'event_label': window.akdisiPageView.title,
+        });
+    }
+
+
+    /* ------------------------------------------------------------------
+       7. Premium micro-interactions v2.0 (transform/opacity only)
+       ------------------------------------------------------------------ */
+    // Marquee: pause on hover (fine pointers), resume on leave
+    document.querySelectorAll('.marquee').forEach(function (m) {
+        const track = m.querySelector('.marquee-track');
+        if (!track) { return; }
+        m.addEventListener('mouseenter', function () { track.style.animationPlayState = 'paused'; });
+        m.addEventListener('mouseleave', function () { track.style.animationPlayState = ''; });
+    });
+
+    // Spotlight border cards: dynamic --mx/--my glow position (desktop, fine pointer)
+    if (window.matchMedia('(pointer: fine)').matches) {
+        document.querySelectorAll('.bento-card, .proof-card, .card').forEach(function (card) {
+            card.addEventListener('mousemove', function (e) {
+                const r = card.getBoundingClientRect();
+                const x = ((e.clientX - r.left) / r.width) * 100;
+                const y = ((e.clientY - r.top) / r.height) * 100;
+                card.style.setProperty('--mx', x.toFixed(1) + '%');
+                card.style.setProperty('--my', y.toFixed(1) + '%');
+            });
         });
     }
 
