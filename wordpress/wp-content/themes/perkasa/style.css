@@ -1,0 +1,236 @@
+/*
+Theme Name: Perkasa
+Theme URI: https://akdisi.com
+Author: AKDISI
+Description: Corporate company profile theme — clean, minimal, industrial aesthetic. Designed for construction, engineering, and B2B service companies.
+Version: 1.0.0
+Text Domain: perkasa
+Tags: business, corporate, one-column, two-columns, right-sidebar, custom-menu, featured-images, theme-options, translation-ready
+
+Design tokens & custom components for Perkasa theme.
+*/
+
+/* ─────────────────────────────────────
+   1. Design Tokens
+   ───────────────────────────────────── */
+:root {
+  --color-ink:       #1f2937;
+  --color-ink-soft:  #4b5563;
+  --color-ink-faint: #9ca3af;
+  --color-paper:     #ffffff;
+  --color-alt:       #f8f9fa;
+  --color-border:    #e5e7eb;
+  --color-primary:   #1565c0;
+  --color-primary-hover: #1256a8;
+  --color-primary-soft: #e8f0fe;
+  --color-accent:    #f59e0b;
+  --color-dark:      #0f172a;
+  --color-dark-alt:  #1e293b;
+  --radius-sm:       6px;
+  --radius:          8px;
+  --radius-lg:       12px;
+  --radius-pill:     9999px;
+  --container:       1200px;
+  --section-py:      clamp(4rem, 8vw, 6.5rem);
+}
+
+/* ─────────────────────────────────────
+   2. Base
+   ───────────────────────────────────── */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+
+/* ─────────────────────────────────────
+   3. Section rhythm
+   ───────────────────────────────────── */
+.section       { padding: var(--section-py) 0; }
+.section-alt   { padding: var(--section-py) 0; background: var(--color-alt); }
+.section-dark  { padding: var(--section-py) 0; background: var(--color-dark); color: #f1f5f9; }
+.section-dark-2 { padding: var(--section-py) 0; background: var(--color-dark-alt); color: #f1f5f9; }
+
+/* ─────────────────────────────────────
+   4. Components
+   ───────────────────────────────────── */
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  line-height: 1.2;
+}
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: var(--color-primary-hover);
+  box-shadow: 0 4px 14px rgba(21, 101, 192, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+}
+.btn-outline:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn-on-dark {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+.btn-on-dark:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.btn-lg {
+  padding: 0.875rem 2rem;
+  font-size: 1rem;
+}
+
+/* Cards */
+.card {
+  background: var(--color-paper);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-pill);
+}
+.badge-primary { background: var(--color-primary-soft); color: var(--color-primary); }
+.badge-accent  { background: #fef3c7; color: #b45309; }
+
+/* Eyebrow */
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+/* Section header */
+.section-header {
+  max-width: 640px;
+  margin-bottom: 3rem;
+}
+.section-header.center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* Stats strip */
+.stat-card { text-align: center; }
+.stat-num {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+.stat-label {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--color-ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Proyek gallery */
+.project-card img {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+}
+
+/* CTA band */
+.perkasa-cta {
+  background: var(--color-dark);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+}
+.perkasa-cta::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -15%;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(21, 101, 192, 0.18) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Reveal animation */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Footer */
+.perkasa-footer a:hover { color: #fff; }
+
+/* ─────────────────────────────────────
+   5. Responsive utilities
+   ───────────────────────────────────── */
+@media (max-width: 767px) {
+  .section, .section-alt, .section-dark, .section-dark-2 {
+    padding: 3rem 0;
+  }
+}

@@ -6,7 +6,65 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
-## v4.6.0 — Use Case Page Realignment: Sector-Based, Bukan Agency Marketing 2026-09-07
+## v1.0.0-perkasa — Tema WordPress Baru: "Garuda Perkasa" (Fake Project) 2026-09-07
+
+Tema WP kedua dari nol: company profile **Garuda Perkasa** — Jasa Konstruksi &
+Sipil (fake project, saudara dari tema `akdisi`). Dibuat sebagai proyek demo
+terpisah; tidak terhubung ke positioning AKDISI. Pola Tailwind CDN Play + config
+inline yang sama dengan tema `akdisi` (staging; produksi → compile statis).
+
+### Design system v1
+- **Palet korporat**: ink `#1f2937` / ink-soft `#4b5563`, paper `#ffffff` /
+  paper-alt `#f8f9fa` / paper-line `#e5e7eb`, brand biru korporat `#1565c0`
+  (hover `#1256a8`), tambahan dark `#0f172a` / dark-alt `#1e293b` (footer,
+  CTA, section gelap), aksen amber `#f59e0b` (tipis).
+- **Fonts**: Plus Jakarta Sans (display) + Inter (body) — Google Fonts.
+- **Shape**: button 8px, card 14px, badge pill; container 1200px; section padding
+  `clamp(4rem,8vw,6.5rem)`.
+
+### Arsitektur tema (13 file)
+- `functions.php` — setup (title-tag, thumbnails, custom-logo, 2 nav menus,
+  image sizes), enqueue Tailwind CDN + config `wp_add_inline_script` + fonts,
+  fallback menus (primary/footer), `perkasa_footer_services()`, SEO meta
+  description sederhana.
+- `style.css` — theme header + token + komponen CSS (btn/btn-primary/btn-outline,
+  card, section/alt/dark, eyebrow, prose, perkasa-cta, dato-reveal).
+- `header.php` (sticky, backdrop-blur, brand "Garuda Perkasa.", desktop nav +
+  mobile toggle aria), `footer.php` (dark 4-col: brand + kontak fiktif, men
+  Perusahaan, Layanan, info kontak + WhatsApp, bar bawah).
+- `front-page.php` — hero split (teks kiri + badge/CTA kanan), 4 layanan cards
+  (Konstruksi Gedung, Infrastruktur & Jalan, Renovasi, Konsultasi) + stats strip
+  dark (Sejak 1999 / 150+ proyek / 12 provinsi / 50 tim), CTA band.
+- `page-layanan.php` (Template Name: Layanan) — 4 layanan dua-kolom zig-zag +
+  CTA; `page-tentang.php` (Template Name: Tentang) — cerita + values grid +
+  stats; `page-kontak.php` (Template Name: Kontak) — info kontak + form
+  client-side (validasi JS, tanpa backend — fake project); `404.php`,
+  `index.php` (fallback archive/search), `page.php`.
+- `assets/js/main.js` — header shadow, mobile menu toggle, reveal-on-scroll
+  (IntersectionObserver, reduced-motion safe), validasi form kontak
+  (required/email inline error, fokus field pertama, sukses simulasi).
+- `template-parts/page-hero.php` — hero seragam halaman dalam (eyebrow + h1 + sub).
+
+### Data & SharePoint
+- Konten nyata memakai halaman AKDISI yang sudah ada (slugs `/layanan/`,
+  `/tentang/`, `/kontak/` cocok dengan Template Name dataset) — tidak ada konten
+  baru dibuat di DB; tema siap di-import ke instalasi WP baru (pages + menu via
+  `Tools → Ekspor` manual, fallback menu jalan tanpa menu ter-assign).
+- `dist/perkasa-theme-v1.0.0.zip` (17 file, 19 KB) — siap upload via
+  Appearance → Themes. *Catatan: identitas kontak (email/WA/alamat) adalah fiktif,
+  harap diganti sebelum dipakai sungguhan.*
+
+### QA v1.0.0-perkasa (Playwright Chromium, DDEV)
+- 6 URL (/, /layanan/, /tentang/, /kontak/, /privacy-policy/, 404): semua status
+  benar (200/200/200/200/200/404), `pageerror` 0, h-overflow **0px** desktop
+  1440 & mobile 390.
+- Form kontak: submit kosong → 4 error inline ("Field ini wajib diisi."), fokus
+  field pertama; isi valid → pesan sukses tampil; form `novalidate` + JS.
+- Mobile: menu toggle buka/tutup (aria-expanded true/false), menu terlihat.
+- Tokens: btn-primary `rgb(21,101,192)` = `#1565c0`, radius 8px, footer dark
+  `rgb(15,23,42)` = `#0f172a`, komponen dark band terverifikasi.
+- Screenshot QA: home 1440 & 390, layanan 1440, kontak 1440, menu mobile, 404.
+- PHP lint bersih (13 file), `node --check` main.js OK.
 
 Halaman `/use-cases/` diarahkan ulang agar konsisten dengan positioning yang
 terkunci (custom application development untuk proses bisnis) — bukan kesan
@@ -68,6 +126,13 @@ non-properti, sekaligus jadi bridge ke landing page solusi per industri.
 - PHP lint bersih (page-use-cases.php, cta-band.php, helpers.php).
 
 ---
+
+## v4.6.0 — Use Case Page Realignment: Sector-Based, Bukan Agency Marketing 2026-09-07
+
+Halaman `/use-cases/` diarahkan ulang agar konsisten dengan positioning yang
+terkunci (custom application development untuk proses bisnis) — bukan kesan
+software house website/branding/marketing. Rasio sektor dijaga 3 properti : 1
+non-properti, sekaligus jadi bridge ke landing page solusi per industri.
 
 ## v4.5.1 — Fix: Gallery Section Container Alignment 2026-09-07
 
