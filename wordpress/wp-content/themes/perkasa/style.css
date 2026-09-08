@@ -1,236 +1,359 @@
 /*
-Theme Name: Perkasa
-Theme URI: https://akdisi.com
-Author: AKDISI
-Description: Corporate company profile theme — clean, minimal, industrial aesthetic. Designed for construction, engineering, and B2B service companies.
-Version: 1.0.0
+Theme Name: Garuda Perkasa
+Theme URI: https://akdisi.ddev.site:8443
+Author: AKDISI — AKAR Digital Solusi
+Author URI: https://akdisi.ddev.site:8443
+Description: Fake project — company profile jasa konstruksi & sipil. Design v3 "Blueprint Engineering": slate hitam + amber + steel, Tailwind Play CDN + Flowbite 2.5.2 + GSAP 3.12.5. Identitas kontak fiktif — harap diganti sebelum dipakai sungguhan.
+Version: 3.2.0
+Requires at least: 6.0
+Tested up to: 7.0
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: perkasa
-Tags: business, corporate, one-column, two-columns, right-sidebar, custom-menu, featured-images, theme-options, translation-ready
-
-Design tokens & custom components for Perkasa theme.
+Tags: one-column, custom-menu, custom-logo, featured-images, translation-ready
 */
 
-/* ─────────────────────────────────────
-   1. Design Tokens
-   ───────────────────────────────────── */
+/* =========================================================================
+   TOKENS (fallback sebelum Tailwind generate — source of truth di
+   tailwind.config inline; CSS ini bantu custom complex pieces)
+   ========================================================================= */
 :root {
-  --color-ink:       #1f2937;
-  --color-ink-soft:  #4b5563;
-  --color-ink-faint: #9ca3af;
-  --color-paper:     #ffffff;
-  --color-alt:       #f8f9fa;
-  --color-border:    #e5e7eb;
-  --color-primary:   #1565c0;
-  --color-primary-hover: #1256a8;
-  --color-primary-soft: #e8f0fe;
-  --color-accent:    #f59e0b;
-  --color-dark:      #0f172a;
-  --color-dark-alt:  #1e293b;
-  --radius-sm:       6px;
-  --radius:          8px;
-  --radius-lg:       12px;
-  --radius-pill:     9999px;
-  --container:       1200px;
-  --section-py:      clamp(4rem, 8vw, 6.5rem);
+	--gp-ink: #060a12;      /* slate-950 custom */
+	--gp-ink-2: #0d1520;    /* surface dark */
+	--gp-ink-3: #15202e;    /* border dark */
+	--gp-amber: #f59e0b;
+	--gp-amber-2: #d97706;
+	--gp-steel: #38bdf8;
+	--gp-paper: #f8f9fb;
+	--gp-line: #e6e9ef;
+	--font-display: 'Archivo', sans-serif;
+	--font-body: 'Inter', sans-serif;
 }
 
-/* ─────────────────────────────────────
-   2. Base
-   ───────────────────────────────────── */
-*,
-*::before,
-*::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+/* A11y (Vercel Web Interface Guidelines): target section tidak tertutup
+   sticky header ketika navigasi anchor. */
+section[id], article[id] { scroll-margin-top: 5.5rem; }
+
+a, button, input, select, textarea { transition-timing-function: cubic-bezier(.4,0,.2,1); }
+
+/* Focus ring global — jangan pernah outline:none tanpa replacement. */
+:focus-visible {
+	outline: 2px solid var(--gp-amber);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+::selection { background: var(--gp-amber); color: var(--gp-ink); }
 
 body {
-  margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: var(--color-ink);
-  background: var(--color-paper);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
+	font-family: var(--font-body);
+	background: var(--gp-paper);
+	color: #0f172a;
+	overflow-x: hidden;
 }
 
-img { max-width: 100%; height: auto; display: block; }
-a { color: inherit; text-decoration: none; }
-
-/* ─────────────────────────────────────
-   3. Section rhythm
-   ───────────────────────────────────── */
-.section       { padding: var(--section-py) 0; }
-.section-alt   { padding: var(--section-py) 0; background: var(--color-alt); }
-.section-dark  { padding: var(--section-py) 0; background: var(--color-dark); color: #f1f5f9; }
-.section-dark-2 { padding: var(--section-py) 0; background: var(--color-dark-alt); color: #f1f5f9; }
-
-/* ─────────────────────────────────────
-   4. Components
-   ───────────────────────────────────── */
-
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.75rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  border-radius: var(--radius);
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-  line-height: 1.2;
-}
-.btn:active { transform: scale(0.97); }
-
-.btn-primary {
-  background: var(--color-primary);
-  color: #fff;
-}
-.btn-primary:hover {
-  background: var(--color-primary-hover);
-  box-shadow: 0 4px 14px rgba(21, 101, 192, 0.3);
+/* =========================================================================
+   BLUEPRINT GRID & PANEL (mood gambar teknik)
+   ========================================================================= */
+.bp-grid {
+	background-image:
+		linear-gradient(to right, rgba(148,163,184,.07) 1px, transparent 1px),
+		linear-gradient(to bottom, rgba(148,163,184,.07) 1px, transparent 1px);
+	background-size: 42px 42px;
 }
 
-.btn-outline {
-  background: transparent;
-  color: var(--color-primary);
-  border: 1.5px solid var(--color-primary);
-}
-.btn-outline:hover {
-  background: var(--color-primary);
-  color: #fff;
+.bp-grid-light {
+	background-image:
+		linear-gradient(to right, rgba(15,23,42,.05) 1px, transparent 1px),
+		linear-gradient(to bottom, rgba(15,23,42,.05) 1px, transparent 1px);
+	background-size: 42px 42px;
 }
 
-.btn-on-dark {
-  background: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-}
-.btn-on-dark:hover {
-  background: rgba(255, 255, 255, 0.18);
-}
-
-.btn-lg {
-  padding: 0.875rem 2rem;
-  font-size: 1rem;
+.bp-cross::before,
+.bp-cross::after {
+	content: '';
+	display: block;
+	height: 6px;
+	width: 6px;
+	border: 1.5px solid rgba(245,158,11,.7);
+	position: absolute;
 }
 
-/* Cards */
-.card {
-  background: var(--color-paper);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  transition: border-color 0.2s, box-shadow 0.2s;
+.bp-cross::before { top: 1rem; left: 1rem; }
+.bp-cross::after { bottom: 1rem; right: 1rem; }
+
+/* Angka raksasa transparan — watermark proyek/seksi. */
+.giant-num {
+	font-family: var(--font-display);
+	font-weight: 900;
+	line-height: 1;
+	color: transparent;
+	-webkit-text-stroke: 1.5px rgba(15,23,42,.14);
+	user-select: none;
 }
-.card:hover {
-  border-color: var(--color-primary);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+.giant-num-light { -webkit-text-stroke: 1.5px rgba(255,255,255,.12); }
+
+.spec-label {
+	font-size: .68rem;
+	font-weight: 700;
+	letter-spacing: .14em;
+	text-transform: uppercase;
 }
 
-/* Badge */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border-radius: var(--radius-pill);
+/* =========================================================================
+   TAPE MARQUEE (strip amber berjalan)
+   ========================================================================= */
+.tape {
+	background: var(--gp-amber);
+	color: var(--gp-ink);
+	overflow: hidden;
 }
-.badge-primary { background: var(--color-primary-soft); color: var(--color-primary); }
-.badge-accent  { background: #fef3c7; color: #b45309; }
+.tape-track {
+	display: flex;
+	gap: 0;
+	width: max-content;
+	animation: perkasa-tape 26s linear infinite;
+}
+.tape:hover .tape-track { animation-play-state: paused; }
 
-/* Eyebrow */
-.eyebrow {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-primary);
+@keyframes perkasa-tape {
+	from { transform: translateX(0); }
+	to { transform: translateX(-50%); }
 }
 
-/* Section header */
-.section-header {
-  max-width: 640px;
-  margin-bottom: 3rem;
+.tape-seg {
+	display: flex;
+	align-items: center;
+	padding: .8rem 0;
 }
-.section-header.center {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-/* Stats strip */
-.stat-card { text-align: center; }
-.stat-num {
-  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-  font-size: clamp(2.4rem, 4vw, 3.2rem);
-  font-weight: 700;
-  color: var(--color-primary);
-  line-height: 1;
-}
-.stat-label {
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--color-ink-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+.tape-seg span {
+	font-family: var(--font-display);
+	font-weight: 800;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	font-size: .95rem;
+	white-space: nowrap;
+	padding: 0 1.4rem;
 }
 
-/* Proyek gallery */
-.project-card img {
-  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-}
-
-/* CTA band */
-.perkasa-cta {
-  background: var(--color-dark);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  position: relative;
-}
-.perkasa-cta::before {
-  content: '';
-  position: absolute;
-  top: -40%;
-  right: -15%;
-  width: 420px;
-  height: 420px;
-  background: radial-gradient(circle, rgba(21, 101, 192, 0.18) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-/* Reveal animation */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-}
-[data-reveal].is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
+	.tape-track { animation: none; flex-wrap: wrap; justify-content: center; }
+	html { scroll-behavior: auto; }
 }
 
-/* Footer */
-.perkasa-footer a:hover { color: #fff; }
-
-/* ─────────────────────────────────────
-   5. Responsive utilities
-   ───────────────────────────────────── */
-@media (max-width: 767px) {
-  .section, .section-alt, .section-dark, .section-dark-2 {
-    padding: 3rem 0;
-  }
+/* =========================================================================
+   HERO CLIP-REVEAL (per baris)
+   Posisi awal ditentukan gsap.set di main.js — JANGAN deklarasi transform
+   di CSS (kalau ada, saat tween selesai & inline style dihapus GSAP,
+   computed jatuh ke nilai CSS dan garis tetap tersembunyi).
+   ========================================================================= */
+.clip-line { display: block; overflow: hidden; }
+html.js .clip-line > [data-hero-line] {
+	display: block;
+	will-change: transform;
 }
+
+/* =========================================================================
+   REVEAL ON SCROLL — tanpa JS konten tetap terlihat.
+   ========================================================================= */
+html.js [data-reveal] { opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+	html.js [data-reveal] {
+		opacity: 1 !important;
+		transform: none !important;
+	}
+}
+
+/* =========================================================================
+   NAVIGASI
+   ========================================================================= */
+#perkasa-header {
+	transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+#perkasa-header.is-scrolled {
+	background-color: rgba(6,10,18,.92);
+	box-shadow: 0 1px 0 rgba(148,163,184,.15), 0 12px 32px -18px rgba(0,0,0,.75);
+}
+#perkasa-header.is-scrolled .header-top { border-color: rgba(148,163,184,.25); }
+
+/* Skip link. */
+.skip-link {
+	position: absolute;
+	left: -9999px;
+	top: 0;
+	z-index: 100;
+	background: var(--gp-amber);
+	color: var(--gp-ink);
+	padding: .7rem 1.2rem;
+	font-weight: 700;
+}
+.skip-link:focus { left: 1rem; top: 1rem; }
+
+/* Item menu header (wp_nav_menu) — desktop & mobile.
+   wp_nav_menu output <li class="menu-item"> tanpa class styling; pastikan
+   kontras teks terang di atas header gelap (fallback pakai nav-link). */
+#perkasa-header .menu-item > a,
+#perkasa-nav .menu-item > a {
+	display: inline-block;
+	padding: .5rem .75rem;
+	font-size: .875rem;
+	font-weight: 500;
+	line-height: 1.25rem;
+	color: var(--gp-white, #e2e8f0);
+	transition: color .2s ease;
+}
+#perkasa-header .lg\:flex .menu-item > a:hover {
+	color: var(--gp-amber);
+}
+#perkasa-header .menu-item.current-menu-item > a {
+	color: var(--gp-amber);
+}
+/* Mobile panel: block, item penuh + hover bg. */
+#perkasa-nav .menu-item > a {
+	display: block;
+	width: 100%;
+	border-radius: .375rem;
+	color: var(--gp-slate-300, #cbd5e1);
+}
+#perkasa-nav .menu-item > a:hover {
+	background: var(--gp-slate-800, #1e293b);
+	color: var(--gp-amber);
+}
+
+/* =========================================================================
+   KOMPONEN
+   ========================================================================= */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: .5rem;
+	font-family: var(--font-display);
+	font-weight: 700;
+	letter-spacing: .03em;
+	text-transform: uppercase;
+	font-size: .82rem;
+	border-radius: 4px;
+	padding: .95rem 1.7rem;
+	transition: transform .2s ease, background-color .2s ease, border-color .2s ease, color .2s ease;
+	cursor: pointer;
+}
+.btn-amber { background: var(--gp-amber); color: var(--gp-ink); }
+.btn-amber:hover { background: #fbbf24; transform: translateY(-1px); }
+.btn-ink { background: var(--gp-ink); color: #fff; }
+.btn-ink:hover { background: var(--gp-ink-3); transform: translateY(-1px); }
+.btn-outline {
+	border: 1px solid rgba(245,158,11,.55);
+	color: var(--gp-amber);
+	background: transparent;
+}
+.btn-outline:hover { border-color: var(--gp-amber); background: rgba(245,158,11,.08); }
+.btn-outline-dark { border-color: rgba(15,23,42,.25); color: var(--gp-ink); }
+.btn-outline-dark:hover { border-color: var(--gp-ink); background: rgba(15,23,42,.04); }
+.btn-outline-light { border-color: rgba(255,255,255,.35); color: #fff; }
+.btn-outline-light:hover { border-color: var(--gp-amber); color: var(--gp-amber); }
+
+@media (prefers-reduced-motion: reduce) {
+	.btn { transition: none; }
+	.btn:hover { transform: none; }
+}
+
+/* Kartu proyek / layanan. */
+.gp-card {
+	background: #fff;
+	border: 1px solid var(--gp-line);
+	border-radius: 10px;
+	transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.gp-card:hover { border-color: var(--gp-amber); transform: translateY(-3px); box-shadow: 0 18px 40px -24px rgba(6,10,18,.35); }
+
+.gp-card-dark {
+	background: var(--gp-ink-2);
+	border: 1px solid var(--gp-ink-3);
+	border-radius: 10px;
+	transition: border-color .25s ease, transform .25s ease;
+}
+.gp-card-dark:hover { border-color: rgba(245,158,11,.55); transform: translateY(-3px); }
+
+/* Chips meta proyek. */
+.chip {
+	display: inline-flex;
+	align-items: center;
+	gap: .35rem;
+	font-size: .72rem;
+	font-weight: 600;
+	letter-spacing: .05em;
+	padding: .3rem .65rem;
+	border-radius: 9999px;
+	border: 1px solid var(--gp-line);
+	color: #475569;
+	background: #fff;
+}
+.chip-dark { border-color: var(--gp-ink-3); color: #94a3b8; background: transparent; }
+.chip-amber { border-color: rgba(245,158,11,.4); color: var(--gp-amber); }
+
+/* Eyebrow section: garis + label. */
+.eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: .7rem;
+}
+.eyebrow::before {
+	content: '';
+	width: 2.2rem;
+	height: 2px;
+	background: var(--gp-amber);
+}
+
+/* Form field. */
+.form-label { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: .45rem; color: #334155; }
+.form-input {
+	width: 100%;
+	border: 1px solid var(--gp-line);
+	border-radius: 6px;
+	padding: .8rem 1rem;
+	font-size: .95rem;
+	background: #fff;
+	color: var(--gp-ink);
+	transition: border-color .2s ease, box-shadow .2s ease;
+}
+.form-input:focus {
+	outline: none;
+	border-color: var(--gp-amber);
+	box-shadow: 0 0 0 3px rgba(245,158,11,.18);
+}
+.field-error { color: #dc2626; font-size: .8rem; margin-top: .4rem; }
+
+/* Entry content (konten WordPress biasa). */
+.entry-content h2, .entry-content h3, .entry-content h4 { font-family: var(--font-display); color: var(--gp-ink); margin-top: 2rem; margin-bottom: .8rem; }
+.entry-content p { margin-bottom: 1rem; line-height: 1.75; color: #334155; }
+.entry-content ul { list-style: disc; padding-left: 1.4rem; margin-bottom: 1rem; color: #334155; }
+.entry-content ol { list-style: decimal; padding-left: 1.4rem; margin-bottom: 1rem; color: #334155; }
+.entry-content blockquote { border-left: 3px solid var(--gp-amber); padding-left: 1.2rem; font-style: italic; color: #475569; margin: 1.5rem 0; }
+.entry-content a { color: var(--gp-amber-2); text-decoration: underline; }
+
+/* Bergaris progres (teknis). */
+.h-bar { height: 3px; background: rgba(148,163,184,.15); overflow: hidden; }
+.h-bar > i { display: block; height: 100%; background: var(--gp-amber); }
+
+/* =========================================================================
+   TABEL KEMAMPUAN (capability table)
+   ========================================================================= */
+.cap-table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.cap-table th {
+	text-align: left;
+	font-family: var(--font-display);
+	font-size: .75rem;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	color: var(--gp-steel);
+	padding: .9rem 1rem;
+	border-bottom: 1px solid rgba(148,163,184,.25);
+}
+.cap-table td { padding: .95rem 1rem; border-bottom: 1px solid rgba(148,163,184,.12); color: #cbd5e1; vertical-align: top; }
+.cap-table tr:hover td { background: rgba(245,158,11,.05); }
+.cap-table td:first-child { color: #fff; font-weight: 600; }

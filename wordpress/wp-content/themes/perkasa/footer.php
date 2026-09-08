@@ -1,72 +1,95 @@
-</main>
+<?php
+/**
+ * Footer — Garuda Perkasa v3.
+ *
+ * @package Garuda_Perkasa
+ */
+?>
+<footer class="bg-[#060a12] text-slate-300" aria-label="Footer">
+	<div class="border-t-4 border-amber-500"></div>
 
-<footer class="perkasa-footer bg-dark text-stone-400">
-	<div class="container mx-auto grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
-		<!-- Brand -->
-		<div class="space-y-4">
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="font-display text-xl font-bold tracking-tight text-white">
-				Garuda Perkasa<span class="text-brand">.</span>
-			</a>
-			<p class="max-w-xs text-sm leading-relaxed">
-				<?php echo esc_html( get_bloginfo( 'description' ) ?: __( 'Mitra konstruksi terpercaya untuk proyek gedung, infrastruktur, dan sipil di seluruh Indonesia.', 'perkasa' ) ); ?>
-			</p>
-			<div class="space-y-1 text-sm">
-				<a href="mailto:info@garudaperkasa.co.id" class="block hover:text-white transition-colors">info@garudaperkasa.co.id</a>
-				<a href="tel:+622155501234" class="block hover:text-white transition-colors">(021) 5550-1234</a>
+	<div class="bp-grid mx-auto max-w-7xl px-5 py-16">
+		<div class="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+
+			<!-- Brand & kontak -->
+			<div class="lg:pr-6">
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3" aria-label="Garuda Perkasa — beranda">
+					<span class="flex h-9 w-9 items-center justify-center bg-amber-500 font-display text-base font-black text-[#060a12]" aria-hidden="true">GP</span>
+					<span class="font-display text-sm font-extrabold uppercase tracking-[0.14em] text-white">
+						Garuda<span class="text-amber-500">Perkasa</span><span class="text-amber-500">.</span>
+					</span>
+				</a>
+				<p class="mt-5 text-sm leading-relaxed text-slate-400">
+					Kontraktor sipil & konstruksi sejak 1999. Membangun gedung,
+					infrastruktur, dan kawasan — dari perencanaan hingga serah terima.
+				</p>
+				<address class="mt-5 space-y-1.5 text-sm not-italic text-slate-400">
+					<p><?php echo esc_html( perkasa_get_contact( 'address' ) ); ?></p>
+					<p><a href="mailto:<?php echo esc_attr( perkasa_get_contact( 'email' ) ); ?>" class="hover:text-amber-400"><?php echo esc_html( perkasa_get_contact( 'email' ) ); ?></a></p>
+					<p><a href="tel:<?php echo esc_attr( preg_replace( '/\D+/', '', perkasa_get_contact( 'phone' ) ) ); ?>" class="hover:text-amber-400"><?php echo esc_html( perkasa_get_contact( 'phone' ) ); ?></a></p>
+					<p><a href="https://wa.me/<?php echo esc_attr( preg_replace( '/\D+/', '', perkasa_get_contact( 'whatsapp' ) ) ); ?>" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400">WhatsApp: <?php echo esc_html( perkasa_wa_display( perkasa_get_contact( 'whatsapp' ) ) ); ?></a></p>
+				</address>
 			</div>
-		</div>
 
-		<!-- Company -->
-		<div>
-			<h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Perusahaan</h3>
-			<?php
-			wp_nav_menu( array(
-				'theme_location' => 'footer',
-				'container'      => false,
-				'menu_class'     => 'space-y-2 text-sm',
-				'items_wrap'     => '<ul class="%2$s">%3$s</ul>',
-				'fallback_cb'    => 'perkasa_fallback_footer',
-				'depth'          => 1,
-			) );
-			?>
-		</div>
-
-		<!-- Services -->
-		<div>
-			<h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Layanan</h3>
-			<ul class="space-y-2 text-sm">
+			<!-- Perusahaan -->
+			<nav aria-label="Tautan perusahaan">
+				<h2 class="spec-label mb-5 text-amber-500">Perusahaan</h2>
 				<?php
-				$services = perkasa_footer_services();
-				foreach ( $services as $label => $url ) :
-					?>
-					<li><a href="<?php echo esc_url( $url ); ?>" class="hover:text-white transition-colors"><?php echo esc_html( $label ); ?></a></li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
+				if ( has_nav_menu( 'footer' ) ) {
+					wp_nav_menu(
+						array(
+							'theme_location' => 'footer',
+							'container'      => false,
+							'menu_class'     => 'space-y-2.5',
+							'fallback_cb'    => false,
+						)
+					);
+				} else {
+					perkasa_footer_nav_fallback();
+				}
+				?>
+			</nav>
 
-		<!-- Contact / WhatsApp -->
-		<div>
-			<h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Kontak</h3>
-			<ul class="space-y-2 text-sm">
-				<li class="leading-relaxed">
-					Jl. Raya Industri No. 88<br>
-					Jakarta Selatan, 12345
-				</li>
-				<li>
-					<a href="https://wa.me/6281234567890" class="inline-flex items-center gap-2 rounded-lg bg-brand/20 px-4 py-2 text-sm font-medium text-brand hover:bg-brand/30 transition-colors">
-						WhatsApp Kami
-					</a>
-				</li>
-			</ul>
+			<!-- Layanan -->
+			<nav aria-label="Tautan layanan">
+				<h2 class="spec-label mb-5 text-amber-500">Layanan</h2>
+				<?php
+				if ( has_nav_menu( 'footer-services' ) ) {
+					wp_nav_menu(
+						array(
+							'theme_location' => 'footer-services',
+							'container'      => false,
+							'menu_class'     => 'space-y-2.5',
+							'fallback_cb'    => false,
+						)
+					);
+				} else {
+					perkasa_footer_services_fallback();
+				}
+				?>
+			</nav>
+
+			<!-- Sertifikasi / jam -->
+			<div>
+				<h2 class="spec-label mb-5 text-amber-500">Sertifikasi</h2>
+				<ul class="space-y-2">
+					<li class="chip chip-dark">ISO 9001:2015 — Mutu</li>
+					<li class="chip chip-dark">ISO 45001 — K3</li>
+					<li class="chip chip-dark">SMK3 PP 50/2012</li>
+					<li class="chip chip-dark">Kualifikasi B2 (Jasa Konstruksi)</li>
+				</ul>
+				<p class="mt-6 text-xs uppercase tracking-wider text-slate-500">Jam operasional</p>
+				<p class="mt-1.5 text-sm text-slate-400">Senin–Jumat 08.00–17.00 WIB</p>
+			</div>
 		</div>
 	</div>
 
-	<div class="border-t border-white/10">
-		<div class="container mx-auto flex flex-col items-center justify-between gap-3 px-5 py-5 text-xs text-stone-500 sm:flex-row lg:px-8">
-			<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. Seluruh hak cipta dilindungi.</p>
-			<div class="flex gap-5">
-				<a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>" class="hover:text-white transition-colors">Kebijakan Privasi</a>
-				<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="hover:text-white transition-colors">Kontak</a>
+	<div class="border-t border-slate-800">
+		<div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-5 py-5 text-xs text-slate-500 sm:flex-row">
+			<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> Garuda Perkasa. Semua hak cipta dilindungi.</p>
+			<div class="flex items-center gap-5">
+				<a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>" class="hover:text-amber-400">Kebijakan Privasi</a>
+				<span class="flex items-center gap-1.5"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true"></span> Sistem beroperasi normal</span>
 			</div>
 		</div>
 	</div>

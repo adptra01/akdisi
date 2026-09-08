@@ -1,61 +1,103 @@
-<!DOCTYPE html>
+<?php
+/**
+ * Header — Garuda Perkasa v3.
+ *
+ * @package Garuda_Perkasa
+ */
+?>
+<!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<?php wp_head(); ?>
+<meta charset="<?php bloginfo( 'charset' ); ?>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?>>
+
+<body <?php body_class( 'bg-paper text-slate-900 antialiased' ); ?>>
 <?php wp_body_open(); ?>
 
-<header id="site-header" class="sticky top-0 z-50 border-b border-paper-line bg-white/80 backdrop-blur-md transition-shadow">
-	<div class="container mx-auto flex h-16 items-center justify-between px-5 lg:px-8">
-		<!-- Brand -->
-		<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="font-display text-xl font-bold tracking-tight text-ink">
-			Garuda Perkasa<span class="text-brand">.</span>
-		</a>
+<a class="skip-link" href="#perkasa-main">Langsung ke konten</a>
 
-		<!-- Desktop nav -->
-		<nav aria-label="Navigasi utama" class="hidden items-center gap-8 md:flex">
-			<?php
-			wp_nav_menu( array(
-				'theme_location' => 'primary',
-				'container'      => false,
-				'menu_class'     => '',
-				'items_wrap'     => '%3$s',
-				'fallback_cb'    => 'perkasa_fallback_menu',
-				'depth'          => 1,
-			) );
-			?>
-			<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary btn-sm">Hubungi Kami</a>
-		</nav>
+<header id="perkasa-header" class="fixed inset-x-0 top-0 z-50 bg-[#060a12]/90 backdrop-blur-md" aria-label="Navigasi utama">
+	<div class="header-top border-b border-slate-800">
+		<div class="mx-auto max-w-7xl px-5">
+			<nav class="flex h-16 items-center justify-between lg:h-[4.5rem]">
 
-		<!-- Mobile toggle -->
-		<button id="menu-toggle" class="flex h-10 w-10 items-center justify-center rounded-lg text-ink md:hidden"
-			aria-label="Buka menu" aria-expanded="false" aria-controls="mobile-menu">
-			<svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-				<path id="icon-menu" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-				<path id="icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-			</svg>
-		</button>
+				<!-- Brand -->
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="flex items-center gap-3" aria-label="Garuda Perkasa — beranda">
+					<span class="flex h-9 w-9 items-center justify-center bg-amber-500 font-display text-base font-black text-[#060a12]" aria-hidden="true">GP</span>
+					<span class="font-display text-sm font-extrabold uppercase leading-none tracking-[0.14em] text-white lg:text-base">
+						Garuda<span class="text-amber-500">Perkasa</span><span class="text-amber-500">.</span>
+					</span>
+				</a>
+
+				<!-- Desktop nav -->
+				<div class="hidden items-center lg:flex">
+					<?php
+					if ( has_nav_menu( 'primary' ) ) {
+						wp_nav_menu(
+							array(
+								'theme_location' => 'primary',
+								'container'      => false,
+								'menu_class'     => 'flex items-center gap-1',
+								'fallback_cb'    => false,
+							)
+						);
+					} else {
+						perkasa_nav_fallback();
+					}
+					?>
+					<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-amber ml-4 !px-5 !py-2.5" data-ga-track="nav_cta">Konsultasi Gratis</a>
+				</div>
+
+				<!-- Toggle mobile (Flowbite collapse) -->
+				<button
+					type="button"
+					class="inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-200 hover:text-amber-500 focus-visible:outline-2 focus-visible:outline-amber-500 lg:hidden"
+					data-collapse-toggle="perkasa-nav"
+					aria-controls="perkasa-nav"
+					aria-expanded="false"
+					aria-label="Buka menu mobile"
+				>
+					<svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+				</button>
+			</nav>
+		</div>
 	</div>
 
-	<!-- Mobile menu -->
-	<div id="mobile-menu" class="hidden border-t border-paper-line bg-white px-5 pb-5 pt-4 md:hidden">
-		<?php
-		wp_nav_menu( array(
-			'theme_location' => 'primary',
-			'container'      => false,
-			'menu_class'     => 'space-y-3',
-			'items_wrap'     => '<ul class="%2$s">%3$s</ul>',
-			'fallback_cb'    => 'perkasa_fallback_menu',
-			'depth'          => 1,
-		) );
-		?>
-		<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-primary mt-4 w-full text-center">Hubungi Kami</a>
+	<!-- Panel mobile (Flowbite) -->
+	<div id="perkasa-nav" class="hidden border-b border-slate-800 bg-[#060a12]/95 backdrop-blur-md lg:hidden">
+		<div class="mx-auto max-w-7xl px-5 py-4">
+			<?php
+			if ( has_nav_menu( 'primary' ) ) {
+				wp_nav_menu(
+					array(
+						'theme_location' => 'primary',
+						'container'      => false,
+						'menu_class'     => 'space-y-1',
+						'fallback_cb'    => false,
+					)
+				);
+			} else {
+				echo '<ul class="space-y-1">';
+				$items = array(
+					'/'         => 'Beranda',
+					'/proyek/'  => 'Proyek',
+					'/layanan/' => 'Layanan',
+					'/tentang/' => 'Tentang',
+					'/kontak/'  => 'Kontak',
+				);
+				foreach ( $items as $url => $label ) {
+					printf(
+						'<li><a href="%s" class="block rounded-md px-3 py-2.5 text-sm font-medium text-slate-200 hover:bg-slate-800 hover:text-amber-500">%s</a></li>',
+						esc_url( home_url( $url ) ),
+						esc_html( $label )
+					);
+				}
+				echo '</ul>';
+			}
+			?>
+			<a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>" class="btn btn-amber mt-4 w-full">Konsultasi Gratis</a>
+		</div>
 	</div>
 </header>
-
-<main id="site-content">

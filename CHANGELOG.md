@@ -6,6 +6,151 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v3.2.0 — SEO Ala Yoast (Meta, OG, Twitter, Schema.org JSON-LD) 2026-09-08
+
+SEO tema `perkasa` dibangun ulang meniru **struktur output Yoast SEO** —
+homegrown tanpa plugin. Menjawab temuan audit: blogname global instalasi WP
+masih milik AKDISI (`blogname` = "AKDISI", `blogdescription` = tagline AKDISI),
+jadi `get_bloginfo('name')` akan memunculkan identitas salah di title/OG. SEO
+kini memakai **identitas Garuda Perkasa via theme_mods**, bukan blogname global.
+
+### `inc/seo.php` (baru, auto-loaded dari functions.php)
+- **Identitas**: `perkasa_site_name()` + `perkasa_site_tagline()` — baca
+  theme_mods `perkasa_company_name` / `perkasa_company_tagline` (default
+  "Garuda Perkasa" / tagline konstruksi 1999).
+- **Title tag** format Yoast `{judul} – {nama}` via `pre_get_document_title`:
+  home `Garuda Perkasa – <tagline>`, singular `Judul – Garuda Perkasa`,
+  archive `Arsip: X – Garuda Perkasa`, 404 `Halaman tidak ditemukan – …`,
+  search `Pencarian: q – …`.
+- **Meta description per halaman**: home → tagline; singular → excerpt (satu
+  sumber, pola field Yoast) → fallback auto-generate 28 kata dari konten
+  (pola Yoast no-field) → tagline; search/404/archive punya deskripsi sendiri.
+- **Robots** via filter `wp_robots` (pola Yoast modern), bukan echo sendiri →
+  tidak dobel dengan core: `index, follow, max-image-preview:large,
+  max-snippet:-1, max-video-preview:-1`; 404 & search → `noindex, follow`.
+- **Canonical**: `rel_canonical` core WP di-`remove_action` (satu canonical
+  per halaman). Home → `/`, singular → permalink, 404 → tanpa canonical.
+- **Open Graph**: `og:locale id_ID`, `og:type` (home/arsip = `website`,
+  singuler = `article` — front page statis bukan article walau `is_singular()`),
+  `og:title`, `og:description`, `og:url`, `og:site_name`, `og:image` + width/
+  height bila featured image `perkasa-wide` (1280×720, sudah ter-register).
+- **Twitter Card**: `summary_large_image` bila ada gambar, `summary` tanpa;
+  + `twitter:title` / `twitter:description`.
+- **Schema.org JSON-LD** (`@graph`): Organization (name/url/description/email/
+  contactPoint — **kontak dari Customizer**) + WebSite (`inLanguage id-ID`,
+  publisher → `#organization`); Article (headline/datePublished/dateModified/
+  author/publisher) pada single `post`.
+
+### Customizer — section baru "Identitas Perusahaan"
+- `perkasa_company_name` (text) & `perkasa_company_tagline` (textarea), prioritas
+  25, sanitasi `sanitize_text_field` / `sanitize_textarea_field` — default dari
+  helper SEO, bisa diedit di wp-admin → Appearance → Customize.
+
+### functions.php & style.css
+- Fungsi `perkasa_seo_meta()` lama (deskripsi statis) **dihapus** → ganti
+  `require inc/seo.php` (sebelum customizer, agar helper tersedia untuk
+  default setting).
+- Version bump **3.1.1 → 3.2.0** (functions.php + style.css).
+
+### QA v3.2.0 (Playwright Chromium, DDEV)
+- **6 URL** (/, /layanan/, /tentang/, /proyek/, /kontak/, 404): semua PASS —
+  title format benar & **tanpa bocor "AKDISI"**, robots **tunggal** (1 meta,
+  hilang dobel core), canonical **tunggal** (1 link, rel_canonical core
+  dimatikan), description ada per halaman, `og:locale id_ID`, `og:site_name`
+  = "Garuda Perkasa", `og:type` home = `website` (fix), twitter:card ada,
+  JSON-LD Organization (name = Garuda Perkasa, email/contactPoint terisi dari
+  Customizer) + WebSite ada di semua halaman, 404 → `noindex` + tanpa
+  canonical/og:url, h-overflow 0px — **FAILS: 0**.
+- Lint: `php -l` bersih (functions.php, inc/seo.php, inc/customizer.php,
+  style.css).
+
+---
+
+## v3.1.1 — Fix: Navbar Invisible Sejak Beralih ke wp_nav_menu 2026-09-07
+
+Setelah v3.1.0 memakai menu WP untuk navbar, link menu tampil **gelap di atas
+header gelap** (`rgb(15,23,42)` di `#060a12`) → navbar nyaris tak terlihat.
+Root cause: `wp_nav_menu` output `<li class="menu-item"><a>` **tanpa class
+styling** (fallback lama `perkasa_nav_fallback()` menambah `text-slate-200`
+inline, jadi hanya menu WP yang kena).
+
+### Fix
+- `style.css`: rule baru **`.menu-item > a`** scoped ke `#perkasa-header` &
+  `#perkasa-nav` — padding 8×12px, font 14px/500, warna `#e2e8f0` (slate-200),
+  hover amber, `current-menu-item` amber; mobile `display:block` + hover-bg
+  slate-800. Fallback hex dipakai karena `--gp-white/slate-*` tak terdefinisi.
+- Version bump 3.1.0 → **3.1.1** (functions.php + style.css).
+
+### QA v3.1.1 (Playwright Chromium, DDEV)
+- **Navbar desktop**: 5 link semua terlihat (Beranda amber active,
+  lainnya slate-200), padding/ukuran benar, 0 link gelap — PASS.
+- **Navbar mobile**: toggle buka → link slate-300, CTA amber, overflow 0 — PASS.
+- **14 URL × 2 viewport**: status benar (404 → 404), overflow 0, pageerror 0 —
+  FAILS: 0. Lint: `php -l` style.css OK, `node --check` main.js OK.
+
+---
+
+## v3.1.0 — Tema Garuda Perkasa: Konten Dinamis (Plugin Proyek + Footer/Contact Customizer) 2026-09-07
+
+Tema kedua (`perkasa`, fake project) kini sepenuhnya didorong dari wp-admin —
+keluar dari array hardcoded v3.0.x. Menjawab dua permintaan: (1) footer kontak &
+link dinamis dari wp-admin, (2) navbar memakai link yang sama dengan footer.
+
+### Plugin baru: `perkasa-project-manager` (v1.0.0)
+- **CPT `perkasa_project`** + taxonomy `perkasa_project_cat` (Gedung/Infrastruktur/
+  Hunian/Industrial/Sport), `show_in_rest`, `rewrite=false` (daftar = halaman
+  `/proyek/`), `supports: title/editor/excerpt/thumbnail`, menu_order = urutan.
+- **Meta box "Detail Proyek"** (posisi normal high): Deskripsi singkat (→
+  `post_excerpt`, satu sumber kebenaran), Lokasi, Tahun, Durasi, Nilai, Status,
+  Fitur/capaian (textarea 1/baris → list centang), Galeri gambar (wp.media
+  multi-select + preview + kosongkan).
+- **`register_post_meta`** untuk location/year/duration/value_type/status/
+  features + gallery array — REST-aware, sanitize gallery aman array/scalar/CSV.
+- **Helper publik `perkasa_pm_get_projects()`** (format v3: `n,t,loc,yr,cat,dur,
+  val,stat,d,feats,id`) + `perkasa_pm_cat_name()` + `perkasa_pm_get_gallery()`.
+- Pattern meniru `akdisi-project-manager` (nonce, capability, `map_deep` gallery).
+
+### Tema `perkasa` — functions & footer dinamis
+- `functions.php` v3.1.0: register menu **`footer-services`**; helper
+  `perkasa_get_projects()` → CPT via plugin, **fallback seed 6 proyek** saat
+  kosong/plugin nonaktif; `perkasa_get_contact()` + `perkasa_wa_display()`;
+  `perkasa_footer_services_fallback()`. Array hardcoded seed dipindah ke
+  `perkasa_default_projects()`.
+- `inc/customizer.php` (baru): section **Info Kontak** (Address/Email/Phone/
+  WhatsApp) — validasi sanitize (email, textarea). Footer membaca theme_mods.
+- `footer.php`: blok <address> kini **dari Customizer** (alamat/email/tel/WA —
+  link `mailto:`, `tel:` (strip non-digit), `wa.me/` + tampilan lokal
+  `0812-xxxx-xxxx`); kolom **Layanan** kini menu WP `footer-services` + fallback.
+- `front-page.php` & `page-proyek.php`: array hardcoded dihapus → `perkasa_get_projects()`.
+  `page-proyek` otomatis memperkaya kartu dengan durasi/nilai/fitur dari CPT.
+
+### Navbar = footer Perusahaan (satu menu sumber)
+- Menu **"Menu Utama Perkasa"** (Beranda/Proyek/Layanan/Tentang/Kontak) di-assign
+  ke `primary` (navbar) **dan** `footer` (kolom Perusahaan) — link navbar kini
+  identik dengan footer, dikelola satu tempat dari wp-admin.
+- Menu **"Layanan Perkasa"** (4 anchor `/layanan/#...`) → `footer-services`.
+
+### Data (seed DB)
+- 6 proyek `perkasa_project` (ID 146–151) + kategori by name — order `menu_order`
+  0–5; menu Utama Perkasa (term 35) & Layanan Perkasa (term 36); kontak default
+  via theme_mods. *Identitas kontak masih fiktif — ganti via Customize.*
+
+### QA v3.1.0 (Playwright Chromium, DDEV)
+- **Footer dinamis**: kontak customizer tampil (alamat/email/tel/WA lokalisasi),
+  link `mailto:`, `wa.me/6281234567890`, kolom Perusahaan = menu 5 link persis
+  navbar, kolom Layanan = menu 4 anchor — PASS.
+- **Navbar** = Beranda/Proyek/Layanan/Tentang/Kontak (sama dengan footer) + CTA
+  "Konsultasi Gratis" — PASS.
+- **Proyek CPT**: home Proyek Unggulan 6 kartu dari CPT; `/proyek/` 6 kartu kaya
+  (durasi/nilai/fitur lengkap menampilkan "Nilai: KOMERSIAL" dsb.) — PASS.
+- **14 URL × 2 viewport** (1440 & 390): status benar (404 → 404), overflow 0,
+  `pageerror` 0 — FAILS: 0.
+- Lint: `php -l` bersih (plugin + 5 file tema), `node --check` main.js OK.
+- Screenshot: home footer 1440, proyek 1440, home mobile 390.
+
+---
+
+
 ## v1.0.0-perkasa — Tema WordPress Baru: "Garuda Perkasa" (Fake Project) 2026-09-07
 
 Tema WP kedua dari nol: company profile **Garuda Perkasa** — Jasa Konstruksi &

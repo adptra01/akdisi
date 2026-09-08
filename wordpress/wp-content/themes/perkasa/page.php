@@ -1,27 +1,36 @@
 <?php
 /**
- * Generic page fallback.
+ * Generic page fallback — Garuda Perkasa v3.
  *
- * @package Perkasa
+ * @package Garuda_Perkasa
  */
+
 get_header();
 
-get_template_part( 'template-parts/page-hero', null, array(
-	'title' => get_the_title(),
-) );
-?>
+while ( have_posts() ) :
+	the_post();
+	?>
+	<main id="perkasa-main">
+		<?php
+		get_template_part(
+			'template-parts/page-hero',
+			null,
+			array(
+				'title'   => get_the_title(),
+				'eyebrow' => 'Halaman',
+			)
+		);
+		?>
 
-<section class="section">
-	<div class="container mx-auto px-5 lg:px-8">
-		<div class="prose max-w-3xl">
-			<?php
-			while ( have_posts() ) :
-				the_post();
-				the_content();
-			endwhile;
-			?>
-		</div>
-	</div>
-</section>
+		<section class="bg-paper py-16 lg:py-24">
+			<div class="mx-auto max-w-3xl px-5">
+				<article class="entry-content" <?php post_class(); ?>>
+					<?php the_content(); ?>
+				</article>
+			</div>
+		</section>
+	</main>
+	<?php
+endwhile;
 
-<?php get_footer(); ?>
+get_footer();

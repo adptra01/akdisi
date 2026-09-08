@@ -1,48 +1,58 @@
 <?php
 /**
- * Fallback template — archive, search, dll.
+ * Fallback: archive / search / index — Garuda Perkasa v3.
  *
- * @package Perkasa
+ * @package Garuda_Perkasa
  */
 
 get_header();
-get_template_part( 'template-parts/page-hero', null, array(
-	'eyebrow' => is_search() ? 'Hasil pencarian' : 'Arsip',
-	'title'   => is_search() ? 'Hasil pencarian untuk: ' . get_search_query() : wp_title( '', false ),
-) );
 ?>
 
-<main id="primary" class="container mx-auto px-4 py-16 md:py-24">
-	<?php if ( have_posts() ) : ?>
-		<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-			<?php
-			while ( have_posts() ) :
-				the_post();
+<main id="perkasa-main">
+	<section class="bp-grid relative overflow-hidden bg-[#060a12] text-white">
+		<div class="relative mx-auto max-w-7xl px-5 pb-16 pt-28 lg:pt-40">
+			<p class="eyebrow spec-label mb-5 text-amber-500">Berita &amp; Arsip</p>
+			<h1 class="font-display text-4xl font-black uppercase tracking-tight sm:text-5xl">
+				<?php
+				if ( is_search() ) {
+					echo esc_html( 'Hasil pencarian' );
+				} elseif ( is_archive() ) {
+					echo esc_html( 'Arsip' );
+				} else {
+					echo esc_html( 'Konten' );
+				}
 				?>
-				<article class="akdisi-card" data-reveal>
-					<a href="<?php the_permalink(); ?>" class="block p-6 no-underline">
-						<h2 class="text-lg font-semibold text-ink hover:text-brand"><?php the_title(); ?></h2>
-						<p class="mt-2 text-sm text-ink/60"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 20 ) ); ?></p>
-					</a>
-				</article>
-			<?php endwhile; ?>
+			</h1>
 		</div>
+	</section>
 
-		<div class="mt-12">
-			<?php
-			the_posts_pagination( array(
-				'mid_size'  => 2,
-				'prev_text' => '&larr; Sebelumnya',
-				'next_text' => 'Berikutnya &rarr;',
-			) );
-			?>
+	<section class="bg-paper py-20">
+		<div class="mx-auto max-w-4xl px-5">
+			<?php if ( have_posts() ) : ?>
+				<div class="space-y-6">
+					<?php
+					while ( have_posts() ) :
+						the_post();
+						?>
+						<article class="gp-card p-7">
+							<h2 class="font-display text-xl font-bold text-[#060a12]">
+								<a href="<?php the_permalink(); ?>" class="hover:text-amber-600"><?php the_title(); ?></a>
+							</h2>
+							<?php if ( has_excerpt() ) : ?>
+								<p class="mt-2 text-sm text-slate-500"><?php echo esc_html( get_the_excerpt() ); ?></p>
+							<?php endif; ?>
+						</article>
+					<?php endwhile; ?>
+				</div>
+				<div class="mt-10"><?php the_posts_pagination( array( 'mid_size' => 2 ) ); ?></div>
+			<?php else : ?>
+				<div class="rounded-xl border border-slate-200 bg-white p-10 text-center">
+					<p class="font-display text-xl font-bold text-[#060a12]">Belum ada konten.</p>
+					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="btn btn-amber mt-5">Kembali ke Beranda</a>
+				</div>
+			<?php endif; ?>
 		</div>
-	<?php else : ?>
-		<div class="text-center py-16">
-			<p class="text-lg text-ink/60">Tidak ada konten ditemukan.</p>
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="btn-primary mt-6">Kembali ke Beranda</a>
-		</div>
-	<?php endif; ?>
+	</section>
 </main>
 
 <?php

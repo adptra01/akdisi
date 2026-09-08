@@ -1,107 +1,139 @@
 <?php
 /**
  * Template Name: Kontak
- * Page: /kontak/
+ * Template Post Type: page
  *
- * @package Perkasa
+ * Halaman kontak + form lead — Garuda Perkasa v3.
+ * Form client-side validasi (inline error + fokus field pertama), tanpa backend —
+ * proyek fiktif.
+ *
+ * @package Garuda_Perkasa
  */
+
 get_header();
 
-get_template_part( 'template-parts/page-hero', null, array(
-	'eyebrow' => __( 'Kontak', 'perkasa' ),
-	'title'   => __( 'Hubungi kami untuk konsultasi proyek', 'perkasa' ),
-	'sub'     => __( 'Ceritakan proyek Anda — kami akan merespons dalam 1 hari kerja.', 'perkasa' ),
-) );
+$perkasa_contact = array(
+	array( 't' => 'Alamat kantor', 'v' => perkasa_get_contact( 'address' ), 'i' => 'pin' ),
+	array( 't' => 'Telepon', 'v' => perkasa_get_contact( 'phone' ), 'i' => 'tel' ),
+	array( 't' => 'Email', 'v' => perkasa_get_contact( 'email' ), 'i' => 'mail' ),
+	array( 't' => 'WhatsApp', 'v' => perkasa_wa_display( perkasa_get_contact( 'whatsapp' ) ), 'i' => 'wa' ),
+);
 ?>
 
-<section class="section">
-	<div class="container mx-auto px-5 lg:px-8">
-		<div class="grid gap-12 lg:grid-cols-[1fr_1.3fr]">
+<main id="perkasa-main">
+
+	<section class="bp-grid relative overflow-hidden bg-[#060a12] text-white" aria-labelledby="page-title">
+		<div class="pointer-events-none absolute inset-0" aria-hidden="true">
+			<div data-parallax="8" class="absolute -right-24 -top-24 h-96 w-96 rounded-full bg-amber-500/15 blur-[110px]"></div>
+		</div>
+		<div class="relative mx-auto max-w-7xl px-5 pb-16 pt-28 lg:pb-20 lg:pt-40">
+			<p class="eyebrow spec-label mb-5 text-amber-500" data-reveal>Kontak</p>
+			<h1 id="page-title" class="font-display text-4xl font-black uppercase leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl" data-reveal>
+				Mulai Dari<br><span class="text-amber-500">Percakapan</span>
+			</h1>
+			<p class="mt-6 max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base" data-reveal>
+				Isi formulir — tim kami membalas dalam 1 hari kerja. Konsultasi 30 menit
+				pertama gratis, tanpa komitmen.
+			</p>
+		</div>
+	</section>
+
+	<section class="bg-paper py-20 lg:py-28" aria-label="Formulir kontak">
+		<div class="mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[0.85fr_1.15fr]">
 
 			<!-- Info -->
-			<div data-reveal>
-				<h2 class="font-display text-2xl font-bold text-ink">Garuda Perkasa</h2>
-				<p class="mt-2 text-ink-soft leading-relaxed">Kantor pusat kami di Jakarta Selatan. Kami melayani proyek di seluruh Indonesia.</p>
+			<div class="space-y-4" data-reveal>
+				<?php foreach ( $perkasa_contact as $c ) : ?>
+					<div class="gp-card flex items-start gap-4 p-5">
+						<span class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-amber-500 font-display text-sm font-black text-[#060a12]" aria-hidden="true"><?php echo esc_html( $c['i'][0] ); ?></span>
+						<div>
+							<p class="spec-label text-slate-400"><?php echo esc_html( $c['t'] ); ?></p>
+							<p class="mt-1 text-sm font-semibold text-slate-700"><?php echo esc_html( $c['v'] ); ?></p>
+						</div>
+					</div>
+				<?php endforeach; ?>
 
-				<div class="mt-8 space-y-6 text-sm">
-					<div>
-						<p class="mb-1 font-semibold text-ink">Alamat</p>
-						<p class="text-ink-soft">Jl. Raya Industri No. 88<br>Jakarta Selatan, DKI Jakarta 12345</p>
-					</div>
-					<div>
-						<p class="mb-1 font-semibold text-ink">Telepon</p>
-						<a href="tel:+622155501234" class="text-brand hover:underline">(021) 5550-1234</a>
-					</div>
-					<div>
-						<p class="mb-1 font-semibold text-ink">Email</p>
-						<a href="mailto:info@garudaperkasa.co.id" class="text-brand hover:underline">info@garudaperkasa.co.id</a>
-					</div>
-					<div>
-						<p class="mb-1 font-semibold text-ink">WhatsApp</p>
-						<a href="https://wa.me/6281234567890" class="text-brand hover:underline" target="_blank" rel="noopener">+62 812-3456-7890</a>
-					</div>
-					<div>
-						<p class="mb-1 font-semibold text-ink">Jam Kerja</p>
-						<p class="text-ink-soft">Senin – Jumat, 08.00 – 17.00 WIB</p>
-					</div>
+				<div class="gp-card p-5">
+					<p class="spec-label text-slate-400">Jam operasional</p>
+					<p class="mt-1 text-sm font-semibold text-slate-700">Senin–Jumat, 08.00–17.00 WIB</p>
+					<p class="mt-2 text-xs text-slate-400">Kunjungan site dapat dijadwalkan di luar jam kerja.</p>
+				</div>
+
+				<div class="rounded-lg border border-amber-200 bg-amber-50 p-5">
+					<p class="flex items-center gap-2 text-sm font-bold text-amber-700">
+						<span aria-hidden="true">✦</span> Respons 1 hari kerja
+					</p>
+					<p class="mt-1.5 text-xs leading-relaxed text-amber-700/80">
+						94% pertanyaan dijawab dalam 24 jam. Pesan di luar jam kerja akan
+						dibalas pada hari kerja berikutnya.
+					</p>
 				</div>
 			</div>
 
 			<!-- Form -->
-			<div data-reveal style="transition-delay:80ms">
-				<div class="rounded-xl border border-paper-line bg-paper-alt p-6 md:p-8">
-					<h3 class="font-display text-lg font-bold text-ink">Kirim Pesan</h3>
-					<p class="mt-1 text-sm text-ink-soft">Isi form di bawah ini, kami akan merespons secepatnya.</p>
+			<div class="gp-card relative overflow-hidden p-8 lg:p-10" data-reveal>
+				<span class="giant-num absolute -right-4 -top-7 text-[8rem]" aria-hidden="true">K</span>
 
-					<form id="perkasa-contact-form" class="mt-6 space-y-5" novalidate>
+				<form id="perkasa-contact-form" class="relative" novalidate>
+					<div class="grid gap-5 sm:grid-cols-2">
 						<div>
-							<label for="cf-name" class="mb-1 block text-sm font-medium text-ink">Nama Lengkap <span class="text-red-500">*</span></label>
-							<input id="cf-name" name="name" type="text" required autocomplete="name"
-								class="w-full rounded-lg border border-paper-line bg-white px-4 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 transition-colors"
-								placeholder="Budi Santoso">
-							<p class="field-error mt-1 hidden text-xs text-red-600"></p>
+							<label class="form-label" for="f-nama">Nama lengkap</label>
+							<input class="form-input" id="f-nama" name="nama" type="text" autocomplete="name" placeholder="Nama Anda" required>
+							<p class="field-error hidden" id="f-nama-error"></p>
 						</div>
 						<div>
-							<label for="cf-email" class="mb-1 block text-sm font-medium text-ink">Email <span class="text-red-500">*</span></label>
-							<input id="cf-email" name="email" type="email" required autocomplete="email"
-								class="w-full rounded-lg border border-paper-line bg-white px-4 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 transition-colors"
-								placeholder="budi@perusahaan.co.id">
-							<p class="field-error mt-1 hidden text-xs text-red-600"></p>
+							<label class="form-label" for="f-email">Email</label>
+							<input class="form-input" id="f-email" name="email" type="email" autocomplete="email" placeholder="nama@perusahaan.com" required>
+							<p class="field-error hidden" id="f-email-error"></p>
+						</div>
+					</div>
+
+					<div class="mt-5 grid gap-5 sm:grid-cols-2">
+						<div>
+							<label class="form-label" for="f-telp">No. telepon / WhatsApp</label>
+							<input class="form-input" id="f-telp" name="telp" type="tel" autocomplete="tel" placeholder="08xx-xxxx-xxxx" required>
+							<p class="field-error hidden" id="f-telp-error"></p>
 						</div>
 						<div>
-							<label for="cf-phone" class="mb-1 block text-sm font-medium text-ink">Telepon</label>
-							<input id="cf-phone" name="phone" type="tel" autocomplete="tel"
-								class="w-full rounded-lg border border-paper-line bg-white px-4 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 transition-colors"
-								placeholder="0812-xxxx-xxxx">
-						</div>
-						<div>
-							<label for="cf-need" class="mb-1 block text-sm font-medium text-ink">Jenis Proyek <span class="text-red-500">*</span></label>
-							<select id="cf-need" name="need" required
-								class="w-full rounded-lg border border-paper-line bg-white px-4 py-2.5 text-sm text-ink focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 transition-colors">
-								<option value="">Pilih jenis proyek…</option>
-								<option value="konstruksi-gedung">Konstruksi Gedung</option>
-								<option value="infrastruktur">Infrastruktur & Jalan</option>
-								<option value="renovasi">Renovasi & Rehabilitasi</option>
-								<option value="konsultasi">Konsultasi Teknis</option>
-								<option value="lainnya">Lainnya</option>
+							<label class="form-label" for="f-jenis">Jenis proyek</label>
+							<select class="form-input" id="f-jenis" name="jenis" required>
+								<option value="">— Pilih jenis proyek —</option>
+								<option>Konstruksi Gedung</option>
+								<option>Infrastruktur &amp; Jalan</option>
+								<option>Renovasi &amp; Rehabilitasi</option>
+								<option>Konsultasi &amp; Manajemen</option>
+								<option>Lainnya</option>
 							</select>
-							<p class="field-error mt-1 hidden text-xs text-red-600"></p>
+							<p class="field-error hidden" id="f-jenis-error"></p>
 						</div>
-						<div>
-							<label for="cf-msg" class="mb-1 block text-sm font-medium text-ink">Pesan <span class="text-red-500">*</span></label>
-							<textarea id="cf-msg" name="message" required rows="4"
-								class="w-full rounded-lg border border-paper-line bg-white px-4 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 transition-colors"
-								placeholder="Ceritakan tentang proyek Anda…"></textarea>
-							<p class="field-error mt-1 hidden text-xs text-red-600"></p>
-						</div>
-						<button type="submit" class="btn btn-primary w-full sm:w-auto">Kirim Pesan</button>
-						<p class="perkasa-form-status hidden rounded-lg px-4 py-3 text-sm"></p>
-					</form>
+					</div>
+
+					<div class="mt-5">
+						<label class="form-label" for="f-pesan">Ceritakan kebutuhan Anda</label>
+						<textarea class="form-input" id="f-pesan" name="pesan" rows="5" placeholder="Lokasi, perkiraan luas, target waktu…" required></textarea>
+						<p class="field-error hidden" id="f-pesan-error"></p>
+					</div>
+
+					<div class="mt-7 flex flex-wrap items-center gap-4">
+						<button type="submit" class="btn btn-amber">Kirim Permintaan</button>
+						<p class="text-xs text-slate-400">Atau langsung via WhatsApp — lebih cepat.</p>
+					</div>
+				</form>
+
+				<!-- Success (simulasi) -->
+				<div id="perkasa-form-success" class="hidden rounded-lg border border-emerald-200 bg-emerald-50 p-8 text-center" role="status" aria-live="polite">
+					<p class="font-display text-xl font-black text-emerald-700">Permintaan terkirim.</p>
+					<p class="mt-2 text-sm text-emerald-700/80">
+						Terima kasih — tim Garuda Perkasa akan menghubungi Anda dalam
+						1 hari kerja. Simulasi form (proyek fiktif).
+					</p>
+					<a href="https://wa.me/<?php echo esc_attr( preg_replace( '/\D+/', '', perkasa_get_contact( 'whatsapp' ) ) ); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-ink mt-5" data-ga-track="form_success_wa">Lanjut via WhatsApp</a>
 				</div>
 			</div>
-
 		</div>
-	</div>
-</section>
+	</section>
 
-<?php get_footer(); ?>
+</main>
+
+<?php
+get_footer();
