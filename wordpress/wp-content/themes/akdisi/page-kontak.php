@@ -24,21 +24,20 @@ get_template_part( 'template-parts/page-hero', null, array(
 			<div class="mt-8 space-y-6">
 				<div>
 					<p class="text-xs font-semibold uppercase tracking-wide text-ink-faint">Email</p>
-					<a href="mailto:hello@akdisi.com" class="mt-1 block text-lg font-semibold text-ink hover:text-brand">hello@akdisi.com</a>
+					<a href="mailto:<?php echo esc_attr( akdisi_get_contact( 'email' ) ); ?>" class="mt-1 block text-lg font-semibold text-ink hover:text-brand"><?php echo esc_html( akdisi_get_contact( 'email' ) ); ?></a>
 				</div>
 				<div>
 					<p class="text-xs font-semibold uppercase tracking-wide text-ink-faint">WhatsApp</p>
-					<a href="https://wa.me/6281234567890" target="_blank" rel="noopener" class="mt-1 block text-lg font-semibold text-ink hover:text-brand">+62 812-3456-7890</a>
+					<a href="<?php echo esc_url( akdisi_wa_link() ); ?>" target="_blank" rel="noopener" class="mt-1 block text-lg font-semibold text-ink hover:text-brand"><?php echo esc_html( akdisi_get_contact( 'phone' ) ); ?></a>
 				</div>
 				<div>
 					<p class="text-xs font-semibold uppercase tracking-wide text-ink-faint">Location</p>
-					<p class="mt-1 text-lg font-semibold text-ink">Jambi, Indonesia</p>
+					<p class="mt-1 text-lg font-semibold text-ink"><?php echo esc_html( akdisi_get_contact( 'location' ) ); ?></p>
 				</div>
 			</div>
 			<div class="mt-10 rounded-2xl border border-paper-line bg-paper-alt p-6">
 				<p class="text-sm leading-relaxed text-ink-soft">
-					<strong class="text-ink">Jam kerja:</strong> Senin–Jumat, 09.00–17.00 WIB.
-					Permintaan singkat biasanya dibalas di hari yang sama.
+					<strong class="text-ink">Jam kerja:</strong> <?php echo esc_html( akdisi_get_contact( 'hours' ) ); ?>
 				</p>
 			</div>
 		</div>

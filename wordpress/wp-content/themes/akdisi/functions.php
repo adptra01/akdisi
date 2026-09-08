@@ -1,6 +1,6 @@
 <?php
 /**
- * AKDISI v4.0.0 — Digital Agency theme functions.
+ * AKDISI v4.7.0 — Digital Agency theme functions.
  *
  * @package AKDISI
  */
@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'AKDISI_VERSION', '4.0.0' );
+define( 'AKDISI_VERSION', '4.7.0' );
 
 /**
  * Theme setup: menus, supports, image sizes.
@@ -22,8 +22,9 @@ function akdisi_setup() {
 
 	register_nav_menus(
 		array(
-			'primary' => __( 'Menu Utama', 'akdisi' ),
-			'footer'  => __( 'Menu Footer', 'akdisi' ),
+			'primary'        => __( 'Menu Utama', 'akdisi' ),
+			'footer'         => __( 'Menu Footer', 'akdisi' ),
+			'footer-services' => __( 'Menu Layanan Footer', 'akdisi' ),
 		)
 	);
 
@@ -85,37 +86,9 @@ function akdisi_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'akdisi_scripts' );
 
-/**
- * SEO meta description + Open Graph — Bahasa Indonesia, fallback ke tagline.
- */
-function akdisi_seo_meta() {
-	$desc = get_bloginfo( 'description' );
-	if ( is_singular() ) {
-		$excerpt = get_the_excerpt();
-		if ( $excerpt ) {
-			$desc = $excerpt;
-		}
-	}
-	$desc = wp_strip_all_tags( $desc );
-	$desc = wp_html_excerpt( $desc, 160, '&hellip;' );
-	if ( '' === $desc ) {
-		$desc = 'AKDISI — mitra digital untuk website dan aplikasi yang mendatangkan pelanggan.';
-	}
-	echo '<meta name="description" content="' . esc_attr( $desc ) . '">' . "\n";
-
-	$og_title = is_singular() ? get_the_title() : get_bloginfo( 'name' );
-	echo '<meta property="og:title" content="' . esc_attr( $og_title ) . '">' . "\n";
-	echo '<meta property="og:description" content="' . esc_attr( $desc ) . '">' . "\n";
-	echo '<meta property="og:type" content="' . ( is_singular( 'akdisi_project' ) ? 'article' : 'website' ) . '">' . "\n";
-	echo '<meta property="og:url" content="' . esc_url( get_permalink() ?: home_url( '/' ) ) . '">' . "\n";
-	echo '<meta property="og:site_name" content="' . esc_attr( get_bloginfo( 'name' ) ) . '">' . "\n";
-	echo '<meta property="og:locale" content="id_ID">' . "\n";
-
-	if ( is_singular() && has_post_thumbnail() ) {
-		echo '<meta property="og:image" content="' . esc_url( (string) get_the_post_thumbnail_url( null, 'akdisi-wide' ) ) . '">' . "\n";
-	}
-}
-add_action( 'wp_head', 'akdisi_seo_meta', 5 );
+// SEO ala Yoast (meta, robots, canonical, OG, Twitter, Schema.org) — inc/seo.php.
+// Customizer "Info Kontak" (email/WA/lokasi/jam kerja) — inc/customizer.php.
+// Keduanya auto-loaded via glob inc/*.php di bawah.
 
 /**
  * Tailwind v3 CDN runtime config — palette & fonts.

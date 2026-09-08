@@ -19,36 +19,7 @@ get_template_part( 'template-parts/page-hero', null, array(
 	<div class="container mx-auto">
 		<div class="grid gap-8 lg:grid-cols-2">
 			<?php
-			$cases = array(
-				array(
-					'title' => __( 'Manajemen unit & sales perumahan', 'akdisi' ),
-					'desc'  => __( 'Dari Excel dan grup WA jadi sistem booking real-time dengan peta kavling interaktif.', 'akdisi' ),
-					'stack' => 'Web app · CRM · Dashboard',
-					'tag'   => 'Properti',
-					'url'   => home_url( '/solutions/developer/' ),
-				),
-				array(
-					'title' => __( 'Iuran & pengaduan perumahan digital', 'akdisi' ),
-					'desc'  => __( 'Billing otomatis, portal warga, dan tracking maintenance dalam satu sistem.', 'akdisi' ),
-					'stack' => 'Billing · Portal warga',
-					'tag'   => 'Properti',
-					'url'   => home_url( '/solutions/property/' ),
-				),
-				array(
-					'title' => __( 'Keanggotaan & sertifikasi digital', 'akdisi' ),
-					'desc'  => __( 'Data anggota dan event asosiasi yang sebelumnya tersebar kini terpusat dan otomatis.', 'akdisi' ),
-					'stack' => 'Membership · Event',
-					'tag'   => 'Asosiasi',
-					'url'   => home_url( '/solutions/organization/' ),
-				),
-				array(
-					'title' => __( 'Inventori multi-gudang & distribusi', 'akdisi' ),
-					'desc'  => __( 'Bukti AKDISI melayani proses operasional kompleks di luar properti.', 'akdisi' ),
-					'stack' => 'Inventory · Multi-lokasi',
-					'tag'   => 'Bisnis Lain',
-					'url'   => home_url( '/projects/' ),
-				),
-			);
+			$cases = akdisi_get_use_cases();
 			foreach ( $cases as $i => $c ) :
 				?>
 				<a data-reveal href="<?php echo esc_url( $c['url'] ); ?>" data-ga-track="use_case_card"

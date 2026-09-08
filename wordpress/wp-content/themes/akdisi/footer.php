@@ -10,10 +10,10 @@
 			<p class="max-w-xs text-sm leading-relaxed">
 				<?php echo esc_html( get_bloginfo( 'description' ) ?: __( 'Mitra digital untuk bisnis yang ingin tumbuh — website dan aplikasi yang mendatangkan pelanggan.', 'akdisi' ) ); ?>
 			</p>
-			<!-- Contact CRUD -->
+			<!-- Contact CRUD (Customizer → Appearance → Customize → Info Kontak) -->
 			<div class="space-y-1 text-sm">
-				<a href="mailto:hello@akdisi.com" class="block hover:text-white">hello@akdisi.com</a>
-				<a href="https://wa.me/6281234567890" class="block hover:text-white" target="_blank" rel="noopener">+62 812-3456-7890</a>
+				<a href="mailto:<?php echo esc_attr( akdisi_get_contact( 'email' ) ); ?>" class="block hover:text-white"><?php echo esc_html( akdisi_get_contact( 'email' ) ); ?></a>
+				<a href="<?php echo esc_url( akdisi_wa_link() ); ?>" class="block hover:text-white" target="_blank" rel="noopener"><?php echo esc_html( akdisi_get_contact( 'phone' ) ); ?></a>
 			</div>
 		</div>
 
@@ -34,17 +34,27 @@
 			?>
 		</div>
 
-		<!-- Services quick-links -->
+		<!-- Services quick-links (menu WP `footer-services`; fallback = akdisi_footer_services) -->
 		<div>
 			<h3 class="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Layanan</h3>
-			<ul class="space-y-2 text-sm">
-				<?php
-				$services = akdisi_footer_services();
-				foreach ( $services as $label => $url ) :
-					?>
-					<li><a href="<?php echo esc_url( $url ); ?>" class="hover:text-white"><?php echo esc_html( $label ); ?></a></li>
-				<?php endforeach; ?>
-			</ul>
+			<?php
+			if ( has_nav_menu( 'footer-services' ) ) {
+				wp_nav_menu(
+					array(
+						'theme_location' => 'footer-services',
+						'container'      => false,
+						'menu_class'     => 'space-y-2 text-sm',
+						'depth'          => 1,
+					)
+				);
+			} else {
+				echo '<ul class="space-y-2 text-sm">';
+				foreach ( akdisi_footer_services() as $label => $url ) {
+					printf( '<li><a href="%s" class="hover:text-white">%s</a></li>', esc_url( $url ), esc_html( $label ) );
+				}
+				echo '</ul>';
+			}
+			?>
 		</div>
 
 		<!-- Newsletter -->

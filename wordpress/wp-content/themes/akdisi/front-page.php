@@ -54,9 +54,9 @@ $testimonials = new WP_Query(
 			</div>
 			<!-- Stats strip -->
 			<dl class="mt-12 flex flex-wrap gap-x-10 gap-y-6 border-t border-paper-line pt-8">
-				<div><dt class="text-3xl font-bold text-ink font-display">40+</dt><dd class="mt-1 text-sm text-ink-faint">Proyek selesai</dd></div>
-				<div><dt class="text-3xl font-bold text-ink font-display">12</dt><dd class="mt-1 text-sm text-ink-faint">Industri dilayani</dd></div>
-				<div><dt class="text-3xl font-bold text-ink font-display">98%</dt><dd class="mt-1 text-sm text-ink-faint">Klien kembali</dd></div>
+				<?php foreach ( akdisi_get_stats( 'hero' ) as $stat ) : ?>
+					<div><dt class="text-3xl font-bold text-ink font-display"><?php echo esc_html( $stat['value'] ); ?></dt><dd class="mt-1 text-sm text-ink-faint"><?php echo esc_html( $stat['label'] ); ?></dd></div>
+				<?php endforeach; ?>
 			</dl>
 		</div>
 
@@ -113,12 +113,9 @@ $testimonials = new WP_Query(
 	<div class="container mx-auto">
 		<p class="mb-6 text-center text-xs font-semibold uppercase tracking-[0.2em] text-ink-faint">Dipercaya tim produk di</p>
 		<div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-4 opacity-70">
-			<span class="font-display text-xl font-bold text-ink/60">NORTHBOUND</span>
-			<span class="font-display text-xl font-bold text-ink/60">Halcyon</span>
-			<span class="font-display text-xl font-bold text-ink/60">Meridian Co.</span>
-			<span class="font-display text-xl font-bold text-ink/60">Kestrel</span>
-			<span class="font-display text-xl font-bold text-ink/60">Atelier 9</span>
-			<span class="font-display text-xl font-bold text-ink/60">Vantage</span>
+			<?php foreach ( akdisi_get_clients() as $name ) : ?>
+				<span class="font-display text-xl font-bold uppercase text-ink/60"><?php echo esc_html( $name ); ?></span>
+			<?php endforeach; ?>
 		</div>
 	</div>
 </section>
@@ -138,28 +135,7 @@ $testimonials = new WP_Query(
 
 		<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
 			<?php
-			$services = array(
-				array(
-					'icon'  => 'M3 17l6-6 4 4 8-8M3 21h18',
-					'title' => __( 'Strategi Produk', 'akdisi' ),
-					'desc'  => __( 'Riset pasar, peta jalan, dan positioning yang memastikan Anda membangun hal yang benar sejak awal.', 'akdisi' ),
-				),
-				array(
-					'icon'  => 'M12 19l9 2-9-18-9 18 9-2zm0 0v-8',
-					'title' => __( 'Desain UI/UX', 'akdisi' ),
-					'desc'  => __( 'Antarmuka yang mudah dipakai sehingga pengunjung betah dan kembali lagi — diteliti, diuji, disempurnakan.', 'akdisi' ),
-				),
-				array(
-					'icon'  => 'M8 9l3 3-3 3m5 0h3M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5z',
-					'title' => __( 'Pengembangan Website & Aplikasi', 'akdisi' ),
-					'desc'  => __( 'Website dan aplikasi yang cepat, aman, dan siap berkembang — dari profil perusahaan hingga platform SaaS.', 'akdisi' ),
-				),
-				array(
-					'icon'  => 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
-					'title' => __( 'Pertumbuhan & Pemasaran', 'akdisi' ),
-					'desc'  => __( 'SEO, analitik, dan program konversi yang mendatangkan pelanggan baru secara konsisten.', 'akdisi' ),
-				),
-			);
+			$services = akdisi_get_services();
 			foreach ( $services as $i => $s ) :
 				?>
 				<article data-reveal class="card group p-7" style="transition-delay:<?php echo esc_attr( $i * 60 ); ?>ms">
@@ -191,22 +167,12 @@ $testimonials = new WP_Query(
 			</ul>
 		</div>
 		<div data-reveal class="grid grid-cols-2 gap-6">
-			<div class="rounded-2xl border border-stone-700/60 bg-stone-800/40 p-7">
-				<p class="font-display text-4xl font-bold text-white">40+</p>
-				<p class="mt-2 text-sm text-stone-400">Proyek selesai di 12 industri</p>
-			</div>
-			<div class="rounded-2xl border border-stone-700/60 bg-stone-800/40 p-7">
-				<p class="font-display text-4xl font-bold text-white">6 mgg</p>
-				<p class="mt-2 text-sm text-stone-400">Rata-rata waktu konsep hingga tayang</p>
-			</div>
-			<div class="rounded-2xl border border-stone-700/60 bg-stone-800/40 p-7">
-				<p class="font-display text-4xl font-bold text-white">98%</p>
-				<p class="mt-2 text-sm text-stone-400">Klien yang kembali untuk proyek berikutnya</p>
-			</div>
-			<div class="rounded-2xl border border-stone-700/60 bg-stone-800/40 p-7">
-				<p class="font-display text-4xl font-bold text-white">4.9/5</p>
-				<p class="mt-2 text-sm text-stone-400">Rating rata-rata dari klien</p>
-			</div>
+			<?php foreach ( akdisi_get_stats( 'why' ) as $stat ) : ?>
+				<div class="rounded-2xl border border-stone-700/60 bg-stone-800/40 p-7">
+					<p class="font-display text-4xl font-bold text-white"><?php echo esc_html( $stat['value'] ); ?></p>
+					<p class="mt-2 text-sm text-stone-400"><?php echo esc_html( $stat['label'] ); ?></p>
+				</div>
+			<?php endforeach; ?>
 		</div>
 	</div>
 </section>
@@ -266,18 +232,13 @@ $testimonials = new WP_Query(
 
 		<ol class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
 			<?php
-			$steps = array(
-				array( '01', __( 'Temukan', 'akdisi' ), __( 'Workshop mendalam, riset pengguna, dan definisi selesai yang jelas.', 'akdisi' ) ),
-				array( '02', __( 'Rancang', 'akdisi' ), __( 'Dari wireframe hingga UI final, divalidasi pengguna nyata di tiap tahap.', 'akdisi' ) ),
-				array( '03', __( 'Bangun', 'akdisi' ), __( 'Engineering berbasis sprint dengan demo setiap Jumat — bukan kotak hitam.', 'akdisi' ) ),
-				array( '04', __( 'Luncurkan & Kembangkan', 'akdisi' ), __( 'Tayang, ukur, perbaiki. Kami tetap mendampingi untuk optimasi dan dukungan.', 'akdisi' ) ),
-			);
+			$steps = akdisi_get_process_steps();
 			foreach ( $steps as $i => $step ) :
 				?>
 				<li data-reveal class="relative rounded-2xl border border-paper-line bg-white p-7" style="transition-delay:<?php echo esc_attr( $i * 60 ); ?>ms">
-					<span class="font-display text-5xl font-bold text-brand-soft"><?php echo esc_html( $step[0] ); ?></span>
-					<h3 class="mt-4 text-lg font-semibold text-ink"><?php echo esc_html( $step[1] ); ?></h3>
-					<p class="mt-2 text-sm leading-relaxed text-ink-soft"><?php echo esc_html( $step[2] ); ?></p>
+					<span class="font-display text-5xl font-bold text-brand-soft"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+					<h3 class="mt-4 text-lg font-semibold text-ink"><?php echo esc_html( $step['title'] ); ?></h3>
+					<p class="mt-2 text-sm leading-relaxed text-ink-soft"><?php echo esc_html( $step['desc'] ); ?></p>
 				</li>
 			<?php endforeach; ?>
 		</ol>

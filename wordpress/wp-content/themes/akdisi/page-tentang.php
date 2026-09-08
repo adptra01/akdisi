@@ -32,22 +32,12 @@ get_template_part( 'template-parts/page-hero', null, array(
 			</div>
 		</div>
 		<div data-reveal class="grid gap-6 sm:grid-cols-2">
-			<div class="rounded-2xl bg-brand-soft p-8">
-				<p class="font-display text-5xl font-bold text-brand">2019</p>
-				<p class="mt-3 text-sm text-ink-soft">Didirikan di Jambi sebagai studio web dua orang.</p>
-			</div>
-			<div class="rounded-2xl border border-paper-line bg-paper-alt p-8">
-				<p class="font-display text-5xl font-bold text-ink">40+</p>
-				<p class="mt-3 text-sm text-ink-soft">Proyek selesai di 12 industri.</p>
-			</div>
-			<div class="rounded-2xl border border-paper-line bg-paper-alt p-8">
-				<p class="font-display text-5xl font-bold text-ink">12</p>
-				<p class="mt-3 text-sm text-ink-soft">Orang, semua senior — tanpa yang belajar sambil jalan.</p>
-			</div>
-			<div class="rounded-2xl bg-ink p-8">
-				<p class="font-display text-5xl font-bold text-white">98%</p>
-				<p class="mt-3 text-sm text-stone-400">Klien kembali untuk kerja sama berikutnya.</p>
-			</div>
+			<?php foreach ( akdisi_get_stats( 'about' ) as $i => $stat ) : ?>
+				<div class="<?php echo 0 === $i ? 'rounded-2xl bg-brand-soft p-8' : ( 3 === $i ? 'rounded-2xl bg-ink p-8' : 'rounded-2xl border border-paper-line bg-paper-alt p-8' ); ?>">
+					<p class="font-display text-5xl font-bold <?php echo 3 === $i ? 'text-white' : 'text-ink'; ?>"><?php echo esc_html( $stat['value'] ); ?></p>
+					<p class="mt-3 text-sm <?php echo 3 === $i ? 'text-stone-400' : 'text-ink-soft'; ?>"><?php echo esc_html( $stat['label'] ); ?></p>
+				</div>
+			<?php endforeach; ?>
 		</div>
 	</div>
 </section>
@@ -61,17 +51,13 @@ get_template_part( 'template-parts/page-hero', null, array(
 		</div>
 		<div class="grid gap-6 md:grid-cols-3">
 			<?php
-			$values = array(
-				array( __( 'Bertanggung jawab atas hasil', 'akdisi' ), __( 'Kami diukur dari metrik Anda — peluncuran, konversi, retensi — bukan dari jam yang ditagih.', 'akdisi' ) ),
-				array( __( 'Senior, selalu', 'akdisi' ), __( 'Orang di kickoff Anda adalah orang yang mengerjakan produknya. Tanpa jualan nama lalu operan.', 'akdisi' ) ),
-				array( __( 'Keandalan yang membosankan', 'akdisi' ), __( 'Demo konsisten, timeline jujur, bahasa yang jelas. Kegembiraan seharusnya datang dari produknya.', 'akdisi' ) ),
-			);
+			$values = akdisi_get_values();
 			foreach ( $values as $i => $v ) :
 				?>
 				<div data-reveal class="card p-7" style="transition-delay:<?php echo esc_attr( $i * 70 ); ?>ms">
 					<div class="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-brand-soft font-display text-sm font-bold text-brand"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></div>
-					<h3 class="text-lg font-semibold text-ink"><?php echo esc_html( $v[0] ); ?></h3>
-					<p class="mt-2 text-sm leading-relaxed text-ink-soft"><?php echo esc_html( $v[1] ); ?></p>
+					<h3 class="text-lg font-semibold text-ink"><?php echo esc_html( $v['title'] ); ?></h3>
+					<p class="mt-2 text-sm leading-relaxed text-ink-soft"><?php echo esc_html( $v['desc'] ); ?></p>
 				</div>
 			<?php endforeach; ?>
 		</div>

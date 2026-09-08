@@ -6,6 +6,92 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.7.0 — De-Hardcode Total: Konten Website Dikelola dari wp-admin + SEO ala Yoast 2026-09-09
+
+Menjawab instruksi: **"jangan hardcode tapi dinamis untuk informasi website atau yang
+memiliki inputan form di wp-admin"** — seluruh konten statis tema (kontak, layanan,
+proses, nilai, use case, skema kerja sama, statistik, marquee klien, menu footer
+layanan) kini didorong dari wp-admin via CPT + Customizer, dengan fallback seed saat
+kosong. Sekaligus SEO tema dibangun ulang meniru struktur output Yoast SEO (homegrown,
+tanpa plugin) + version bump 4.0.0 → 4.7.0.
+
+### Plugin baru: `akdisi-info-manager` (v1.0.0)
+- **7 CPT admin-only** (`public=false, show_ui=true, show_in_rest=true`, urutan via
+  `menu_order`): `akdisi_service` (Layanan), `akdisi_step` (Proses), `akdisi_value`
+  (Nilai), `akdisi_use_case` (Use Case), `akdisi_engagement` (Skema Kerja Sama),
+  `akdisi_stat` (Statistik), `akdisi_client` (Klien marquee) — tersembunyi dari
+  front-end, dikelola di wp-admin → menu "Info Website".
+- **Metabox**: Layanan (ikon SVG, deskripsi detail, poin 1/baris), Use Case
+  (tag/badge, stack, URL tujuan), Skema (catatan), Statistik (nilai, label, grup
+  `hero`/`why`/`about` via checkbox).
+- **`register_post_meta`** REST-aware; meta array `_akdisi_stat_groups` memakai
+  `show_in_rest.schema.items` (fix notice WP 5.3+); `_akdisi_use_case_url` terdaftar
+  sekali dengan `esc_url_raw` (hapus duplikat string-meta).
+- Helper publik era-`function_exists`: `akdisi_info_get_items( $post_type )`.
+
+### Tema `akdisi` — semua konten hardcode → dinamis
+- `inc/helpers.php` (append): `akdisi_get_contact()`, `akdisi_wa_link()`,
+  `akdisi_get_services()`, `akdisi_get_process_steps()`, `akdisi_get_values()`,
+  `akdisi_get_use_cases()`, `akdisi_get_engagements()`, `akdisi_get_stats($group)`,
+  `akdisi_get_clients()` — baca CPT bila ada, **fallback = konten lama persis**
+  (tampilan tidak berubah).
+- `inc/customizer.php` (baru): section **Info Kontak** (Email/Phone/WhatsApp/
+  Location/Hours/Address) — satu sumber kebenaran untuk footer, halaman kontak, dan
+  JSON-LD; default `hello@akdisi.com`, `+62 812-3456-7890`, `6281234567890`,
+  `Jambi, Indonesia`, jam kerja.
+- `front-page.php`: stats hero + band gelap "Mengapa AKDISI" → `akdisi_get_stats()`,
+  marquee klien → `akdisi_get_clients()` (+class `uppercase`), 4 kartu layanan →
+  `akdisi_get_services()`, 4 langkah proses → `akdisi_get_process_steps()` (nomor
+  auto `01–04`).
+- `page-layanan.php`: layanan → helper (detail + 4 poin), 3 skema kerja sama →
+  `akdisi_get_engagements()`. `page-tentang.php`: 4 statistik → `akdisi_get_stats('about')`,
+  3 nilai → `akdisi_get_values()`. `page-use-cases.php`: 4 kartu → `akdisi_get_use_cases()`.
+  `page-kontak.php`: email/WA/lokasi/jam → `akdisi_get_contact()` + `akdisi_wa_link()`.
+- `footer.php`: email/WA → kontak Customizer; kolom **Layanan** → menu WP
+  `footer-services` + fallback `akdisi_footer_services()`.
+
+### `inc/seo.php` (baru, auto-loaded) — struktur output Yoast SEO
+- Title format `{judul} – AKDISI` via `pre_get_document_title`: home
+  `AKDISI – <tagline>`, singular `<judul> – AKDISI`, archive `Arsip: X – AKDISI`,
+  404 `Halaman tidak ditemukan – AKDISI`, pencarian `Pencarian: q – AKDISI`.
+- Meta description per halaman: home → tagline; singular → excerpt → auto-generate
+  28 kata dari konten; archive/search/404 punya deskripsi sendiri.
+- Robots via `wp_robots`: `index, follow, max-image-preview:large, max-snippet:-1,
+  max-video-preview:-1`; 404 & search → `noindex, follow`. Canonical tunggal
+  (rel_canonical core di-`remove_action`), 404 tanpa canonical.
+- Open Graph: `og:locale id_ID`, `og:type` (front page = `website`, singular =
+  `article`), `og:title/description/url/site_name`, `og:image` + width/height bila
+  thumbnail `akdisi-wide`; Twitter Card `summary_large_image` (bila gambar) /
+  `summary`.
+- Schema.org JSON-LD `@graph`: Organization (name/url/description/**email/contact
+  dari Customizer**) + WebSite (`inLanguage id-ID`) di semua halaman; **Article**
+  pada single `post`, `akdisi_insight`, **dan `akdisi_project`** (fix QA).
+
+### functions.php & style.css
+- `akdisi_seo_meta()` lama + hook dihapus → SEO & Customizer via glob `inc/*.php`;
+  register menu `footer-services`; version bump **4.0.0 → 4.7.0**.
+
+### Data (seed DB, idempotent by slug)
+- 4 layanan, 4 langkah proses, 3 nilai, 4 use case, 3 skema, 10 statistik (hero 3 /
+  why 4 / about 4, "40+ Proyek selesai di 12 industri" di-share why+about), 6 klien
+  marquee; menu **"Layanan Footer"** (4 link `/layanan/*/`) ter-assign ke
+  `footer-services`; kontak default via Customizer (bisa diganti wp-admin).
+
+### QA v4.7.0 (Playwright Chromium, DDEV)
+- **88 checks, FAILS: 0**: 7 URL (/, /layanan/, /tentang/, /use-cases/, /kontak/,
+  404 + single project + single insight) — status benar (404 → 404), title format
+  benar & tanpa bocor, robots **tunggal** (1 meta, hilang dobel core), canonical
+  tunggal, `og:locale id_ID`, `og:site_name AKDISI`, og:type home = `website`,
+  twitter:card ada, JSON-LD ada (Organization email dari Customizer, Article di
+  single project & insight), konten dinamis (stats hero/why/about, 4 layanan, 3
+  skema, 4 use case, 6 klien marquee uppercase), footer menu layanan 4 link + kontak
+  dinamis, 404 → noindex + tanpa canonical, h-overflow 0px desktop 1440 & mobile 390,
+  pageerror 0.
+- Lint: `php -l` bersih (plugin + 13 file tema), `node --check` n/a (QA mjs
+  dijalankan, No-Syntax-Error berlaku untuk file PHP).
+
+---
+
 ## v3.2.0 — SEO Ala Yoast (Meta, OG, Twitter, Schema.org JSON-LD) 2026-09-08
 
 SEO tema `perkasa` dibangun ulang meniru **struktur output Yoast SEO** —
