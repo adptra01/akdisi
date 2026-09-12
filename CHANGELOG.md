@@ -6,6 +6,57 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## Seed Setup — Fresh Install Ready (akdisi + perkasa) 2026-09-09
+
+Menjawab permintaan: **"buat seed agar tema akdisi dan juga garuda (perkasa) siap
+pakai tanpa bingung/repot"** — setelah upload zip tema, cukup jalankan satu file
+seed per tema dan seluruh struktur halaman/menu/setting front page terbentuk.
+Tidak ada perubahan file tema (zero bump — zip v4.7.0 tetap valid).
+
+### Dua script seed idempotent (`wordpress/seed/`)
+- **`seed-akdisi-setup.php`**: pages Beranda (front), Layanan + **4 detail layanan**
+  (parent = Layanan, konten edutatif lengkap: Pengembangan Aplikasi Kustom,
+  Digitalisasi Proses Bisnis, Sistem Administrasi & Data, Solusi Bisnis Kustom),
+  Tentang, Testimoni, Use Case, Kontak, Solusi + 4 sub-sektor →
+  template `page-*.php` ter-assign (diisi hanya bila masih `default`); 3 menu
+  (Primary 8 link, Footer 5, Layanan Footer 4) + assign lokasi; `show_on_front=page`,
+  `page_on_front=Beranda`.
+- **`seed-perkasa-setup.php`**: pages Beranda, Layanan, Proyek, Tentang, Kontak →
+  `page-*.php`; menu **Menu Utama Perkasa** (5 link, assign ke `primary` DAN
+  `footer` — satu sumber navbar = footer Perusahaan) + **Layanan Perkasa**
+  (4 anchor `/layanan/#gedung|infrastruktur|renovasi|konsultasi` →
+  `footer-services`); front page setting.
+- Cara pakai (per-tema karena `nav_menu_locations` tersimpan di theme mods per
+  stylesheet — jalankan **setelah tema diaktifkan**):
+  `wp theme activate akdisi && wp eval-file wordpress/seed/seed-akdisi-setup.php`
+  (begitu pula dengan `perkasa`).
+- Idempotensi dijamin by `post_name + post_parent` (bukan `get_page_by_path` —
+  halaman ber-parent punya path `layanan/application-development`, path pendek
+  tidak cocok → duplikat `*-2` saat evaluasi awal, sudah dicegah & dibersihkan).
+
+### Perubahan konsistensi URL (DB, bukan tema)
+- Detail layanan dipindah parent dari page lama `services` (8, template lama tak
+  ada lagi) ke **halaman Layanan `/layanan/`** (67) → URL kini
+  `/layanan/application-development/` dst., **konsisten dengan fallback
+  `akdisi_footer_services()` dan menu Layanan Footer** (sebelumnya link footer
+  menunjuk `/layanan/*/` tapi halaman hidup di `/services/*/` → potensi 404).
+
+### QA Seed (Playwright-lite curl + wp-cli, DDEV)
+- **Akdisi** (tema aktif): front page = Beranda (6), `nav_menu_locations` =
+  `{primary:2, footer:14, footer-services:37}`; **15 URL** — `/`, `/layanan/`,
+  4× `/layanan/<detail>/`, `/tentang/`, `/testimoni/`, `/use-cases/`, `/kontak/`,
+  `/solutions/`, `/solutions/developer/`, `/projects/`, `/insight/`,
+  `/privacy-policy/`, `/proyek/` → semua **200**; `/halaman-tidak-ada/` → **404**.
+  Navbar = 8 link menu Primary; footer layanan = 4 link `/layanan/*/` (semua hidup).
+- **Perkasa**: 5 URL (/, /layanan/, /proyek/, /tentang/, /kontak/) → semua 200;
+  `theme_mods_perkasa.nav_menu_locations` = `{primary:35, footer:35,
+  footer-services:36}` — tidak mengganggu theme mods akdisi (per-stylesheet,
+  diverifikasi via eksperimen `switch_theme` roundtrip: tidak ada sinkronisasi).
+- Tidak ada duplikat halaman (`GROUP BY post_name HAVING count>1` → kosong).
+- Lint: `php -l` bersih kedua seed.
+
+---
+
 ## v4.7.0 — De-Hardcode Total: Konten Website Dikelola dari wp-admin + SEO ala Yoast 2026-09-09
 
 Menjawab instruksi: **"jangan hardcode tapi dinamis untuk informasi website atau yang
