@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'AKDISI_VERSION', '4.7.0' );
+define( 'AKDISI_VERSION', '4.8.0' );
 
 /**
  * Theme setup: menus, supports, image sizes.
@@ -127,54 +127,11 @@ JS;
 }
 
 /**
- * Register fresh content types — "clean slate" (no clash with legacy data).
+ * Register content types khusus tema.
+ * Catatan: CPT `akdisi_project` (+ taksonomi) kini didaftarkan plugin
+ * akdisi-info-manager; Insight memakai Pos (post) bawaan WordPress.
  */
 function akdisi_register_post_types() {
-
-	register_post_type(
-		'akdisi_project',
-		array(
-			'labels'       => array(
-				'name'          => __( 'Proyek', 'akdisi' ),
-				'singular_name' => __( 'Proyek', 'akdisi' ),
-				'add_new_item'  => __( 'Tambah Proyek Baru', 'akdisi' ),
-			),
-			'public'       => true,
-			'has_archive'  => true,
-			'menu_icon'    => 'dashicons-portfolio',
-			'rewrite'      => array( 'slug' => 'projects', 'with_front' => false ),
-			'show_in_rest' => true,
-			'supports'     => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
-		)
-	);
-
-	register_taxonomy(
-		'akdisi_project_cat',
-		'akdisi_project',
-		array(
-			'labels'          => array( 'name' => __( 'Kategori Proyek', 'akdisi' ) ),
-			'hierarchical'    => true,
-			'show_admin_column'=> true,
-			'show_in_rest'    => true,
-			'rewrite'         => array( 'slug' => 'project-category' ),
-		)
-	);
-
-	register_post_type(
-		'akdisi_insight',
-		array(
-			'labels'       => array(
-				'name'          => __( 'Insight', 'akdisi' ),
-				'singular_name' => __( 'Insight', 'akdisi' ),
-			),
-			'public'       => true,
-			'has_archive'  => true,
-			'menu_icon'    => 'dashicons-welcome-write-blog',
-			'rewrite'      => array( 'slug' => 'insight', 'with_front' => false ),
-			'show_in_rest' => true,
-			'supports'     => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
-		)
-	);
 
 	register_post_type(
 		'akdisi_faq',

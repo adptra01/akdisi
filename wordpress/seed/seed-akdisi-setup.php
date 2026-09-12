@@ -172,6 +172,7 @@ foreach ( $layanan_details as $slug => $d ) {
 $tentang  = seed_akdisi_ensure_page( 'tentang', 'Tentang', 'page-tentang.php' );
 $testim   = seed_akdisi_ensure_page( 'testimoni', 'Testimoni', 'page-testimonials.php' );
 $use_case = seed_akdisi_ensure_page( 'use-cases', 'Use Case', 'page-use-cases.php' );
+$insight  = seed_akdisi_ensure_page( 'insight', 'Insight', 'page-insight.php' ); // Daftar artikel bawaan WP.
 $kontak   = seed_akdisi_ensure_page( 'kontak', 'Kontak', 'page-kontak.php' );
 
 $solutions = 0;

@@ -260,8 +260,8 @@ function akdisi_seo_schema() {
 		'inLanguage' => 'id-ID',
 	);
 
-	// Article — single post, insight & project (konten editorial AKDISI).
-	if ( is_singular( array( 'post', 'akdisi_insight', 'akdisi_project' ) ) ) {
+	// Article — artikel (post) & proyek (konten editorial AKDISI).
+	if ( is_singular( array( 'post', 'akdisi_project' ) ) ) {
 		$post   = get_queried_object();
 		$author = get_the_author_meta( 'display_name', $post->post_author );
 		$graph[] = array(

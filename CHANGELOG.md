@@ -6,6 +6,76 @@ Spec otoritatif: `PRD AKDISI Website v5.0.md`
 
 ---
 
+## v4.8.0 — Penyederhanaan Radikal: Info Website Menu Satu Pintu + Kirim Email Gmail + Insight = Post Bawaan 2026-09-12
+
+Menjawab instruksi: **"sederhanakan plugin akdisi-info-manager — cukup management kirim email
+(Gmail gratis), insight dari post bawaan, info perusahaan dari Setting General/fitur plugin,
+management Proyek & Klien; yang lain tidak perlu dinamis."**
+
+### Plugin `akdisi-info-manager` → v2.0.0 (rewrite total)
+- **Menu wp-admin "Info Website"** (satu pintu) dengan submenu:
+  **Info Perusahaan** (kontak: email/telepon/WhatsApp/lokasi/jam/alamat → option
+  `akdisi_info_contact`; nama & tagline situs tetap dari *Settings → General* via
+  `bloginfo()`), **Kirim Email**, **Proyek** (CPT), **Klien** (CPT).
+- **Kirim Email (Gmail SMTP gratis)**: simpan alamat Gmail + **App Password 16
+  karakter** (petunjuk langkah demi langkah di halaman: myaccount.google.com →
+  Keamanan → Verifikasi 2 Langkah → App passwords) + nama pengirim + host/port/
+  enkripsi (default `smtp.gmail.com:587` TLS). Hook `phpmailer_init` menerapkan
+  SMTP ke **semua** `wp_mail()` (form kontak & newsletter) — tanpa plugin pihak
+  ketiga. **Tombol "Kirim email percobaan"** → redirect dengan notice sukses /
+  pesan error detail (`wp_mail_failed`); App Password kosong = pertahankan yang
+  tersimpan; input otomatis membersihkan spasi & huruf besar.
+- **CPT `akdisi_project` + taksonomi `akdisi_project_cat` pindah dari tema ke
+  plugin** (args identik: rewrite `/projects/`, show_in_rest) — metabox
+  **"Detail Proyek" digabung dari plugin `akdisi-project-manager` (di-retire &
+  dihapus)**; helper publik `akdisi_pm_get_gallery()` / `akdisi_pm_get_visit_url()`
+  dipertahankan agar template tak berubah.
+- **CPT `akdisi_client`** dipertahankan (Klien marquee beranda).
+- **6 CPT dihapus**: `akdisi_service`, `akdisi_step`, `akdisi_value`,
+  `akdisi_use_case`, `akdisi_engagement`, `akdisi_stat` (data lama dibiarkan di
+  DB, tak terdaftar — tidak muncul di wp-admin).
+
+### Tema `akdisi` v4.8.0
+- **Insight = artikel (Post) bawaan WordPress**: query beranda `post_type=post`;
+  template baru **`page-insight.php`** (halaman /insight/ daftar artikel, featured
+  span 2, pagination) menggantikan `archive-akdisi_insight.php` + 
+  `single-akdisi_insight.php` (dihapus); artikel tunggal memakai `single.php`.
+- `functions.php`: registrasi CPT project/insight dihapus (project kini dari
+  plugin; FAQ & Testimoni tetap di tema); version bump.
+- `inc/helpers.php` disederhanakan: kontak via `akdisi_im_contact()` (plugin,
+  fallback default), layanan/proses/nilai/use-case/skema/statistik → **array
+  statis** (bagian desain template), klien tetap baca CPT (guard
+  `post_type_exists`) + fallback statis.
+- **`inc/customizer.php` dihapus** — kontak satu sumber di plugin (tidak dobel
+  Customizer).
+- **String JS dilokalkan**: `akdisiData.i18n` (contact.php) — pesan error
+  newsletter "Please enter a valid email." dkk. kini Bahasa Indonesia ("Mohon
+  masukkan alamat email yang valid.").
+- `inc/seo.php`: JSON-LD Article kini `post` + `akdisi_project`.
+
+### Migrasi data (DDEV)
+- **10 artikel `akdisi_insight` → `post`** (SQL `post_type` swap; URL berubah
+  `/insight/<slug>/` → `/<slug>/` — seluruh link diarsip & beranda otomatis
+  mengikuti); halaman **Insight** dibuat via seed (template `page-insight.php`).
+- Plugin `akdisi-project-manager` dinonaktifkan & dihapus (folder dibersihkan).
+- Zip: `akdisi-theme-v4.8.0.zip` (32 file) + `akdisi-info-manager-v2.0.0.zip`
+  (7 file) — zip lama dihapus.
+
+### QA v4.8.0 (Playwright Chromium + wp-cli, DDEV)
+- **wp-admin (user QA temp, dihapus setelahnya)**: menu Info Website + 4 submenu
+  render; setelan kontak tersimpan & dipulihkan; halaman Kirim Email +
+  instruksi App Password; test-kirim tanpa konfigurasi → notice peringatan; SMTP
+  terisi → banner "Aktif"; **test-kirim kredensial palsu → error graceful**
+  "Kesalahan SMTP: Tidak dapat mengautentikasi" (tanpa crash).
+- **Front-end**: beranda (Insight 3 artikel native, Proyek 6 CPT plugin, stats
+  fallback); /insight/ 9 kartu + featured span + `/insight/page/2/` 200; single
+  artikel `single.php` + JSON-LD Article; /projects/ 10 kartu + single proyek
+  (metabox plugin); form kontak submit sukses (lead tersimpan); newsletter pesan
+  ID; 404 benar; `pageerror` 0.
+- Lint: `php -l` bersih (plugin 5 file + tema 8 file), `node --check` main.js OK.
+
+---
+
 ## Seed Setup — Fresh Install Ready (akdisi + perkasa) 2026-09-09
 
 Menjawab permintaan: **"buat seed agar tema akdisi dan juga garuda (perkasa) siap

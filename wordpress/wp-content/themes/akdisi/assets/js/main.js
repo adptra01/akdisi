@@ -134,8 +134,9 @@
 
 			const submit = form.querySelector( 'button[type="submit"]' );
 			const original = submit.innerHTML;
+			const i18nC = window.akdisiData.i18n || {};
 			submit.disabled = true;
-			submit.innerHTML = 'Sending&hellip;';
+			submit.innerHTML = i18nC.sending || 'Mengirim…';
 
 			try {
 				const res = await fetch( window.akdisiData.ajaxUrl, { method: 'POST', body } );
@@ -145,7 +146,7 @@
 					status.textContent = data.data.message;
 					status.classList.remove( 'hidden', 'bg-brand-soft', 'text-brand' );
 				} else {
-					status.textContent = ( data.data && data.data.message ) || 'Something went wrong. Please try again.';
+					status.textContent = ( data.data && data.data.message ) || i18nC.error || 'Terjadi kesalahan. Silakan coba lagi.';
 					status.classList.remove( 'hidden', 'bg-brand-soft', 'text-brand' );
 					status.classList.add( 'bg-paper-alt', 'text-ink' );
 				}
@@ -166,12 +167,13 @@
 		const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		const nlEmail = nlForm.querySelector( 'input[name="nl-email"]' );
 		const nlStatus = nlForm.querySelector( '.akdisi-nl-status' );
+		const i18n = window.akdisiData.i18n || {};
 
 		nlForm.addEventListener( 'submit', async ( e ) => {
 			e.preventDefault();
 			const email = nlEmail.value.trim();
 			if ( ! emailRe.test( email ) ) {
-				nlStatus.textContent = 'Please enter a valid email.';
+				nlStatus.textContent = i18n.nlInvalid || 'Mohon masukkan alamat email yang valid.';
 				nlStatus.classList.remove( 'hidden' );
 				nlEmail.focus();
 				return;
@@ -179,7 +181,7 @@
 			const btn = nlForm.querySelector( 'button[type="submit"]' );
 			const original = btn.innerHTML;
 			btn.disabled = true;
-			btn.innerHTML = 'Joining&hellip;';
+			btn.innerHTML = i18n.nlJoining || 'Bergabung…';
 
 			const body = new URLSearchParams();
 			body.set( 'action', 'akdisi_newsletter' );
@@ -189,7 +191,7 @@
 			try {
 				const res = await fetch( window.akdisiData.ajaxUrl, { method: 'POST', body } );
 				const data = await res.json();
-				nlStatus.textContent = data.success ? data.data.message : ( data.data && data.data.message ) || 'Could not subscribe. Try again.';
+				nlStatus.textContent = data.success ? data.data.message : ( data.data && data.data.message ) || i18n.nlFail || 'Gagal berlangganan. Silakan coba lagi.';
 				if ( data.success ) {
 					nlEmail.value = '';
 					nlStatus.classList.add( 'text-brand-soft', 'text-brand', 'font-medium' );
@@ -198,7 +200,7 @@
 				}
 				nlStatus.classList.remove( 'hidden' );
 			} catch ( err ) {
-				nlStatus.textContent = 'Network error — please try again.';
+				nlStatus.textContent = i18n.network || 'Gangguan jaringan — silakan coba lagi.';
 				nlStatus.classList.remove( 'hidden', 'text-brand-soft', 'text-brand', 'font-medium' );
 			} finally {
 				btn.disabled = false;

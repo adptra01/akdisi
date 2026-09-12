@@ -18,7 +18,7 @@ $projects = new WP_Query(
 
 $insights = new WP_Query(
 	array(
-		'post_type'      => 'akdisi_insight',
+		'post_type'      => 'post', // Insight = artikel bawaan WordPress.
 		'posts_per_page' => 3,
 		'no_found_rows'  => true,
 		'post_status'    => 'publish',

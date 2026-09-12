@@ -2,6 +2,13 @@
 /**
  * AKDISI template helpers.
  *
+ * Arsitektur konten (v4.8.0 — "cukup yang perlu saja yang dinamis"):
+ *  - Kontak & SMTP  : plugin akdisi-info-manager (menu Info Website)
+ *  - Proyek & Klien : CPT via plugin akdisi-info-manager
+ *  - Insight        : Pos (post) bawaan WordPress
+ *  - Layanan, proses, nilai, use case, skema, statistik : statis di sini
+ *    (bagian dari desain template — diedit lewat kode, bukan wp-admin)
+ *
  * @package AKDISI
  */
 
@@ -63,17 +70,18 @@ function akdisi_footer_services() {
 }
 
 /* -------------------------------------------------------------------------
- * Info Kontak — Customizer (inc/customizer.php), fallback default.
+ * Info Kontak — plugin akdisi-info-manager (Info Website → Info Perusahaan),
+ * fallback default bila plugin nonaktif.
  * ---------------------------------------------------------------------- */
 
 /**
- * Ambil kontak dari Customizer (theme_mod) dengan default.
+ * Ambil kontak perusahaan.
  *
  * @param string $key Kunci kontak (email/phone/whatsapp/location/hours/address), '' = semua.
  * @return string|array
  */
 function akdisi_get_contact( $key = '' ) {
-	$defaults = function_exists( 'akdisi_contact_defaults' ) ? akdisi_contact_defaults() : array(
+	$defaults = array(
 		'email'    => 'hello@akdisi.com',
 		'phone'    => '+62 812-3456-7890',
 		'whatsapp' => '6281234567890',
@@ -81,10 +89,9 @@ function akdisi_get_contact( $key = '' ) {
 		'hours'    => 'Senin–Jumat, 09.00–17.00 WIB. Permintaan singkat biasanya dibalas di hari yang sama.',
 		'address'  => '',
 	);
-	$contact  = array();
-	foreach ( $defaults as $k => $v ) {
-		$contact[ $k ] = get_theme_mod( 'akdisi_contact_' . $k, $v );
-	}
+
+	$contact = function_exists( 'akdisi_im_contact' ) ? akdisi_im_contact() : $defaults;
+
 	return $key ? ( $contact[ $key ] ?? '' ) : $contact;
 }
 
@@ -98,56 +105,16 @@ function akdisi_wa_link() {
 }
 
 /* -------------------------------------------------------------------------
- * Query umum untuk CPT Info Manager (plugin akdisi-info-manager).
+ * Konten statis — layanan, proses, nilai, use case, skema, statistik.
+ * (Diedit langsung di template/helper; bukan via wp-admin.)
  * ---------------------------------------------------------------------- */
 
 /**
- * Ambil semua item CPT terurut (menu_order), publis saja.
- *
- * @param string $post_type CPT.
- * @return WP_Post[]
- */
-function akdisi_info_items( $post_type ) {
-	$q = new WP_Query(
-		array(
-			'post_type'      => $post_type,
-			'posts_per_page' => 30,
-			'orderby'        => 'menu_order',
-			'order'          => 'ASC',
-			'no_found_rows'  => true,
-			'post_status'    => 'publish',
-		)
-	);
-	$items = $q->posts;
-	wp_reset_postdata();
-	return $items;
-}
-
-/**
- * Baris teks meta (textarea 1-per-baris) → array bersih.
- *
- * @param int    $post_id Post ID.
- * @param string $key     Meta key.
- * @return string[]
- */
-function akdisi_lines_meta( $post_id, $key ) {
-	$raw = get_post_meta( $post_id, $key, true );
-	if ( ! is_string( $raw ) || '' === trim( $raw ) ) {
-		return array();
-	}
-	$lines = preg_split( '/\r\n|\r|\n/', $raw );
-	$lines = array_map( 'trim', $lines );
-	return array_values( array_filter( $lines, 'strlen' ) );
-}
-
-/**
- * Fallback saat plugin nonaktif / belum di-seed — konten sama seperti versi
- * hardcoded lama agar tampilan tidak berubah (editable via wp-admin setelah
- * seed: wp-admin → Layanan/Proses/dst.).
+ * Layanan (Beranda 4 kartu + halaman Layanan).
  *
  * @return array
  */
-function akdisi_default_services() {
+function akdisi_get_services() {
 	return array(
 		array(
 			'title'  => __( 'Strategi Produk', 'akdisi' ),
@@ -181,143 +148,66 @@ function akdisi_default_services() {
 }
 
 /**
- * Layanan dari CPT (plugin akdisi-info-manager) — fallback seed.
- *
- * @return array
- */
-function akdisi_get_services() {
-	$items = array();
-	foreach ( akdisi_info_items( 'akdisi_service' ) as $post ) {
-		$items[] = array(
-			'title'  => $post->post_title,
-			'desc'   => get_the_excerpt( $post ),
-			'icon'   => get_post_meta( $post->ID, '_akdisi_service_icon', true ),
-			'detail' => get_post_meta( $post->ID, '_akdisi_service_detail', true ),
-			'points' => akdisi_lines_meta( $post->ID, '_akdisi_service_points' ),
-		);
-	}
-	return ! empty( $items ) ? $items : akdisi_default_services();
-}
-
-/**
- * Proses 4 langkah — CPT `akdisi_step` (title + Ringkasan).
+ * Proses 4 langkah (Beranda).
  *
  * @return array
  */
 function akdisi_get_process_steps() {
-	$items = array();
-	foreach ( akdisi_info_items( 'akdisi_step' ) as $post ) {
-		$items[] = array(
-			'title' => $post->post_title,
-			'desc'  => get_the_excerpt( $post ),
-		);
-	}
-	if ( empty( $items ) ) {
-		$items = array(
-			array( 'title' => __( 'Temukan', 'akdisi' ), 'desc' => __( 'Workshop mendalam, riset pengguna, dan definisi selesai yang jelas.', 'akdisi' ) ),
-			array( 'title' => __( 'Rancang', 'akdisi' ), 'desc' => __( 'Dari wireframe hingga UI final, divalidasi pengguna nyata di tiap tahap.', 'akdisi' ) ),
-			array( 'title' => __( 'Bangun', 'akdisi' ), 'desc' => __( 'Engineering berbasis sprint dengan demo setiap Jumat — bukan kotak hitam.', 'akdisi' ) ),
-			array( 'title' => __( 'Luncurkan & Kembangkan', 'akdisi' ), 'desc' => __( 'Tayang, ukur, perbaiki. Kami tetap mendampingi untuk optimasi dan dukungan.', 'akdisi' ) ),
-		);
-	}
-	return $items;
+	return array(
+		array( 'title' => __( 'Temukan', 'akdisi' ), 'desc' => __( 'Workshop mendalam, riset pengguna, dan definisi selesai yang jelas.', 'akdisi' ) ),
+		array( 'title' => __( 'Rancang', 'akdisi' ), 'desc' => __( 'Dari wireframe hingga UI final, divalidasi pengguna nyata di tiap tahap.', 'akdisi' ) ),
+		array( 'title' => __( 'Bangun', 'akdisi' ), 'desc' => __( 'Engineering berbasis sprint dengan demo setiap Jumat — bukan kotak hitam.', 'akdisi' ) ),
+		array( 'title' => __( 'Luncurkan & Kembangkan', 'akdisi' ), 'desc' => __( 'Tayang, ukur, perbaiki. Kami tetap mendampingi untuk optimasi dan dukungan.', 'akdisi' ) ),
+	);
 }
 
 /**
- * Nilai (halaman Tentang) — CPT `akdisi_value`.
+ * Nilai (halaman Tentang).
  *
  * @return array
  */
 function akdisi_get_values() {
-	$items = array();
-	foreach ( akdisi_info_items( 'akdisi_value' ) as $post ) {
-		$items[] = array(
-			'title' => $post->post_title,
-			'desc'  => get_the_excerpt( $post ),
-		);
-	}
-	if ( empty( $items ) ) {
-		$items = array(
-			array( 'title' => __( 'Bertanggung jawab atas hasil', 'akdisi' ), 'desc' => __( 'Kami diukur dari metrik Anda — peluncuran, konversi, retensi — bukan dari jam yang ditagih.', 'akdisi' ) ),
-			array( 'title' => __( 'Senior, selalu', 'akdisi' ), 'desc' => __( 'Orang di kickoff Anda adalah orang yang mengerjakan produknya. Tanpa jualan nama lalu operan.', 'akdisi' ) ),
-			array( 'title' => __( 'Keandalan yang membosankan', 'akdisi' ), 'desc' => __( 'Demo konsisten, timeline jujur, bahasa yang jelas. Kegembiraan seharusnya datang dari produknya.', 'akdisi' ) ),
-		);
-	}
-	return $items;
+	return array(
+		array( 'title' => __( 'Bertanggung jawab atas hasil', 'akdisi' ), 'desc' => __( 'Kami diukur dari metrik Anda — peluncuran, konversi, retensi — bukan dari jam yang ditagih.', 'akdisi' ) ),
+		array( 'title' => __( 'Senior, selalu', 'akdisi' ), 'desc' => __( 'Orang di kickoff Anda adalah orang yang mengerjakan produknya. Tanpa jualan nama lalu operan.', 'akdisi' ) ),
+		array( 'title' => __( 'Keandalan yang membosankan', 'akdisi' ), 'desc' => __( 'Demo konsisten, timeline jujur, bahasa yang jelas. Kegembiraan seharusnya datang dari produknya.', 'akdisi' ) ),
+	);
 }
 
 /**
- * Use cases (halaman Use Cases) — CPT `akdisi_use_case`.
+ * Use cases (halaman Use Cases).
  *
  * @return array
  */
 function akdisi_get_use_cases() {
-	$items = array();
-	foreach ( akdisi_info_items( 'akdisi_use_case' ) as $post ) {
-		$items[] = array(
-			'title' => $post->post_title,
-			'desc'  => get_the_excerpt( $post ),
-			'tag'   => get_post_meta( $post->ID, '_akdisi_use_case_tag', true ),
-			'stack' => get_post_meta( $post->ID, '_akdisi_use_case_stack', true ),
-			'url'   => get_post_meta( $post->ID, '_akdisi_use_case_url', true ),
-		);
-	}
-	if ( empty( $items ) ) {
-		$items = array(
-			array( 'title' => __( 'Manajemen unit & sales perumahan', 'akdisi' ), 'desc' => __( 'Dari Excel dan grup WA jadi sistem booking real-time dengan peta kavling interaktif.', 'akdisi' ), 'stack' => 'Web app · CRM · Dashboard', 'tag' => 'Properti', 'url' => home_url( '/solutions/developer/' ) ),
-			array( 'title' => __( 'Iuran & pengaduan perumahan digital', 'akdisi' ), 'desc' => __( 'Billing otomatis, portal warga, dan tracking maintenance dalam satu sistem.', 'akdisi' ), 'stack' => 'Billing · Portal warga', 'tag' => 'Properti', 'url' => home_url( '/solutions/property/' ) ),
-			array( 'title' => __( 'Keanggotaan & sertifikasi digital', 'akdisi' ), 'desc' => __( 'Data anggota dan event asosiasi yang sebelumnya tersebar kini terpusat dan otomatis.', 'akdisi' ), 'stack' => 'Membership · Event', 'tag' => 'Asosiasi', 'url' => home_url( '/solutions/organization/' ) ),
-			array( 'title' => __( 'Inventori multi-gudang & distribusi', 'akdisi' ), 'desc' => __( 'Bukti AKDISI melayani proses operasional kompleks di luar properti.', 'akdisi' ), 'stack' => 'Inventory · Multi-lokasi', 'tag' => 'Bisnis Lain', 'url' => home_url( '/projects/' ) ),
-		);
-	}
-	return $items;
+	return array(
+		array( 'title' => __( 'Manajemen unit & sales perumahan', 'akdisi' ), 'desc' => __( 'Dari Excel dan grup WA jadi sistem booking real-time dengan peta kavling interaktif.', 'akdisi' ), 'stack' => 'Web app · CRM · Dashboard', 'tag' => 'Properti', 'url' => home_url( '/solutions/developer/' ) ),
+		array( 'title' => __( 'Iuran & pengaduan perumahan digital', 'akdisi' ), 'desc' => __( 'Billing otomatis, portal warga, dan tracking maintenance dalam satu sistem.', 'akdisi' ), 'stack' => 'Billing · Portal warga', 'tag' => 'Properti', 'url' => home_url( '/solutions/property/' ) ),
+		array( 'title' => __( 'Keanggotaan & sertifikasi digital', 'akdisi' ), 'desc' => __( 'Data anggota dan event asosiasi yang sebelumnya tersebar kini terpusat dan otomatis.', 'akdisi' ), 'stack' => 'Membership · Event', 'tag' => 'Asosiasi', 'url' => home_url( '/solutions/organization/' ) ),
+		array( 'title' => __( 'Inventori multi-gudang & distribusi', 'akdisi' ), 'desc' => __( 'Bukti AKDISI melayani proses operasional kompleks di luar properti.', 'akdisi' ), 'stack' => 'Inventory · Multi-lokasi', 'tag' => 'Bisnis Lain', 'url' => home_url( '/projects/' ) ),
+	);
 }
 
 /**
- * Skema kerja sama (halaman Layanan) — CPT `akdisi_engagement`.
+ * Skema kerja sama (halaman Layanan).
  *
  * @return array
  */
 function akdisi_get_engagements() {
-	$items = array();
-	foreach ( akdisi_info_items( 'akdisi_engagement' ) as $post ) {
-		$items[] = array(
-			'title' => $post->post_title,
-			'desc'  => get_the_excerpt( $post ),
-			'note'  => get_post_meta( $post->ID, '_akdisi_engagement_note', true ),
-		);
-	}
-	if ( empty( $items ) ) {
-		$items = array(
-			array( 'title' => __( 'Tim Sprint', 'akdisi' ), 'desc' => __( 'Tim senior bergabung dengan tim Anda untuk satu sprint tetap (2–4 minggu). Demo mingguan, transparan penuh.', 'akdisi' ), 'note' => __( 'Cocok saat Anda punya momentum dan butuh kapasitas cepat.', 'akdisi' ) ),
-			array( 'title' => __( 'Retainer Produk', 'akdisi' ), 'desc' => __( 'Kemitraan desain + engineering berkelanjutan dengan backlog bersama dan prioritas bulanan.', 'akdisi' ), 'note' => __( 'Cocok jika Anda rilis terus-menerus dan ingin satu tim yang bertanggung jawab.', 'akdisi' ) ),
-			array( 'title' => __( 'Lingkup Tetap', 'akdisi' ), 'desc' => __( 'Deliverable, milestone, dan harga yang jelas. Ideal untuk peluncuran atau rebuild tertentu.', 'akdisi' ), 'note' => __( 'Cocok saat lingkup sudah pasti dan anggaran tetap.', 'akdisi' ) ),
-		);
-	}
-	return $items;
+	return array(
+		array( 'title' => __( 'Tim Sprint', 'akdisi' ), 'desc' => __( 'Tim senior bergabung dengan tim Anda untuk satu sprint tetap (2–4 minggu). Demo mingguan, transparan penuh.', 'akdisi' ), 'note' => __( 'Cocok saat Anda punya momentum dan butuh kapasitas cepat.', 'akdisi' ) ),
+		array( 'title' => __( 'Retainer Produk', 'akdisi' ), 'desc' => __( 'Kemitraan desain + engineering berkelanjutan dengan backlog bersama dan prioritas bulanan.', 'akdisi' ), 'note' => __( 'Cocok jika Anda rilis terus-menerus dan ingin satu tim yang bertanggung jawab.', 'akdisi' ) ),
+		array( 'title' => __( 'Lingkup Tetap', 'akdisi' ), 'desc' => __( 'Deliverable, milestone, dan harga yang jelas. Ideal untuk peluncuran atau rebuild tertentu.', 'akdisi' ), 'note' => __( 'Cocok saat lingkup sudah pasti dan anggaran tetap.', 'akdisi' ) ),
+	);
 }
 
 /**
- * Statistik per grup — CPT `akdisi_stat` (meta groups: hero/why/about).
+ * Statistik per grup.
  *
  * @param string $group hero (strip beranda) | why (band gelap) | about (tentang).
  * @return array<int,array{value:string,label:string}>
  */
 function akdisi_get_stats( $group = 'hero' ) {
-	$items = array();
-	foreach ( akdisi_info_items( 'akdisi_stat' ) as $post ) {
-		$groups = (array) get_post_meta( $post->ID, '_akdisi_stat_groups', true );
-		if ( in_array( $group, $groups, true ) ) {
-			$items[] = array(
-				'value' => get_post_meta( $post->ID, '_akdisi_stat_value', true ),
-				'label' => get_post_meta( $post->ID, '_akdisi_stat_label', true ),
-			);
-		}
-	}
-	if ( ! empty( $items ) ) {
-		return $items;
-	}
-
 	$all = array(
 		'hero'  => array(
 			array( 'value' => '40+', 'label' => __( 'Proyek selesai', 'akdisi' ) ),
@@ -340,15 +230,32 @@ function akdisi_get_stats( $group = 'hero' ) {
 	return $all[ $group ] ?? array();
 }
 
+/* -------------------------------------------------------------------------
+ * Klien marquee — CPT `akdisi_client` (plugin), fallback statis.
+ * ---------------------------------------------------------------------- */
+
 /**
- * Klien marquee (Beranda) — CPT `akdisi_client`.
+ * Klien marquee (Beranda).
  *
  * @return string[]
  */
 function akdisi_get_clients() {
 	$items = array();
-	foreach ( akdisi_info_items( 'akdisi_client' ) as $post ) {
-		$items[] = $post->post_title;
+	if ( post_type_exists( 'akdisi_client' ) ) {
+		$q = new WP_Query(
+			array(
+				'post_type'      => 'akdisi_client',
+				'posts_per_page' => 30,
+				'orderby'        => 'menu_order',
+				'order'          => 'ASC',
+				'no_found_rows'  => true,
+				'post_status'    => 'publish',
+			)
+		);
+		foreach ( $q->posts as $post ) {
+			$items[] = $post->post_title;
+		}
+		wp_reset_postdata();
 	}
 	if ( empty( $items ) ) {
 		$items = array( 'NORTHBOUND', 'Halcyon', 'Meridian Co.', 'Kestrel', 'Atelier 9', 'Vantage' );

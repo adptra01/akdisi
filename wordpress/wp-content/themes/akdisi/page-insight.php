@@ -1,30 +1,42 @@
 <?php
 /**
- * Insights archive — /insight/.
+ * Template Name: Insight
+ * Halaman /insight/ — daftar artikel (Post) bawaan WordPress.
  *
  * @package AKDISI
  */
 
 get_header();
 
+$paged = get_query_var( 'paged' ) ? (int) get_query_var( 'paged' ) : ( get_query_var( 'page' ) ? (int) get_query_var( 'page' ) : 1 );
+$posts_q = new WP_Query(
+	array(
+		'post_type'           => 'post',
+		'posts_per_page'      => 9,
+		'paged'               => $paged,
+		'ignore_sticky_posts' => true,
+		'post_status'         => 'publish',
+	)
+);
+
 get_template_part( 'template-parts/page-hero', null, array(
 	'eyebrow' => __( 'Insight', 'akdisi' ),
-	'title'   => __( 'Ide yang sedang kami pikirkan.', 'akdisi' ),
+	'title'   => get_the_title(),
 	'sub'     => __( 'Perspektif soal produk, desain, engineering, dan pertumbuhan dari tim AKDISI.', 'akdisi' ),
 ) );
 ?>
 
 <section class="section section-bg">
 	<div class="container mx-auto">
-		<?php if ( have_posts() ) : ?>
+		<?php if ( $posts_q->have_posts() ) : ?>
 			<div class="grid gap-10 lg:grid-cols-3">
 				<?php
 				$i = 0;
-				while ( have_posts() ) :
-					the_post();
+				while ( $posts_q->have_posts() ) :
+					$posts_q->the_post();
 					$first = ( 0 === $i );
 					?>
-					<article data-reveal <?php echo $first ? 'class="lg:col-span-2 lg:row-span-2"' : ''; ?> class="group">
+					<article data-reveal <?php post_class( $first ? 'lg:col-span-2 lg:row-span-2 group' : 'group' ); ?>>
 						<a href="<?php the_permalink(); ?>" class="block">
 							<div class="aspect-[16/9] overflow-hidden rounded-xl bg-paper-alt <?php echo $first ? 'lg:aspect-auto lg:h-full lg:min-h-[280px]' : ''; ?>">
 								<?php if ( has_post_thumbnail() ) : ?>
@@ -41,14 +53,24 @@ get_template_part( 'template-parts/page-hero', null, array(
 					<?php
 					$i++;
 				endwhile;
+				wp_reset_postdata();
 				?>
 			</div>
 			<div class="mt-14">
-				<?php the_posts_pagination( array( 'mid_size' => 1, 'prev_text' => '&larr;', 'next_text' => '&rarr;' ) ); ?>
+				<?php
+				the_posts_pagination(
+					array(
+						'total'     => $posts_q->max_num_pages,
+						'mid_size'  => 1,
+						'prev_text' => '&larr;',
+						'next_text' => '&rarr;',
+					)
+				);
+				?>
 			</div>
 		<?php else : ?>
 			<div data-reveal class="rounded-2xl border border-dashed border-paper-line bg-paper-alt p-12 text-center">
-				<p class="text-ink-faint">Insight segera hadir. Sambil menunggu, lihat <a href="<?php echo esc_url( home_url( '/projects/' ) ); ?>" class="text-brand underline underline-offset-2">karya kami</a>.</p>
+				<p class="text-ink-faint">Belum ada artikel. Tulis artikel pertama dari <a href="<?php echo esc_url( admin_url( 'edit.php' ) ); ?>" class="text-brand underline underline-offset-2">Artikel → Tambah Baru</a> di wp-admin.</p>
 			</div>
 		<?php endif; ?>
 	</div>

@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Localize ajaxUrl for the contact form.
+ * Localize ajaxUrl + string UI (Bahasa Indonesia) untuk JS form.
  */
 function akdisi_localize_ajax() {
 	wp_localize_script(
@@ -18,6 +18,14 @@ function akdisi_localize_ajax() {
 		'akdisiData',
 		array(
 			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+			'i18n'    => array(
+				'sending'     => __( 'Mengirim…', 'akdisi' ),
+				'error'       => __( 'Terjadi kesalahan. Silakan coba lagi.', 'akdisi' ),
+				'nlInvalid'   => __( 'Mohon masukkan alamat email yang valid.', 'akdisi' ),
+				'nlJoining'   => __( 'Bergabung…', 'akdisi' ),
+				'nlFail'      => __( 'Gagal berlangganan. Silakan coba lagi.', 'akdisi' ),
+				'network'     => __( 'Gangguan jaringan — silakan coba lagi.', 'akdisi' ),
+			),
 		)
 	);
 }
